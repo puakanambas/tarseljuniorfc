@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TARSEL JUNIOR FC | Official Club Portal & CMS</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981', // Emerald Pitch
+              600: '#059669', 
+              700: '#047857',
+              800: '#065f46',
+              900: '#0f172a', // Deep Slate
+              950: '#020617', // Darker Slate
+              accent: '#f59e0b', // Gold Trophy
+            }
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif']
+          },
+          animation: {
+            'marquee': 'marquee 25s linear infinite',
+            'float': 'float 3s ease-in-out infinite',
+          },
+          keyframes: {
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    h1, h2, h3, h4, h5, .font-display { font-family: 'Space Grotesk', sans-serif; }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; }
+    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+    .dark .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(30, 41, 59, 0.8); }
+    
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    
+    .kenburns { animation: kenburns 12s ease-out infinite alternate; }
+    @keyframes kenburns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased">
+
+  <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none items-end"></div>
+
+  <div id="confirm-modal" class="hidden fixed inset-0 bg-slate-900/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 max-w-sm w-full space-y-6 text-center shadow-2xl border border-slate-200 dark:border-slate-700 transform transition-transform">
+      <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-2xl flex items-center justify-center text-3xl mx-auto border border-red-200 dark:border-red-800/50">⚠️</div>
+      <div class="space-y-2">
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display">Konfirmasi Hapus</h3>
+        <p id="confirm-modal-text" class="text-sm text-slate-500 dark:text-slate-400">Data yang dihapus tidak dapat dikembalikan.</p>
+      </div>
+      <div class="flex gap-3">
+        <button id="confirm-btn-cancel" class="flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 font-bold rounded-xl transition text-slate-700 dark:text-slate-200 text-sm">Batal</button>
+        <button id="confirm-btn-action" class="flex-1 py-3 bg-red-600 hover:bg-red-500 font-bold text-white rounded-xl transition text-sm shadow-lg shadow-red-500/30">Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-login-modal" class="hidden fixed inset-0 bg-slate-900/90 z-[90] flex items-center justify-center p-4 backdrop-blur-md">
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 max-w-sm w-full space-y-6 shadow-2xl relative">
+      <button onclick="closeAdminLogin()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white w-8 h-8 rounded-full flex items-center justify-center font-bold transition">✕</button>
+      <div class="text-center space-y-2">
+        <div class="w-16 h-16 bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 rounded-2xl flex items-center justify-center text-3xl mx-auto">🔐</div>
+        <h3 class="text-2xl font-black text-slate-900 dark:text-white font-display">CMS Login</h3>
+        <p class="text-xs text-slate-500">Akses khusus manajemen Tarsel FC.<br>(Hint: admin / admin123)</p>
+      </div>
+      <form id="admin-login-form" class="space-y-4">
+        <div class="space-y-1">
+          <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-500">Username</label>
+          <input type="text" id="login-username" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none text-slate-800 dark:text-white transition-all">
+        </div>
+        <div class="space-y-1">
+          <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-500">Password</label>
+          <input type="password" id="login-password" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none text-slate-800 dark:text-white transition-all">
+        </div>
+        <button type="submit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl transition duration-300 shadow-lg shadow-brand-500/30 font-display">
+          Masuk Dasbor
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="public-view" class="block">
+    <!-- Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-40 transition-all duration-300 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+          <a href="#" class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-brand-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/20">
+              <svg class="w-7 h-7 text-brand-accent" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <div>
+              <span class="text-[9px] font-bold tracking-widest text-brand-600 dark:text-brand-500 uppercase block leading-none">SEPAKBOLA JUNIOR</span>
+              <span class="text-xl font-black text-slate-900 dark:text-white block tracking-tight font-display">TARSEL JR</span>
+            </div>
+          </a>
+
+          <nav class="hidden lg:flex items-center gap-6">
+            <a href="#profil" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Profil Klub</a>
+            <a href="#skuad" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Skuad</a>
+            <a href="#galeri" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Media</a>
+            <a href="#berita" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Berita</a>
+            <button onclick="document.getElementById('admin-login-modal').classList.remove('hidden')" class="text-sm font-semibold px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white dark:hover:bg-brand-600 rounded-xl transition-all flex items-center gap-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200">
+              🔒 Admin
+            </button>
+          </nav>
+
+          <div class="flex items-center gap-3">
+            <button id="theme-toggle" class="p-2.5 text-slate-500 hover:text-brand-600 dark:text-slate-400 dark:hover:text-brand-400 bg-slate-100 dark:bg-slate-800 rounded-xl transition-colors">
+              <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.46 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            </button>
+            <a href="#pendaftaran" class="hidden sm:flex px-5 py-2.5 bg-brand-600 text-white font-bold rounded-xl shadow-lg shadow-brand-500/30 hover:bg-brand-500 transition-all font-display tracking-wide">Gabung Trial</a>
+            <button id="mobile-menu-btn" class="p-2 lg:hidden bg-slate-100 dark:bg-slate-800 rounded-xl text-slate-700 dark:text-slate-300">
+              <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+              <svg id="close-icon" class="hidden w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 shadow-xl py-4 px-6 space-y-2 absolute w-full left-0">
+        <a href="#profil" class="block py-2.5 font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">Profil Klub</a>
+        <a href="#skuad" class="block py-2.5 font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">Skuad Pemain</a>
+        <a href="#galeri" class="block py-2.5 font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">Galeri Media</a>
+        <a href="#berita" class="block py-2.5 font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">Berita Tim</a>
+        <button onclick="document.getElementById('admin-login-modal').classList.remove('hidden'); document.getElementById('mobile-menu-btn').click();" class="w-full text-left py-2.5 font-bold text-brand-600 dark:text-brand-400">🔒 Portal Admin</button>
+      </div>
+    </header>
+
+    <section class="relative h-[85vh] bg-slate-900 overflow-hidden border-b border-slate-800 mt-20 sm:mt-0">
+      <div id="hero-slideshow" class="absolute inset-0 w-full h-full">
+        <div class="hero-slide absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-100 z-10">
+          <img class="w-full h-full object-cover filter contrast-110 brightness-[0.4] kenburns" src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1600&auto=format&fit=crop" alt="Match">
+          <div class="absolute inset-0 flex items-center justify-center sm:justify-start px-4 sm:px-12 lg:px-24">
+            <div class="max-w-3xl space-y-5 text-center sm:text-left pt-10 sm:pt-0">
+              <span class="inline-block px-4 py-1.5 bg-brand-500/20 border border-brand-500/30 text-brand-400 rounded-full font-bold text-xs tracking-widest uppercase">Kebanggaan Kampung</span>
+              <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black text-white uppercase leading-none tracking-tighter font-display drop-shadow-2xl">
+                Satu Tekad<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-600">Kehormatan</span>
+              </h1>
+              <p class="text-base sm:text-xl text-slate-300 font-light max-w-xl mx-auto sm:mx-0">Membina bakat sepakbola muda asli desa Tarempa Selatan menuju level kompetisi yang profesional.</p>
+              <div class="pt-4"><a href="#pendaftaran" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-2xl transition inline-block">Daftar Trial Seleksi</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-slide absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
+          <img class="w-full h-full object-cover filter contrast-110 brightness-[0.4]" src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258?w=1600&auto=format&fit=crop" alt="Latihan">
+          <div class="absolute inset-0 flex items-center justify-center sm:justify-start px-4 sm:px-12 lg:px-24">
+            <div class="max-w-3xl space-y-5 text-center sm:text-left pt-10 sm:pt-0">
+              <span class="inline-block px-4 py-1.5 bg-brand-accent/20 border border-brand-accent/30 text-brand-accent rounded-full font-bold text-xs tracking-widest uppercase">Pembinaan Usia Dini</span>
+              <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black text-white uppercase leading-none tracking-tighter font-display drop-shadow-2xl">
+                Mentalitas<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-yellow-600">Sang Juara</span>
+              </h1>
+              <p class="text-base sm:text-xl text-slate-300 font-light max-w-xl mx-auto sm:mx-0">Dilatih oleh tim coach berlisensi PSSI nasional. Fokus pada taktik cerdas dan persaudaraan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute bottom-8 left-0 right-0 flex justify-center gap-3 z-20">
+        <div class="slide-progress w-12 h-1.5 bg-brand-500 rounded-full cursor-pointer transition-all" onclick="setSlide(0)"></div>
+        <div class="slide-progress w-12 h-1.5 bg-white/30 rounded-full cursor-pointer transition-all" onclick="setSlide(1)"></div>
+      </div>
+    </section>
+
+    <section id="profil" class="py-20 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <span class="text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">Profil Klub</span>
+          <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white font-display">Identitas Tarsel FC</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+          <!-- Profil -->
+          <div class="md:col-span-2 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 relative overflow-hidden group">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform"></div>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4 font-display">Sejarah Singkat</h3>
+            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">Lahir dari inisiatif Karang Taruna Tarempa Selatan. Kami adalah wadah olahraga sosial yang membina fisik, kerja sama, dan persatuan pemuda desa untuk menghindarkan mereka dari hal negatif.</p>
+            <div class="flex gap-2"><span class="px-3 py-1 bg-brand-50 dark:bg-brand-900/50 text-brand-700 dark:text-brand-400 rounded-lg text-xs font-bold border border-brand-200 dark:border-brand-800">U12</span><span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 rounded-lg text-xs font-bold border border-indigo-200 dark:border-indigo-800">U15</span><span class="px-3 py-1 bg-emerald-50 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 rounded-lg text-xs font-bold border border-emerald-200 dark:border-emerald-800">U17</span></div>
+          </div>
+          <!-- Next Match -->
+          <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-center text-center">
+            <span class="text-[10px] font-bold text-red-500 uppercase tracking-widest block mb-4 animate-pulse">LIVE DERBY AHEAD</span>
+            <div class="flex justify-between items-center px-2">
+              <div><div class="w-12 h-12 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-xl mx-auto">TJ</div><span class="text-[10px] font-bold mt-2 block dark:text-slate-300">TARSEL</span></div>
+              <span class="text-2xl font-black text-slate-300 dark:text-slate-600 font-display">VS</span>
+              <div><div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-bold text-xl mx-auto">SF</div><span class="text-[10px] font-bold mt-2 block dark:text-slate-300">SIANTAN</span></div>
+            </div>
+            <span class="text-xs text-slate-500 mt-6 block">Sabtu, 20 Juni 2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skuad" class="py-20 bg-white dark:bg-slate-950 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12 reveal">
+          <div>
+            <span class="text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">SQUAD LIST</span>
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white font-display">Pemain Tarsel Junior</h2>
+          </div>
+          <div class="flex gap-3 w-full md:w-auto">
+            <input type="text" id="search-player" oninput="renderRoster()" placeholder="Cari nama/posisi..." class="w-full md:w-64 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:ring-2 focus:ring-brand-500 outline-none dark:text-white">
+            <select id="filter-squad-select" onchange="renderRoster()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:ring-2 focus:ring-brand-500 outline-none dark:text-white cursor-pointer">
+              <option value="all">Semua Umur</option><option value="U-12">U-12</option><option value="U-15">U-15</option><option value="U-17">U-17</option><option value="Senior">Senior</option>
+            </select>
+          </div>
+        </div>
+        <div id="public-roster-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 reveal"></div>
+        <div id="roster-empty-state" class="hidden text-center py-12"><span class="text-4xl">⚽</span><p class="mt-4 text-slate-500 font-bold">Pemain tidak ditemukan.</p></div>
+      </div>
+    </section>
+
+    <section id="galeri" class="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal">
+          <span class="text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">GALERI MEDIA</span>
+          <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white font-display">Aksi Lapangan</h2>
+        </div>
+        <div class="flex justify-center gap-2 mb-8 reveal overflow-x-auto no-scrollbar">
+          <button onclick="filterGallery('all')" class="gallery-tab bg-brand-600 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md">Semua</button>
+          <button onclick="filterGallery('latihan')" class="gallery-tab bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-5 py-2 rounded-xl text-sm font-bold">Latihan</button>
+          <button onclick="filterGallery('match')" class="gallery-tab bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-5 py-2 rounded-xl text-sm font-bold">Tanding</button>
+        </div>
+        <div id="public-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16 reveal"></div>
+        
+        <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-6 border-t border-slate-200 dark:border-slate-700 pt-10 font-display">📹 Video Highlights</h3>
+        <div id="public-video-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal"></div>
+      </div>
+    </section>
+
+    <section id="berita" class="py-20 bg-white dark:bg-slate-950 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal">
+          <span class="text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">PRESS RILIS</span>
+          <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white font-display">Kabar Tim Terbaru</h2>
+        </div>
+        <div id="public-news-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal"></div>
+      </div>
+    </section>
+
+    <section id="pendaftaran" class="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors relative overflow-hidden">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="bg-white dark:bg-slate-800 p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 reveal">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-black text-slate-900 dark:text-white font-display">Daftar Trial Seleksi Terbuka</h2>
+            <p class="text-sm text-slate-500 mt-2">Buka khusus putra daerah Tarempa Selatan. Pendaftaran gratis.</p>
+          </div>
+          <form id="trial-registration-form" class="space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div><label class="block text-xs font-bold text-slate-500 mb-1">Nama Pemain</label><input type="text" id="trial-name" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:border-brand-500 outline-none dark:text-white"></div>
+              <div><label class="block text-xs font-bold text-slate-500 mb-1">Nama Wali</label><input type="text" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:border-brand-500 outline-none dark:text-white"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div><label class="block text-xs font-bold text-slate-500 mb-1">No. WhatsApp</label><input type="tel" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:border-brand-500 outline-none dark:text-white"></div>
+              <div><label class="block text-xs font-bold text-slate-500 mb-1">Posisi Main</label><select required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:border-brand-500 outline-none dark:text-white"><option value="Kiper">Kiper</option><option value="Bek">Bek</option><option value="Gelandang">Gelandang</option><option value="Striker">Striker</option></select></div>
+            </div>
+            <button type="submit" class="w-full py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg transition font-display tracking-wide mt-4">Kirim Berkas Pendaftaran</button>
+          </form>
+          <div id="trial-form-loader" class="hidden absolute inset-0 bg-white/90 dark:bg-slate-800/90 rounded-3xl flex items-center justify-center z-10"><div class="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div></div>
+          <div id="trial-form-success" class="hidden absolute inset-0 bg-white dark:bg-slate-800 rounded-3xl flex flex-col items-center justify-center p-8 text-center z-20">
+            <div class="text-5xl mb-4">✅</div>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white">Registrasi Berhasil!</h3>
+            <p class="text-sm text-slate-500 mt-2">Data <strong id="success-name" class="text-brand-600"></strong> tersimpan. Tim pelatih akan menghubungi via WA.</p>
+            <button onclick="resetTrialForm()" class="mt-6 px-6 py-2.5 bg-slate-100 dark:bg-slate-700 font-bold rounded-xl text-sm">Tutup</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-10 text-center text-sm font-sans border-t border-slate-900">
+      <p>© 2026 Tarsel Junior FC - Desa Tarempa Selatan. Hak Cipta Dilindungi.</p>
+    </footer>
+  </div> <!-- End Public View -->
+
+  <div id="admin-view" class="hidden min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col md:flex-row transition-colors">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex-shrink-0 sticky top-0 h-auto md:h-screen p-6 flex flex-col">
+      <div class="flex items-center gap-3 mb-10">
+        <div class="w-10 h-10 bg-brand-600 text-white rounded-lg flex items-center justify-center font-bold">TJ</div>
+        <span class="font-black text-slate-900 dark:text-white font-display text-lg">Admin Panel</span>
+      </div>
+      <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible flex-1">
+        <button onclick="switchAdminTab('players')" id="nav-tab-players" class="admin-nav-btn text-left px-4 py-3 bg-brand-50 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold rounded-xl text-sm transition">⚽ Kelola Skuad</button>
+        <button onclick="switchAdminTab('news')" id="nav-tab-news" class="admin-nav-btn text-left px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold rounded-xl text-sm transition">📰 Berita Tim</button>
+        <button onclick="switchAdminTab('gallery')" id="nav-tab-gallery" class="admin-nav-btn text-left px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold rounded-xl text-sm transition">📸 Galeri Foto</button>
+        <button onclick="switchAdminTab('videos')" id="nav-tab-videos" class="admin-nav-btn text-left px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold rounded-xl text-sm transition">🎥 Video YT</button>
+      </nav>
+      <div class="mt-auto pt-6 border-t border-slate-200 dark:border-slate-700 flex flex-col gap-2">
+        <button onclick="toggleTheme()" class="w-full text-center py-2.5 bg-slate-100 dark:bg-slate-700 rounded-xl text-xs font-bold transition">Ubah Tema 🌓</button>
+        <button onclick="logoutAdmin()" class="w-full text-center py-2.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-xl text-xs font-bold transition">Keluar Sesi 🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Admin Content -->
+    <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+      
+      <!-- Tab Players -->
+      <div id="admin-tab-players" class="admin-tab-content block">
+        <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 font-display">Manajemen Skuad</h2>
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+          <div class="xl:col-span-4 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+            <h3 id="form-action-title" class="font-bold text-lg mb-4">Tambah Pemain</h3>
+            <form id="player-crud-form" class="space-y-3">
+              <input type="hidden" id="edit-player-id" value="">
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Lengkap</label><input type="text" id="form-pname" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Domisili</label><input type="text" id="form-paddress" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">No. Punggung</label><input type="number" id="form-pnumber" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tgl Lahir</label><input type="date" id="form-pdob" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Posisi</label>
+                  <select id="form-pposition" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none">
+                    <option value="Striker">Striker</option><option value="Gelandang">Gelandang</option><option value="Bek">Bek</option><option value="Kiper">Kiper</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kategori</label>
+                  <select id="form-pcategory" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none">
+                    <option value="U-12">U-12</option><option value="U-15">U-15</option><option value="U-17">U-17</option><option value="Senior">Senior</option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tinggi</label><input type="number" id="form-pheight" placeholder="cm" class="w-full px-2 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs outline-none"></div>
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Berat</label><input type="number" id="form-pweight" placeholder="kg" class="w-full px-2 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs outline-none"></div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kaki</label>
+                  <select id="form-pfoot" class="w-full px-1 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs outline-none"><option value="Kanan">Kanan</option><option value="Kiri">Kiri</option></select>
+                </div>
+              </div>
+              
+              <!-- Dynamic Stats (Kiper vs Outfield) -->
+              <div id="form-outfield-stats" class="grid grid-cols-2 gap-3">
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Gol</label><input type="number" id="form-pgoals" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none" value="0"></div>
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Assist</label><input type="number" id="form-passists" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none" value="0"></div>
+              </div>
+              <div id="form-gk-stats" class="hidden">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Clean Sheet (Nirbobol)</label>
+                <input type="number" id="form-pcleansheets" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none" value="0">
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Foto Profil</label>
+                <input type="file" id="form-pfile" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-brand-100 dark:file:bg-brand-900/50 file:text-brand-600">
+                <input type="hidden" id="form-pimage-base64">
+              </div>
+
+              <div class="flex gap-2 pt-3">
+                <button type="submit" class="flex-1 py-2.5 bg-brand-600 text-white font-bold rounded-xl text-sm">Simpan</button>
+                <button type="button" id="form-btn-cancel" onclick="cancelPlayerEdit()" class="hidden px-4 py-2.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-sm">Batal</button>
+              </div>
+            </form>
+          </div>
+          <div class="xl:col-span-8 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700">
+            <h3 class="font-bold text-lg mb-4 flex justify-between">Database Skuad <span class="bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 px-2 py-0.5 rounded text-xs" id="admin-player-count">0</span></h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm border-collapse min-w-[500px]">
+                <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-xs text-slate-500"><th class="pb-2">Profil</th><th class="pb-2">Nama</th><th class="pb-2">Posisi</th><th class="pb-2 text-right">Aksi</th></tr></thead>
+                <tbody id="admin-table-body" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab News -->
+      <div id="admin-tab-news" class="admin-tab-content hidden">
+        <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 font-display">Manajemen Berita</h2>
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+          <div class="xl:col-span-4 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+            <h3 id="news-form-title" class="font-bold text-lg mb-4">Tulis Berita</h3>
+            <form id="news-crud-form" class="space-y-3">
+              <input type="hidden" id="edit-news-id">
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Judul</label><input type="text" id="form-ntitle" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kategori</label><select id="form-ncategory" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"><option value="Match Day">Match Day</option><option value="Latihan">Latihan</option><option value="Komunitas">Komunitas</option></select></div>
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="form-ndate" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              </div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Ringkasan</label><input type="text" id="form-nsummary" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Konten Penuh</label><textarea id="form-ncontent" rows="4" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></textarea></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Cover (Opsional)</label><input type="file" id="form-nfile" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-brand-100 dark:file:bg-brand-900/50 file:text-brand-600"><input type="hidden" id="form-nimage-base64"></div>
+              <div class="flex gap-2 pt-3"><button type="submit" class="flex-1 py-2.5 bg-brand-600 text-white font-bold rounded-xl text-sm">Terbitkan</button><button type="button" id="news-btn-cancel" onclick="cancelNewsEdit()" class="hidden px-4 py-2.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-sm">Batal</button></div>
+            </form>
+          </div>
+          <div class="xl:col-span-8 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700">
+            <h3 class="font-bold text-lg mb-4">Database Berita</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm border-collapse min-w-[500px]">
+                <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-xs text-slate-500"><th class="pb-2">Cover</th><th class="pb-2">Judul</th><th class="pb-2 text-right">Aksi</th></tr></thead>
+                <tbody id="admin-news-table-body" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Gallery -->
+      <div id="admin-tab-gallery" class="admin-tab-content hidden">
+        <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 font-display">Manajemen Galeri</h2>
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+          <div class="xl:col-span-4 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+            <h3 class="font-bold text-lg mb-4">Upload Foto Baru</h3>
+            <form id="gallery-crud-form" class="space-y-3">
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Judul / Ket</label><input type="text" id="form-gtitle" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kategori</label><select id="form-gcategory" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"><option value="latihan">Latihan</option><option value="match">Pertandingan</option></select></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">File Foto</label><input type="file" id="form-gfile" accept="image/*" required class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-brand-100 dark:file:bg-brand-900/50 file:text-brand-600"><input type="hidden" id="form-gimage-base64"></div>
+              <div class="pt-3"><button type="submit" class="w-full py-2.5 bg-brand-600 text-white font-bold rounded-xl text-sm">Unggah Foto</button></div>
+            </form>
+          </div>
+          <div class="xl:col-span-8 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700">
+            <h3 class="font-bold text-lg mb-4">Koleksi Foto</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm border-collapse min-w-[400px]">
+                <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-xs text-slate-500"><th class="pb-2">Thumbnail</th><th class="pb-2">Ket & Kategori</th><th class="pb-2 text-right">Aksi</th></tr></thead>
+                <tbody id="admin-gallery-table-body" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Videos -->
+      <div id="admin-tab-videos" class="admin-tab-content hidden">
+        <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 font-display">Manajemen Video YT</h2>
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+          <div class="xl:col-span-4 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+            <h3 class="font-bold text-lg mb-4">Tambah Tautan YT</h3>
+            <form id="video-crud-form" class="space-y-3">
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Judul Video</label><input type="text" id="form-vtitle" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">URL YouTube</label><input type="url" id="form-vurl" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none" placeholder="https://youtube.com/watch?v=..."></div>
+              <div class="pt-3"><button type="submit" class="w-full py-2.5 bg-brand-600 text-white font-bold rounded-xl text-sm">Terbitkan Video</button></div>
+            </form>
+          </div>
+          <div class="xl:col-span-8 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700">
+            <h3 class="font-bold text-lg mb-4">Daftar Video</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm border-collapse min-w-[400px]">
+                <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-xs text-slate-500"><th class="pb-2">Cover</th><th class="pb-2">Judul</th><th class="pb-2 text-right">Aksi</th></tr></thead>
+                <tbody id="admin-video-table-body" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div> <!-- End Admin View -->
+
+  <div id="player-detail-modal" class="hidden fixed inset-0 bg-slate-900/90 z-[80] flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-sm w-full relative shadow-2xl border border-slate-200 dark:border-slate-700">
+      <button onclick="document.getElementById('player-detail-modal').classList.add('hidden')" class="absolute top-4 right-4 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-500 w-8 h-8 rounded-full flex items-center justify-center font-bold transition">✕</button>
+      <div class="text-center space-y-4 relative z-10">
+        <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-2">
+          <span id="detail-pcategory" class="text-[10px] font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest bg-brand-50 dark:bg-brand-900/50 px-2 py-1 rounded">KATEGORI</span>
+          <span id="detail-pnumber" class="text-3xl font-black text-slate-900 dark:text-white font-display">#00</span>
+        </div>
+        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-brand-500 shadow-[0_0_15px_rgba(16,185,129,0.3)] bg-slate-100 dark:bg-slate-900"><img id="detail-pimage" src="" class="w-full h-full object-cover"></div>
+        <div>
+          <h3 id="detail-pname" class="text-2xl font-black text-slate-900 dark:text-white leading-tight uppercase font-display">NAMA</h3>
+          <span id="detail-pposition" class="text-xs font-bold text-slate-500 mt-1 block">POSISI</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-left">
+          <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-100 dark:border-slate-700 space-y-1">
+            <span class="text-[9px] font-bold text-slate-400 uppercase block mb-1">FISIK</span>
+            <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Tinggi</span><span id="detail-pheight">0</span></div>
+            <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Berat</span><span id="detail-pweight">0</span></div>
+            <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Kaki</span><span id="detail-pfoot">-</span></div>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-100 dark:border-slate-700 space-y-1">
+            <span class="text-[9px] font-bold text-slate-400 uppercase block mb-1">PERFORMA</span>
+            <div id="detail-outfield-stats" class="space-y-1">
+              <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Gol</span><span id="detail-pgoals" class="font-bold text-brand-600 dark:text-brand-400">0</span></div>
+              <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Assist</span><span id="detail-passists" class="font-bold text-brand-600 dark:text-brand-400">0</span></div>
+            </div>
+            <div id="detail-goalkeeper-stats" class="hidden space-y-1">
+              <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Clean Sheet</span><span id="detail-pcleansheets" class="font-bold text-brand-600 dark:text-brand-400">0</span></div>
+              <div class="text-[9px] text-slate-400 italic text-center mt-1">GK Stats</div>
+            </div>
+            <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200 border-t border-slate-200 dark:border-slate-800 pt-1 mt-1"><span class="text-slate-500">Usia</span><span id="detail-page">0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="news-reader-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[80] flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 sm:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto space-y-6 relative shadow-2xl">
+      <button onclick="document.getElementById('news-reader-modal').classList.add('hidden')" class="absolute top-4 right-4 bg-slate-100 dark:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center font-bold">✕</button>
+      <span id="reader-category" class="inline-block px-2 py-1 bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-400 text-[10px] font-bold rounded uppercase">Cat</span>
+      <h3 id="reader-title" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-display">Judul</h3>
+      <span id="reader-date" class="block text-xs text-slate-500">Tanggal</span>
+      <div class="w-full aspect-video rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-900"><img id="reader-image" src="" class="w-full h-full object-cover"></div>
+      <div id="reader-content" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-4 whitespace-pre-wrap"></div>
+    </div>
+  </div>
+
+  <script>
+    // Database Init
+    let players = JSON.parse(localStorage.getItem('tarsel_players')) || [
+      { id: "p1", name: "Muhammad Rizky", position: "Striker", address: "RT 02/04", number: "9", dob: "2010-04-12", category: "U-17", height: "174", weight: "62", foot: "Kanan", goals: "6", assists: "2", cleansheets: "0", image: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?w=300&fit=crop" },
+      { id: "p2", name: "Bagus Adi", position: "Kiper", address: "RT 01/02", number: "1", dob: "2005-08-20", category: "Senior", height: "180", weight: "70", foot: "Kanan", goals: "0", assists: "0", cleansheets: "4", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&fit=crop" }
+    ];
+    let news = JSON.parse(localStorage.getItem('tarsel_news')) || [
+      { id: "n1", title: "Kemenangan Dramatis di Laga Derbi!", category: "Match Day", date: "2026-06-15", summary: "Tarsel FC pastikan tiket semifinal.", content: "Pertandingan yang sangat menegangkan...", image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&fit=crop" }
+    ];
+    let gallery = JSON.parse(localStorage.getItem('tarsel_gallery')) || [
+      { id: "g1", title: "Sesi Latihan Fisik", category: "latihan", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&fit=crop" }
+    ];
+    let videos = JSON.parse(localStorage.getItem('tarsel_videos')) || [
+      { id: "v1", title: "Highlights Match", youtubeId: "dQw4w9WgXcQ" }
+    ];
+
+    function saveData() {
+      localStorage.setItem('tarsel_players', JSON.stringify(players));
+      localStorage.setItem('tarsel_news', JSON.stringify(news));
+      localStorage.setItem('tarsel_gallery', JSON.stringify(gallery));
+      localStorage.setItem('tarsel_videos', JSON.stringify(videos));
+    }
+
+    // UI Utilities
+    function showToast(msg, type='success') {
+      const c = document.getElementById('toast-container');
+      const t = document.createElement('div');
+      t.className = `p-4 rounded-xl border ${type==='success'?'bg-emerald-50 dark:bg-emerald-900 border-emerald-200 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300':'bg-red-50 dark:bg-red-900 border-red-200 dark:border-red-700 text-red-800 dark:text-red-300'} shadow-xl transform translate-y-2 opacity-0 transition-all font-sans text-sm flex gap-3`;
+      t.innerHTML = `<span>${type==='success'?'✅':'⚠️'}</span><span class="font-bold">${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(()=> t.classList.remove('translate-y-2','opacity-0'), 10);
+      setTimeout(()=> { t.classList.add('translate-y-2','opacity-0'); setTimeout(()=>t.remove(), 300); }, 3000);
+    }
+
+    let confirmCb = null;
+    function askConfirm(msg, cb) {
+      document.getElementById('confirm-modal-text').innerText = msg;
+      document.getElementById('confirm-modal').classList.remove('hidden');
+      confirmCb = cb;
+    }
+    document.getElementById('confirm-btn-cancel').onclick = () => document.getElementById('confirm-modal').classList.add('hidden');
+    document.getElementById('confirm-btn-action').onclick = () => { if(confirmCb) confirmCb(); document.getElementById('confirm-modal').classList.add('hidden'); };
+
+    // Theme logic
+    function toggleTheme() {
+      const h = document.documentElement; h.classList.toggle('dark');
+      localStorage.theme = h.classList.contains('dark') ? 'dark' : 'light';
+      updateThemeIcons();
+    }
+    function updateThemeIcons() {
+      const isD = document.documentElement.classList.contains('dark');
+      const l = document.getElementById('theme-toggle-light-icon'), d = document.getElementById('theme-toggle-dark-icon');
+      if(l && d) { l.classList.toggle('hidden', !isD); d.classList.toggle('hidden', isD); }
+    }
+    if(localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
+    updateThemeIcons();
+    if(document.getElementById('theme-toggle')) document.getElementById('theme-toggle').onclick = toggleTheme;
+
+    // Scroll & Navbar
+    window.onscroll = () => {
+      if(document.getElementById('navbar')) document.getElementById('navbar').classList.toggle('shadow-sm', window.scrollY>20);
+      document.querySelectorAll('.reveal').forEach(el => {
+        if(el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('active');
+      });
+    };
+    if(document.getElementById('mobile-menu-btn')) {
+      document.getElementById('mobile-menu-btn').onclick = () => {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+        document.getElementById('hamburger-icon').classList.toggle('hidden'); document.getElementById('close-icon').classList.toggle('hidden');
+      };
+      document.querySelectorAll('#mobile-menu a').forEach(a => a.onclick = () => document.getElementById('mobile-menu-btn').click());
+    }
+
+    // Hero Slider
+    let sIdx = 0; const slds = document.querySelectorAll('.hero-slide'), inds = document.querySelectorAll('.slide-progress');
+    function setSlide(i) {
+      sIdx = i<0 ? slds.length-1 : i>=slds.length ? 0 : i;
+      slds.forEach((s, x) => {
+        s.classList.toggle('opacity-100', x===sIdx); s.classList.toggle('z-10', x===sIdx); s.classList.toggle('opacity-0', x!==sIdx);
+      });
+      inds.forEach((d, x) => { d.classList.toggle('bg-brand-500', x===sIdx); d.classList.toggle('bg-white/30', x!==sIdx); });
+    }
+    setInterval(()=>setSlide(sIdx+1), 5000);
+
+    // SPA Logic (Public vs Admin)
+    function isAdmin() { return sessionStorage.getItem('tj_admin') === 'true'; }
+    function closeAdminLogin() { document.getElementById('admin-login-modal').classList.add('hidden'); }
+    function showAdminView() {
+      document.getElementById('public-view').classList.remove('block'); document.getElementById('public-view').classList.add('hidden');
+      document.getElementById('admin-view').classList.remove('hidden'); document.getElementById('admin-view').classList.add('flex');
+      switchAdminTab('players'); renderAdminAll();
+    }
+    function showPublicView() {
+      document.getElementById('admin-view').classList.remove('flex'); document.getElementById('admin-view').classList.add('hidden');
+      document.getElementById('public-view').classList.remove('hidden'); document.getElementById('public-view').classList.add('block');
+      renderPublicAll(); setTimeout(()=>window.dispatchEvent(new Event('scroll')), 100);
+    }
+    
+    document.getElementById('admin-login-form').onsubmit = (e) => {
+      e.preventDefault();
+      if(document.getElementById('login-username').value==='admin' && document.getElementById('login-password').value==='admin123') {
+        sessionStorage.setItem('tj_admin', 'true'); closeAdminLogin(); showAdminView(); showToast('Login Admin Sukses');
+        document.getElementById('admin-login-form').reset();
+      } else showToast('Kredensial Salah', 'error');
+    };
+    window.logoutAdmin = () => { sessionStorage.removeItem('tj_admin'); showPublicView(); showToast('Logout sukses'); };
+
+    // File to Base64 Utils
+    function setupB64(inputId, targetId) {
+      const el = document.getElementById(inputId);
+      if(el) el.onchange = function() { if(this.files[0]) { const r = new FileReader(); r.onload = e => document.getElementById(targetId).value = e.target.result; r.readAsDataURL(this.files[0]); } };
+    }
+    setupB64('form-pfile', 'form-pimage-base64'); setupB64('form-nfile', 'form-nimage-base64'); setupB64('form-gfile', 'form-gimage-base64');
+
+    // Admin Tab Switcher
+    window.switchAdminTab = (t) => {
+      document.querySelectorAll('.admin-tab-content').forEach(v => { v.classList.remove('block'); v.classList.add('hidden'); });
+      document.getElementById('admin-tab-'+t).classList.remove('hidden'); document.getElementById('admin-tab-'+t).classList.add('block');
+      document.querySelectorAll('.admin-nav-btn').forEach(b => {
+        if(b.id === 'nav-tab-'+t) { b.classList.add('bg-brand-50','dark:bg-brand-900/50','text-brand-600','dark:text-brand-400'); b.classList.remove('hover:bg-slate-100','dark:hover:bg-slate-700','text-slate-600','dark:text-slate-300'); }
+        else { b.classList.remove('bg-brand-50','dark:bg-brand-900/50','text-brand-600','dark:text-brand-400'); b.classList.add('hover:bg-slate-100','dark:hover:bg-slate-700','text-slate-600','dark:text-slate-300'); }
+      });
+    };
+
+    // Form logic: Skuad Kiper Toggle
+    document.getElementById('form-pposition').onchange = (e) => {
+      const isGK = e.target.value==='Kiper';
+      document.getElementById('form-outfield-stats').classList.toggle('hidden', isGK); document.getElementById('form-outfield-stats').classList.toggle('grid', !isGK);
+      document.getElementById('form-gk-stats').classList.toggle('hidden', !isGK);
+    };
+
+    function calcAge(d) { if(!d) return 0; const a = new Date().getFullYear() - new Date(d).getFullYear(); return a>0?a:0; }
+
+    // RENDERERS
+    function renderAdminAll() {
+      // Players
+      const pB = document.getElementById('admin-table-body'); pB.innerHTML=''; document.getElementById('admin-player-count').innerText=players.length;
+      players.forEach(p => pB.innerHTML += `<tr><td class="p-3"><img src="${p.image}" class="w-10 h-10 object-cover rounded-lg"></td><td class="p-3"><b>${p.name}</b></td><td class="p-3"><span class="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-[10px]">${p.position} #${p.number}</span></td><td class="p-3 text-right"><button onclick="editP('${p.id}')" class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded mr-1">✏️</button><button onclick="delP('${p.id}')" class="px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-600 rounded">🗑️</button></td></tr>`);
+      // News
+      const nB = document.getElementById('admin-news-table-body'); nB.innerHTML='';
+      news.forEach(n => nB.innerHTML += `<tr><td class="p-3"><img src="${n.image}" class="w-12 h-8 object-cover rounded"></td><td class="p-3 line-clamp-1">${n.title}</td><td class="p-3 text-right"><button onclick="editN('${n.id}')" class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded mr-1">✏️</button><button onclick="delN('${n.id}')" class="px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-600 rounded">🗑️</button></td></tr>`);
+      // Gallery
+      const gB = document.getElementById('admin-gallery-table-body'); gB.innerHTML='';
+      gallery.forEach(g => gB.innerHTML += `<tr><td class="p-3 flex items-center gap-2"><img src="${g.image}" class="w-10 h-10 object-cover rounded"> <span class="truncate max-w-[100px] text-[10px]">${g.title}</span></td><td class="p-3 text-[10px]">${g.category}</td><td class="p-3 text-right"><button onclick="delG('${g.id}')" class="px-2 py-1 bg-red-100 text-red-600 rounded">🗑️</button></td></tr>`);
+      // Video
+      const vB = document.getElementById('admin-video-table-body'); vB.innerHTML='';
+      videos.forEach(v => vB.innerHTML += `<tr><td class="p-3 flex items-center gap-2"><img src="https://img.youtube.com/vi/${v.youtubeId}/default.jpg" class="w-12 h-8 object-cover rounded"> <span class="truncate max-w-[100px] text-[10px]">${v.title}</span></td><td class="p-3 text-right"><button onclick="delV('${v.id}')" class="px-2 py-1 bg-red-100 text-red-600 rounded">🗑️</button></td></tr>`);
+    }
+
+    function renderPublicAll() {
+      // Squad
+      const q = (document.getElementById('search-player')?.value || '').toLowerCase(), f = document.getElementById('filter-squad-select')?.value || 'all';
+      const fP = players.filter(p => (f==='all'||p.category===f) && (p.name.toLowerCase().includes(q) || p.position.toLowerCase().includes(q)));
+      const pGrid = document.getElementById('public-roster-grid'); pGrid.innerHTML='';
+      document.getElementById('roster-empty-state').classList.toggle('hidden', fP.length>0);
+      fP.forEach(p => {
+        pGrid.innerHTML += `<div onclick="openPModal('${p.id}')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl overflow-hidden group shadow-sm hover:shadow-lg transition-all cursor-pointer relative"><div class="absolute top-3 left-3 bg-white dark:bg-slate-900 w-8 h-8 flex items-center justify-center rounded-lg font-black text-brand-500 z-10 border border-slate-200 dark:border-slate-700">#${p.number}</div><div class="absolute top-3 right-3 bg-white/90 dark:bg-slate-900/90 px-2 py-1 rounded text-[10px] font-bold z-10 border border-slate-200 dark:border-slate-700">${p.category}</div><div class="aspect-square relative overflow-hidden bg-slate-100 dark:bg-slate-900"><img src="${p.image}" class="w-full h-full object-cover group-hover:scale-105 transition-all"></div><div class="p-5 relative"><span class="text-[10px] text-brand-600 dark:text-brand-400 font-bold uppercase block">${p.position}</span><h4 class="text-xl font-black text-slate-900 dark:text-white leading-tight mt-1 truncate font-display">${p.name}</h4><div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700 flex justify-between text-[10px] text-slate-500 font-bold"><span>${p.position==='Kiper'?'🧤 '+p.cleansheets+' CS':'⚽ '+p.goals+' G'}</span><span>${calcAge(p.dob)} THN</span></div></div></div>`;
+      });
+      // News
+      const nGrid = document.getElementById('public-news-grid'); nGrid.innerHTML='';
+      news.forEach(n => nGrid.innerHTML += `<div class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700 group flex flex-col"><div class="aspect-video relative overflow-hidden"><img src="${n.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><span class="absolute top-3 right-3 bg-white/90 dark:bg-slate-900/90 px-2 py-1 text-[10px] font-bold rounded border border-slate-200 dark:border-slate-700">${n.category}</span></div><div class="p-6 flex-1 flex flex-col"><span class="text-[10px] font-bold text-slate-400 block mb-2">${n.date}</span><h3 class="text-xl font-black text-slate-900 dark:text-white leading-tight mb-2 font-display">${n.title}</h3><p class="text-xs text-slate-500 mb-4 line-clamp-2">${n.summary}</p><button onclick="window.readN('${n.id}')" class="mt-auto text-brand-600 dark:text-brand-400 text-xs font-bold text-left hover:underline">Baca Selengkapnya ➔</button></div></div>`);
+      // Gallery Filter
+      window.filterGallery('all');
+      // Videos
+      const vGrid = document.getElementById('public-video-grid'); vGrid.innerHTML='';
+      videos.forEach(v => vGrid.innerHTML += `<div onclick="window.openVid('${v.youtubeId}')" class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden cursor-pointer group shadow-sm border border-slate-200 dark:border-slate-700"><div class="aspect-video relative"><img src="https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><div class="absolute inset-0 flex items-center justify-center bg-black/30"><div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white pl-1 shadow-lg">▶</div></div></div><div class="p-5"><h4 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-2 font-display">${v.title}</h4></div></div>`);
+    }
+
+    // CRUD PLAYER
+    document.getElementById('player-crud-form').onsubmit = (e) => {
+      e.preventDefault();
+      const id = document.getElementById('edit-player-id').value || "p"+Date.now(),
+            p = { id, name: document.getElementById('form-pname').value, position: document.getElementById('form-pposition').value, category: document.getElementById('form-pcategory').value, number: document.getElementById('form-pnumber').value, dob: document.getElementById('form-pdob').value, height: document.getElementById('form-pheight').value, weight: document.getElementById('form-pweight').value, foot: document.getElementById('form-pfoot').value, goals: document.getElementById('form-pgoals').value, assists: document.getElementById('form-passists').value, cleansheets: document.getElementById('form-pcleansheets').value, address: document.getElementById('form-paddress').value, image: document.getElementById('form-pimage-base64').value || (document.getElementById('edit-player-id').value ? players.find(x=>x.id===id).image : defaultPlayers[0].image) };
+      if(document.getElementById('edit-player-id').value) { const ix = players.findIndex(x=>x.id===id); if(ix>-1) players[ix]=p; showToast('Pemain diupdate'); } else { players.push(p); showToast('Pemain ditambah'); }
+      saveData(); renderAdminAll(); window.cancelPlayerEdit();
+    };
+    window.editP = (id) => {
+      const p = players.find(x=>x.id===id); if(!p) return;
+      document.getElementById('edit-player-id').value=p.id; document.getElementById('form-pname').value=p.name; document.getElementById('form-pposition').value=p.position; document.getElementById('form-pposition').dispatchEvent(new Event('change')); document.getElementById('form-pcategory').value=p.category; document.getElementById('form-pnumber').value=p.number; document.getElementById('form-pdob').value=p.dob; document.getElementById('form-pheight').value=p.height; document.getElementById('form-pweight').value=p.weight; document.getElementById('form-pfoot').value=p.foot; document.getElementById('form-pgoals').value=p.goals; document.getElementById('form-passists').value=p.assists; document.getElementById('form-pcleansheets').value=p.cleansheets; document.getElementById('form-paddress').value=p.address; document.getElementById('form-action-title').innerText='Edit Pemain'; document.getElementById('form-btn-cancel').classList.remove('hidden');
+    };
+    window.delP = (id) => askConfirm('Hapus pemain ini?', ()=>{ players=players.filter(x=>x.id!==id); saveData(); renderAdminAll(); showToast('Terhapus'); });
+    window.cancelPlayerEdit = () => { document.getElementById('player-crud-form').reset(); document.getElementById('edit-player-id').value=''; document.getElementById('form-pimage-base64').value=''; document.getElementById('form-action-title').innerText='Tambah Pemain'; document.getElementById('form-btn-cancel').classList.add('hidden'); document.getElementById('form-pposition').dispatchEvent(new Event('change')); };
+
+    // CRUD NEWS
+    document.getElementById('news-crud-form').onsubmit = (e) => {
+      e.preventDefault(); const id = document.getElementById('edit-news-id').value || "n"+Date.now(), n = { id, title: document.getElementById('form-ntitle').value, category: document.getElementById('form-ncategory').value, date: document.getElementById('form-ndate').value, summary: document.getElementById('form-nsummary').value, content: document.getElementById('form-ncontent').value, image: document.getElementById('form-nimage-base64').value || (document.getElementById('edit-news-id').value ? news.find(x=>x.id===id).image : defaultNews[0].image) };
+      if(document.getElementById('edit-news-id').value) { const ix = news.findIndex(x=>x.id===id); if(ix>-1) news[ix]=n; showToast('Berita diedit'); } else { news.push(n); showToast('Berita diterbitkan'); }
+      saveData(); renderAdminAll(); window.cancelNewsEdit();
+    };
+    window.editN = (id) => { const n=news.find(x=>x.id===id); if(!n) return; document.getElementById('edit-news-id').value=n.id; document.getElementById('form-ntitle').value=n.title; document.getElementById('form-ncategory').value=n.category; document.getElementById('form-ndate').value=n.date; document.getElementById('form-nsummary').value=n.summary; document.getElementById('form-ncontent').value=n.content; document.getElementById('news-form-title').innerText='Edit Berita'; document.getElementById('news-btn-cancel').classList.remove('hidden'); };
+    window.delN = (id) => askConfirm('Hapus berita?', ()=>{ news=news.filter(x=>x.id!==id); saveData(); renderAdminAll(); showToast('Terhapus'); });
+    window.cancelNewsEdit = () => { document.getElementById('news-crud-form').reset(); document.getElementById('edit-news-id').value=''; document.getElementById('form-nimage-base64').value=''; document.getElementById('news-form-title').innerText='Tulis Berita'; document.getElementById('news-btn-cancel').classList.add('hidden'); };
+
+    // CRUD GALLERY
+    document.getElementById('gallery-crud-form').onsubmit = (e) => {
+      e.preventDefault(); if(!document.getElementById('form-gimage-base64').value) return showToast('Pilih foto!','error');
+      gallery.push({ id:"g"+Date.now(), title:document.getElementById('form-gtitle').value, category:document.getElementById('form-gcategory').value, image:document.getElementById('form-gimage-base64').value });
+      saveData(); renderAdminAll(); document.getElementById('gallery-crud-form').reset(); document.getElementById('form-gimage-base64').value=''; showToast('Foto diupload');
+    };
+    window.delG = (id) => askConfirm('Hapus foto?', ()=>{ gallery=gallery.filter(x=>x.id!==id); saveData(); renderAdminAll(); showToast('Terhapus'); });
+
+    // CRUD VIDEOS
+    document.getElementById('video-crud-form').onsubmit = (e) => {
+      e.preventDefault(); const url = document.getElementById('form-vurl').value, m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+      if(!m) return showToast('Link YT tidak valid!','error');
+      videos.push({ id:"v"+Date.now(), title:document.getElementById('form-vtitle').value, youtubeId:m[1] });
+      saveData(); renderAdminAll(); document.getElementById('video-crud-form').reset(); showToast('Video ditambah');
+    };
+    window.delV = (id) => askConfirm('Hapus video?', ()=>{ videos=videos.filter(x=>x.id!==id); saveData(); renderAdminAll(); showToast('Terhapus'); });
+
+    // PUBLIC INTERACTIONS
+    window.openPModal = (id) => {
+      const p = players.find(x=>x.id===id); if(!p) return;
+      document.getElementById('detail-pcategory').innerText = p.category; document.getElementById('detail-pnumber').innerText = '#'+p.number;
+      document.getElementById('detail-pimage').src = p.image; document.getElementById('detail-pname').innerText = p.name;
+      document.getElementById('detail-pposition').innerText = p.position;
+      document.getElementById('detail-pheight').innerText = p.height||'-'; document.getElementById('detail-pweight').innerText = p.weight||'-';
+      document.getElementById('detail-pfoot').innerText = p.foot||'-'; document.getElementById('detail-page').innerText = calcAge(p.dob);
+      document.getElementById('detail-paddress').innerText = p.address;
+      const isGK = p.position==='Kiper';
+      document.getElementById('detail-outfield-stats').classList.toggle('hidden', isGK); document.getElementById('detail-goalkeeper-stats').classList.toggle('hidden', !isGK);
+      if(isGK) document.getElementById('detail-pcleansheets').innerText = p.cleansheets||'0'; else { document.getElementById('detail-pgoals').innerText = p.goals||'0'; document.getElementById('detail-passists').innerText = p.assists||'0'; }
+      document.getElementById('player-detail-modal').classList.remove('hidden');
+    };
+
+    window.readN = (id) => { const n=news.find(x=>x.id===id); if(n){ document.getElementById('reader-title').innerText=n.title; document.getElementById('reader-category').innerText=n.category; document.getElementById('reader-date').innerText=n.date; document.getElementById('reader-image').src=n.image; document.getElementById('reader-content').innerHTML=n.content.replace(/\n/g, '<br>'); document.getElementById('news-reader-modal').classList.remove('hidden'); } };
+    window.openVid = (yId) => { document.getElementById('modal-youtube-iframe').src=`https://www.youtube.com/embed/${yId}?autoplay=1`; document.getElementById('video-player-modal').classList.remove('hidden'); };
+    window.closeVideoPlayer = () => { document.getElementById('video-player-modal').classList.add('hidden'); document.getElementById('modal-youtube-iframe').src=''; };
+    
+    // Gallery Lightbox
+    let lBoxIdx = 0, curGals = [];
+    window.filterGallery = (cat) => { 
+      document.querySelectorAll('.gallery-tab').forEach(b => { 
+        if(b.innerText.toLowerCase().includes(cat.replace('match','tanding'))) { b.classList.add('bg-brand-600','text-white','shadow-md'); b.classList.remove('bg-white','dark:bg-slate-800','text-slate-600','dark:text-slate-300','border'); }
+        else { b.classList.remove('bg-brand-600','text-white','shadow-md'); b.classList.add('bg-white','dark:bg-slate-800','text-slate-600','dark:text-slate-300','border'); }
+      }); 
+      const gGrid = document.getElementById('public-gallery-grid'); gGrid.innerHTML='';
+      curGals = gallery.filter(g => cat==='all' || g.category===cat);
+      curGals.forEach((g,i) => {
+        gGrid.innerHTML += `<div onclick="window.openGal(${i})" class="aspect-[4/3] rounded-3xl overflow-hidden relative group cursor-pointer shadow-sm border border-slate-200 dark:border-slate-800"><img src="${g.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-5"><span class="text-white font-bold text-sm font-display">${g.title}</span></div></div>`;
+      });
+    };
+    window.openGal = (i) => { lBoxIdx=i; window.updLBox(); document.getElementById('gallery-lightbox').classList.remove('hidden'); };
+    window.closeLightbox = () => document.getElementById('gallery-lightbox').classList.add('hidden');
+    window.changeLightboxImage = (d) => { lBoxIdx+=d; if(lBoxIdx>=curGals.length) lBoxIdx=0; if(lBoxIdx<0) lBoxIdx=curGals.length-1; window.updLBox(); };
+    window.updLBox = () => { const g=curGals[lBoxIdx]; if(g){ document.getElementById('lightbox-image').src=g.image; document.getElementById('lightbox-title').innerText=g.title; } };
+
+    // Registration Form
+    document.getElementById('trial-registration-form').onsubmit = (e) => {
+      e.preventDefault(); document.getElementById('trial-form-loader').classList.remove('hidden');
+      setTimeout(()=>{ document.getElementById('trial-form-loader').classList.add('hidden'); document.getElementById('success-name').innerText = document.getElementById('trial-name').value; document.getElementById('trial-form-success').classList.remove('hidden'); }, 1200);
+    };
+    window.resetTrialForm = () => { document.getElementById('trial-registration-form').reset(); document.getElementById('trial-form-success').classList.add('hidden'); };
+
+    // Initial Load Logic
+    window.onload = () => {
+      if(isAdmin()) showAdminView(); else showPublicView();
+      setTimeout(()=> { document.querySelectorAll('.reveal').forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('active'); }); }, 500);
+    };
+  </script>
+</body>
+</html>
