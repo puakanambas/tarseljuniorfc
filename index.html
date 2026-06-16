@@ -3,796 +3,1443 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TARSEL JUNIOR FC | Official Club Portal & CMS</title>
+  <title>KLUB SEPAKBOLA - Tarsel FC</title>
   
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
             brand: {
-              50: '#f0fdf4',
-              100: '#dcfce7',
-              500: '#10b981', // Emerald Pitch
-              600: '#059669', 
-              700: '#047857',
-              800: '#065f46',
-              900: '#0f172a', // Deep Slate
-              950: '#020617', // Darker Slate
-              accent: '#f59e0b', // Gold Trophy
+              orange: '#d9531e', 
+              dark: '#1a1a1c',   
+              gray: '#2c2d31',   
+              light: '#d1d1d1',  
             }
           },
           fontFamily: {
-            display: ['Space Grotesk', 'sans-serif'],
-            body: ['Plus Jakarta Sans', 'sans-serif']
-          },
-          animation: {
-            'marquee': 'marquee 25s linear infinite',
-            'float': 'float 3s ease-in-out infinite',
-          },
-          keyframes: {
-            marquee: {
-              '0%': { transform: 'translateX(0%)' },
-              '100%': { transform: 'translateX(-50%)' }
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' }
-            }
+            sans: ['Arial', 'Helvetica', 'sans-serif'], 
+            display: ['Arial', 'Helvetica', 'sans-serif'],
           }
         }
       }
     }
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-    h1, h2, h3, h4, h5, .font-display { font-family: 'Space Grotesk', sans-serif; }
+    body {
+      background-color: #2c2d31;
+      color: #d1d1d1;
+      font-family: Arial, sans-serif;
+    }
     
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    .dark ::-webkit-scrollbar-thumb { background: #334155; }
-    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    .nav-link.active {
+      border-bottom: 2px solid #d9531e;
+      color: #fff;
+    }
 
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .col-title-border {
+      border-top: 2px solid #d9531e;
+      padding-top: 10px;
+      display: inline-block;
+    }
 
-    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
-    .dark .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(30, 41, 59, 0.8); }
+    .btn-orange {
+      background: linear-gradient(to bottom, #f26f31, #c84110);
+      color: white;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #9e310a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-orange:hover {
+      background: linear-gradient(to bottom, #ff8246, #da4a15);
+      transform: translateY(-1px);
+    }
+    .btn-orange:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .btn-detail {
+      background-color: transparent;
+      color: #a0a0a0;
+      border: 1px solid #555;
+      font-size: 10px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-detail:hover {
+      background-color: #d9531e;
+      color: white;
+      border-color: #d9531e;
+    }
+    .btn-detail-icon {
+      width: 6px;
+      height: 6px;
+      background-color: #d9531e;
+      border-radius: 50%;
+    }
+    .btn-detail:hover .btn-detail-icon {
+      background-color: white;
+    }
+
+    .app-view {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    .app-view.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon-3d { filter: drop-shadow(0px 10px 8px rgba(0,0,0,0.5)); }
     
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-    
-    .kenburns { animation: kenburns 12s ease-out infinite alternate; }
-    @keyframes kenburns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1a1a1c; }
+    ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #d9531e; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased">
+<body class="antialiased selection:bg-brand-orange selection:text-white">
 
-  <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none items-end"></div>
+  <!-- ================= TOAST & ALERTS ================= -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <div id="confirm-modal" class="hidden fixed inset-0 bg-slate-900/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
-    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 max-w-sm w-full space-y-6 text-center shadow-2xl border border-slate-200 dark:border-slate-700 transform transition-transform">
-      <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-2xl flex items-center justify-center text-3xl mx-auto border border-red-200 dark:border-red-800/50">⚠️</div>
-      <div class="space-y-2">
-        <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display">Konfirmasi Hapus</h3>
-        <p id="confirm-modal-text" class="text-sm text-slate-500 dark:text-slate-400">Data yang dihapus tidak dapat dikembalikan.</p>
-      </div>
-      <div class="flex gap-3">
-        <button id="confirm-btn-cancel" class="flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 font-bold rounded-xl transition text-slate-700 dark:text-slate-200 text-sm">Batal</button>
-        <button id="confirm-btn-action" class="flex-1 py-3 bg-red-600 hover:bg-red-500 font-bold text-white rounded-xl transition text-sm shadow-lg shadow-red-500/30">Hapus</button>
-      </div>
-    </div>
+  <!-- ================= OVERLAY LOADING UPLOAD ================= -->
+  <div id="upload-loader" class="hidden fixed inset-0 bg-black/80 z-[60] flex flex-col items-center justify-center">
+    <div class="w-12 h-12 border-4 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
+    <p class="text-white mt-4 text-xs font-bold uppercase tracking-widest" id="loader-text">Memproses...</p>
   </div>
 
-  <div id="admin-login-modal" class="hidden fixed inset-0 bg-slate-900/90 z-[90] flex items-center justify-center p-4 backdrop-blur-md">
-    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 max-w-sm w-full space-y-6 shadow-2xl relative">
-      <button onclick="closeAdminLogin()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white w-8 h-8 rounded-full flex items-center justify-center font-bold transition">✕</button>
-      <div class="text-center space-y-2">
-        <div class="w-16 h-16 bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 rounded-2xl flex items-center justify-center text-3xl mx-auto">🔐</div>
-        <h3 class="text-2xl font-black text-slate-900 dark:text-white font-display">CMS Login</h3>
-        <p class="text-xs text-slate-500">Akses khusus manajemen Tarsel FC.<br>(Hint: admin / admin123)</p>
-      </div>
-      <form id="admin-login-form" class="space-y-4">
-        <div class="space-y-1">
-          <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-500">Username</label>
-          <input type="text" id="login-username" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none text-slate-800 dark:text-white transition-all">
-        </div>
-        <div class="space-y-1">
-          <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-500">Password</label>
-          <input type="password" id="login-password" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none text-slate-800 dark:text-white transition-all">
-        </div>
-        <button type="submit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl transition duration-300 shadow-lg shadow-brand-500/30 font-display">
-          Masuk Dasbor
-        </button>
+  <!-- ================= ADMIN LOGIN MODAL ================= -->
+  <div id="admin-login-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded">
+      <button onclick="window.closeAdminLogin()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl">✕</button>
+      <h3 class="text-lg font-bold text-white uppercase mb-4 col-title-border">Login Dasbor Resmi</h3>
+      <form id="admin-login-form" class="space-y-3">
+        <!-- Menggunakan tipe email yang benar -->
+        <input type="email" id="login-email" required class="w-full px-3 py-2 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange outline-none transition" placeholder="Email Admin">
+        <input type="password" id="login-password" required class="w-full px-3 py-2 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange outline-none transition" placeholder="Password Akun">
+        <button type="submit" class="btn-orange w-full justify-center mt-2">Otorisasi & Masuk</button>
       </form>
     </div>
   </div>
 
-  <div id="public-view" class="block">
-    <!-- Navbar -->
-    <header id="navbar" class="fixed top-0 left-0 w-full z-40 transition-all duration-300 glass">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-20">
-          <a href="#" class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-brand-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/20">
-              <svg class="w-7 h-7 text-brand-accent" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+  <!-- ================= STICKY NAVBAR ================= -->
+  <header class="fixed top-0 left-0 w-full z-40 bg-black/80 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="#" onclick="window.switchView('beranda')" class="flex items-center gap-3 cursor-pointer group">
+          <img id="nav-logo-img" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=100&auto=format&fit=crop" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-lg" alt="Logo">
+          <div class="leading-tight">
+            <span class="text-[10px] text-gray-400 block -mb-1">sejak 2003</span>
+            <span class="text-xl font-bold text-white uppercase tracking-widest group-hover:text-brand-orange transition">SOCCERCLUB</span>
+          </div>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-6 h-full">
+          <button onclick="window.switchView('beranda')" class="nav-link active text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Beranda</button>
+          <button onclick="window.switchView('skuad')" class="nav-link text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Tim</button>
+          <button onclick="window.switchView('prestasi')" class="nav-link text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Prestasi</button>
+          <button onclick="window.switchView('ofisial')" class="nav-link text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Ofisial</button>
+          <button onclick="window.switchView('berita')" class="nav-link text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Berita</button>
+          <button onclick="window.switchView('galeri')" class="nav-link text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Galeri</button>
+          <button onclick="window.switchView('pendaftaran')" class="nav-link text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Gabung</button>
+          <button onclick="window.handleCMSAuthClick()" class="nav-link text-xs font-semibold text-brand-orange hover:text-white uppercase h-full px-2 transition flex items-center gap-1">
+            <span id="nav-cms-icon">🔒</span> Admin
+          </button>
+        </nav>
+
+        <button class="md:hidden text-white p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">☰</button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-gray-800 p-4 space-y-2">
+      <button onclick="window.switchView('beranda')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Beranda</button>
+      <button onclick="window.switchView('skuad')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Tim</button>
+      <button onclick="window.switchView('prestasi')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Prestasi</button>
+      <button onclick="window.switchView('ofisial')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Ofisial</button>
+      <button onclick="window.switchView('berita')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Berita</button>
+      <button onclick="window.switchView('galeri')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Galeri</button>
+      <button onclick="window.switchView('pendaftaran')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Gabung</button>
+      <button onclick="window.handleCMSAuthClick()" class="block w-full text-left text-sm text-brand-orange uppercase py-2">Dasbor Admin</button>
+    </div>
+  </header>
+
+  <!-- ================= APP CONTAINER ================= -->
+  <main id="app-container" class="pt-20">
+
+    <!-- ================= 1. VIEW: BERANDA ================= -->
+    <div id="view-beranda" class="app-view active">
+      
+      <!-- HERO SLIDER SECTION -->
+      <section class="relative h-[550px] bg-black overflow-hidden border-b border-gray-800">
+        <!-- Kontainer Slider -->
+        <div id="hero-slider-container" class="relative w-full h-full"></div>
+
+        <!-- Decorative Arrows for Slider Controls -->
+        <div class="absolute bottom-12 left-4 md:left-[50%] md:-translate-x-[200px] flex gap-4 text-gray-500 text-2xl z-20">
+          <span class="cursor-pointer hover:text-white hover:-translate-x-1 transition-all" onclick="window.prevHeroSlide()">←</span>
+          <span class="cursor-pointer hover:text-white hover:translate-x-1 transition-all" onclick="window.nextHeroSlide()">→</span>
+        </div>
+      </section>
+
+      <!-- 4 ICONS SECTION -->
+      <section class="bg-brand-gray py-12 border-b border-gray-800">
+        <div class="max-w-6xl mx-auto px-4">
+          <div class="flex items-center justify-between mb-8 px-4 text-gray-600 text-2xl">
+            <span class="cursor-pointer hover:text-white transition">←</span>
+            <span class="cursor-pointer hover:text-white transition">→</span>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center px-8 mt-4">
+            <!-- Icon 1: Our Team -->
+            <div class="flex flex-col items-center group cursor-pointer" onclick="window.switchView('skuad')">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-b from-gray-300 to-gray-500 flex items-center justify-center icon-3d mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(217,83,30,0.5)] transition-all">
+                <span class="text-3xl">⚽</span>
+              </div>
+              <h3 class="text-white font-bold text-sm uppercase mb-3 group-hover:text-brand-orange transition">Tim Kami</h3>
+              <p class="text-[11px] text-gray-400 leading-relaxed mb-4">Melihat daftar lengkap pemain dan skuad utama kami di berbagai kategori umur.</p>
+              <button class="btn-detail"><span class="btn-detail-icon"></span> detail</button>
             </div>
+            
+            <!-- Icon 2: Awards -->
+            <div class="flex flex-col items-center group cursor-pointer" onclick="window.switchView('prestasi')">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-b from-yellow-300 to-yellow-600 flex items-center justify-center icon-3d mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(217,83,30,0.5)] transition-all">
+                <span class="text-3xl">🏆</span>
+              </div>
+              <h3 class="text-white font-bold text-sm uppercase mb-3 group-hover:text-brand-orange transition">Prestasi</h3>
+              <p class="text-[11px] text-gray-400 leading-relaxed mb-4">Deretan piala, juara yang pernah didapat, dan pemain terbaik klub kami.</p>
+              <button class="btn-detail"><span class="btn-detail-icon"></span> detail</button>
+            </div>
+            
+            <!-- Icon 3: Coaches -->
+            <div class="flex flex-col items-center group cursor-pointer" onclick="window.switchView('ofisial')">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-b from-blue-300 to-blue-600 flex items-center justify-center icon-3d mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(217,83,30,0.5)] transition-all">
+                <span class="text-3xl">⏱️</span>
+              </div>
+              <h3 class="text-white font-bold text-sm uppercase mb-3 group-hover:text-brand-orange transition">Pelatih</h3>
+              <p class="text-[11px] text-gray-400 leading-relaxed mb-4">Menampilkan profil para pelatih kepala dan asisten pelatih berlisensi.</p>
+              <button class="btn-detail"><span class="btn-detail-icon"></span> detail</button>
+            </div>
+            
+            <!-- Icon 4: Official -->
+            <div class="flex flex-col items-center group cursor-pointer" onclick="window.switchView('ofisial')">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-b from-gray-200 to-gray-400 flex items-center justify-center icon-3d mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(217,83,30,0.5)] transition-all text-4xl leading-none pt-1">
+                👔
+              </div>
+              <h3 class="text-white font-bold text-sm uppercase mb-3 group-hover:text-brand-orange transition">Ofisial</h3>
+              <p class="text-[11px] text-gray-400 leading-relaxed mb-4">Menampilkan daftar pengurus manajemen, manajer, dan ofisial resmi klub.</p>
+              <button class="btn-detail"><span class="btn-detail-icon"></span> detail</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- JOIN OUR CLUB BANNER (Background Diatur via Javascript) -->
+      <section id="join-section" class="relative py-16 transition-all duration-500 border-b border-gray-800" style="background-size: cover; background-repeat: no-repeat;">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
+          <h2 class="text-2xl text-white font-light">
+            Mencari tim yang bagus? <span class="font-bold text-4xl md:text-5xl block sm:inline mt-2 sm:mt-0 uppercase tracking-tight">Gabung Klub Kami!</span>
+          </h2>
+          <p class="text-[11px] text-gray-300 mt-4 mb-6 leading-relaxed max-w-3xl mx-auto">
+            Kami selalu mencari talenta baru untuk bergabung. Pendaftaran trial terbuka untuk seluruh masyarakat. Latih disiplin, fisik, dan visi bermain Anda bersama staf kepelatihan kami.
+          </p>
+          <button onclick="window.switchView('pendaftaran')" class="btn-orange hover:scale-105 active:scale-95 transition-transform">
+            Selengkapnya tentang tim <span class="text-lg leading-none">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 3 COLUMNS FOOTER -->
+      <section class="bg-brand-dark py-12 pb-20 border-t border-black">
+        <div class="max-w-6xl mx-auto px-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            
+            <!-- Col 1 -->
             <div>
-              <span class="text-[9px] font-bold tracking-widest text-brand-600 dark:text-brand-500 uppercase block leading-none">SEPAKBOLA JUNIOR</span>
-              <span class="text-xl font-black text-slate-900 dark:text-white block tracking-tight font-display">TARSEL JR</span>
+              <h3 class="text-white font-bold text-sm uppercase mb-4 col-title-border">Selamat Datang</h3>
+              <img id="footer-logo-img" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=200&auto=format&fit=crop" class="h-16 w-auto object-contain mb-4 drop-shadow-md" alt="Site Logo">
+              <p class="text-[11px] text-white font-bold mb-2">Tarsel Junior FC - Kebanggaan Masyarakat Tarempa Selatan.</p>
+              <p class="text-[11px] text-gray-400 leading-relaxed">
+                Klub sepakbola komunitas yang berdedikasi melatih karakter disiplin, kekeluargaan, serta memacu prestasi atlet lokal di kancah regional demi memajukan sepakbola daerah.
+              </p>
             </div>
-          </a>
 
-          <nav class="hidden lg:flex items-center gap-6">
-            <a href="#profil" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Profil Klub</a>
-            <a href="#skuad" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Skuad</a>
-            <a href="#galeri" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Media</a>
-            <a href="#berita" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Berita</a>
-            <button onclick="document.getElementById('admin-login-modal').classList.remove('hidden')" class="text-sm font-semibold px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white dark:hover:bg-brand-600 rounded-xl transition-all flex items-center gap-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200">
-              🔒 Admin
-            </button>
-          </nav>
-
-          <div class="flex items-center gap-3">
-            <button id="theme-toggle" class="p-2.5 text-slate-500 hover:text-brand-600 dark:text-slate-400 dark:hover:text-brand-400 bg-slate-100 dark:bg-slate-800 rounded-xl transition-colors">
-              <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.46 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-              <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            </button>
-            <a href="#pendaftaran" class="hidden sm:flex px-5 py-2.5 bg-brand-600 text-white font-bold rounded-xl shadow-lg shadow-brand-500/30 hover:bg-brand-500 transition-all font-display tracking-wide">Gabung Trial</a>
-            <button id="mobile-menu-btn" class="p-2 lg:hidden bg-slate-100 dark:bg-slate-800 rounded-xl text-slate-700 dark:text-slate-300">
-              <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-              <svg id="close-icon" class="hidden w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 shadow-xl py-4 px-6 space-y-2 absolute w-full left-0">
-        <a href="#profil" class="block py-2.5 font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">Profil Klub</a>
-        <a href="#skuad" class="block py-2.5 font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">Skuad Pemain</a>
-        <a href="#galeri" class="block py-2.5 font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">Galeri Media</a>
-        <a href="#berita" class="block py-2.5 font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">Berita Tim</a>
-        <button onclick="document.getElementById('admin-login-modal').classList.remove('hidden'); document.getElementById('mobile-menu-btn').click();" class="w-full text-left py-2.5 font-bold text-brand-600 dark:text-brand-400">🔒 Portal Admin</button>
-      </div>
-    </header>
-
-    <section class="relative h-[85vh] bg-slate-900 overflow-hidden border-b border-slate-800 mt-20 sm:mt-0">
-      <div id="hero-slideshow" class="absolute inset-0 w-full h-full">
-        <div class="hero-slide absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-100 z-10">
-          <img class="w-full h-full object-cover filter contrast-110 brightness-[0.4] kenburns" src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1600&auto=format&fit=crop" alt="Match">
-          <div class="absolute inset-0 flex items-center justify-center sm:justify-start px-4 sm:px-12 lg:px-24">
-            <div class="max-w-3xl space-y-5 text-center sm:text-left pt-10 sm:pt-0">
-              <span class="inline-block px-4 py-1.5 bg-brand-500/20 border border-brand-500/30 text-brand-400 rounded-full font-bold text-xs tracking-widest uppercase">Kebanggaan Kampung</span>
-              <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black text-white uppercase leading-none tracking-tighter font-display drop-shadow-2xl">
-                Satu Tekad<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-600">Kehormatan</span>
-              </h1>
-              <p class="text-base sm:text-xl text-slate-300 font-light max-w-xl mx-auto sm:mx-0">Membina bakat sepakbola muda asli desa Tarempa Selatan menuju level kompetisi yang profesional.</p>
-              <div class="pt-4"><a href="#pendaftaran" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-2xl transition inline-block">Daftar Trial Seleksi</a></div>
+            <!-- Col 2 -->
+            <div>
+              <h3 class="text-white font-bold text-sm uppercase mb-4 col-title-border">Berita Terbaru</h3>
+              <div id="home-news-preview" class="space-y-4"></div>
             </div>
-          </div>
-        </div>
-        <div class="hero-slide absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0">
-          <img class="w-full h-full object-cover filter contrast-110 brightness-[0.4]" src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258?w=1600&auto=format&fit=crop" alt="Latihan">
-          <div class="absolute inset-0 flex items-center justify-center sm:justify-start px-4 sm:px-12 lg:px-24">
-            <div class="max-w-3xl space-y-5 text-center sm:text-left pt-10 sm:pt-0">
-              <span class="inline-block px-4 py-1.5 bg-brand-accent/20 border border-brand-accent/30 text-brand-accent rounded-full font-bold text-xs tracking-widest uppercase">Pembinaan Usia Dini</span>
-              <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black text-white uppercase leading-none tracking-tighter font-display drop-shadow-2xl">
-                Mentalitas<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-yellow-600">Sang Juara</span>
-              </h1>
-              <p class="text-base sm:text-xl text-slate-300 font-light max-w-xl mx-auto sm:mx-0">Dilatih oleh tim coach berlisensi PSSI nasional. Fokus pada taktik cerdas dan persaudaraan.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="absolute bottom-8 left-0 right-0 flex justify-center gap-3 z-20">
-        <div class="slide-progress w-12 h-1.5 bg-brand-500 rounded-full cursor-pointer transition-all" onclick="setSlide(0)"></div>
-        <div class="slide-progress w-12 h-1.5 bg-white/30 rounded-full cursor-pointer transition-all" onclick="setSlide(1)"></div>
-      </div>
-    </section>
 
-    <section id="profil" class="py-20 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16 reveal">
-          <span class="text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">Profil Klub</span>
-          <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white font-display">Identitas Tarsel FC</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
-          <!-- Profil -->
-          <div class="md:col-span-2 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 relative overflow-hidden group">
-            <div class="absolute -right-10 -top-10 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform"></div>
-            <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4 font-display">Sejarah Singkat</h3>
-            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">Lahir dari inisiatif Karang Taruna Tarempa Selatan. Kami adalah wadah olahraga sosial yang membina fisik, kerja sama, dan persatuan pemuda desa untuk menghindarkan mereka dari hal negatif.</p>
-            <div class="flex gap-2"><span class="px-3 py-1 bg-brand-50 dark:bg-brand-900/50 text-brand-700 dark:text-brand-400 rounded-lg text-xs font-bold border border-brand-200 dark:border-brand-800">U12</span><span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 rounded-lg text-xs font-bold border border-indigo-200 dark:border-indigo-800">U15</span><span class="px-3 py-1 bg-emerald-50 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 rounded-lg text-xs font-bold border border-emerald-200 dark:border-emerald-800">U17</span></div>
-          </div>
-          <!-- Next Match -->
-          <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-center text-center">
-            <span class="text-[10px] font-bold text-red-500 uppercase tracking-widest block mb-4 animate-pulse">LIVE DERBY AHEAD</span>
-            <div class="flex justify-between items-center px-2">
-              <div><div class="w-12 h-12 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-xl mx-auto">TJ</div><span class="text-[10px] font-bold mt-2 block dark:text-slate-300">TARSEL</span></div>
-              <span class="text-2xl font-black text-slate-300 dark:text-slate-600 font-display">VS</span>
-              <div><div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-bold text-xl mx-auto">SF</div><span class="text-[10px] font-bold mt-2 block dark:text-slate-300">SIANTAN</span></div>
+            <!-- Col 3 -->
+            <div>
+              <h3 class="text-white font-bold text-sm uppercase mb-4 col-title-border">Kegiatan Kami</h3>
+              <div id="home-gallery-preview" class="space-y-4"></div>
             </div>
-            <span class="text-xs text-slate-500 mt-6 block">Sabtu, 20 Juni 2026</span>
+
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="skuad" class="py-20 bg-white dark:bg-slate-950 transition-colors">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12 reveal">
-          <div>
-            <span class="text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">SQUAD LIST</span>
-            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white font-display">Pemain Tarsel Junior</h2>
-          </div>
-          <div class="flex gap-3 w-full md:w-auto">
-            <input type="text" id="search-player" oninput="renderRoster()" placeholder="Cari nama/posisi..." class="w-full md:w-64 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:ring-2 focus:ring-brand-500 outline-none dark:text-white">
-            <select id="filter-squad-select" onchange="renderRoster()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:ring-2 focus:ring-brand-500 outline-none dark:text-white cursor-pointer">
-              <option value="all">Semua Umur</option><option value="U-12">U-12</option><option value="U-15">U-15</option><option value="U-17">U-17</option><option value="Senior">Senior</option>
+    </div>
+
+    <!-- ================= 2. VIEW: SKUAD (TEAM) ================= -->
+    <div id="view-skuad" class="app-view bg-brand-gray min-h-screen py-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 border-b border-gray-700 pb-4">
+          <h2 class="text-3xl font-bold text-white uppercase col-title-border">Tim Kami</h2>
+          <div class="flex gap-2">
+            <input id="search-player" oninput="window.renderRoster()" type="text" placeholder="Cari nama pemain..." class="px-3 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange w-48 transition">
+            <select id="filter-squad-select" onchange="window.renderRoster()" class="px-3 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition">
+              <option value="all">Semua Kategori</option>
+              <option value="U-12">U-12</option>
+              <option value="U-15">U-15</option>
+              <option value="U-17">U-17</option>
+              <option value="Senior">Senior</option>
             </select>
           </div>
         </div>
-        <div id="public-roster-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 reveal"></div>
-        <div id="roster-empty-state" class="hidden text-center py-12"><span class="text-4xl">⚽</span><p class="mt-4 text-slate-500 font-bold">Pemain tidak ditemukan.</p></div>
+        <div id="public-roster-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"></div>
       </div>
-    </section>
+    </div>
 
-    <section id="galeri" class="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12 reveal">
-          <span class="text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">GALERI MEDIA</span>
-          <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white font-display">Aksi Lapangan</h2>
-        </div>
-        <div class="flex justify-center gap-2 mb-8 reveal overflow-x-auto no-scrollbar">
-          <button onclick="filterGallery('all')" class="gallery-tab bg-brand-600 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md">Semua</button>
-          <button onclick="filterGallery('latihan')" class="gallery-tab bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-5 py-2 rounded-xl text-sm font-bold">Latihan</button>
-          <button onclick="filterGallery('match')" class="gallery-tab bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 px-5 py-2 rounded-xl text-sm font-bold">Tanding</button>
-        </div>
-        <div id="public-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16 reveal"></div>
+
+    <!-- ================= 3. VIEW: PRESTASI (AWARDS) ================= -->
+    <div id="view-prestasi" class="app-view bg-brand-gray min-h-screen py-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Prestasi & Penghargaan</h2>
+        <p class="text-xs text-gray-400 mb-8 max-w-2xl leading-relaxed">Deretan piala, kejuaraan, dan pencapaian yang pernah diraih oleh tim serta pemain terbaik Tarsel Junior FC sepanjang sejarah. Bukti nyata dedikasi dan kerja keras.</p>
+        <div id="public-awards-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+      </div>
+    </div>
+
+
+    <!-- ================= 4. VIEW: OFISIAL (STAFF) ================= -->
+    <div id="view-ofisial" class="app-view bg-brand-gray min-h-screen py-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Pelatih & Ofisial</h2>
+        <p class="text-xs text-gray-400 mb-8 max-w-2xl leading-relaxed">Dibalik tim yang kuat terdapat dedikasi pelatih dan pengurus yang hebat. Berikut adalah jajaran staf kepelatihan dan ofisial manajerial Tarsel FC.</p>
+        <div id="public-staff-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"></div>
+      </div>
+    </div>
+
+
+    <!-- ================= 5. VIEW: BERITA (BLOG) ================= -->
+    <div id="view-berita" class="app-view bg-brand-gray min-h-screen py-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Berita & Informasi Terbaru</h2>
+        <div id="public-news-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+      </div>
+    </div>
+
+
+    <!-- ================= 6. VIEW: GALERI ================= -->
+    <div id="view-galeri" class="app-view bg-brand-gray min-h-screen py-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Galeri Media</h2>
+        <div id="public-gallery-grid-full" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"></div>
+
+        <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Sorotan Video</h2>
+        <div id="public-video-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      </div>
+    </div>
+
+
+    <!-- ================= 7. VIEW: PENDAFTARAN (JOIN) ================= -->
+    <div id="view-pendaftaran" class="app-view bg-brand-dark min-h-screen py-12">
+      <div class="max-w-3xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Gabung Klub Kami</h2>
         
-        <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-6 border-t border-slate-200 dark:border-slate-700 pt-10 font-display">📹 Video Highlights</h3>
-        <div id="public-video-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal"></div>
-      </div>
-    </section>
-
-    <section id="berita" class="py-20 bg-white dark:bg-slate-950 transition-colors">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12 reveal">
-          <span class="text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-widest block mb-2">PRESS RILIS</span>
-          <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white font-display">Kabar Tim Terbaru</h2>
-        </div>
-        <div id="public-news-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal"></div>
-      </div>
-    </section>
-
-    <section id="pendaftaran" class="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors relative overflow-hidden">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
-        <div class="bg-white dark:bg-slate-800 p-8 sm:p-12 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 reveal">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-black text-slate-900 dark:text-white font-display">Daftar Trial Seleksi Terbuka</h2>
-            <p class="text-sm text-slate-500 mt-2">Buka khusus putra daerah Tarempa Selatan. Pendaftaran gratis.</p>
-          </div>
+        <div class="bg-brand-gray border border-gray-700 p-8 shadow-xl relative rounded-md">
           <form id="trial-registration-form" class="space-y-5">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div><label class="block text-xs font-bold text-slate-500 mb-1">Nama Pemain</label><input type="text" id="trial-name" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:border-brand-500 outline-none dark:text-white"></div>
-              <div><label class="block text-xs font-bold text-slate-500 mb-1">Nama Wali</label><input type="text" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:border-brand-500 outline-none dark:text-white"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Nama Lengkap Calon Pemain</label>
+                <input class="w-full px-3 py-2.5 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange focus:ring-1 focus:ring-brand-orange outline-none transition rounded-sm" id="trial-name" type="text" required>
+              </div>
+              <div>
+                <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Nama Orang Tua / Wali</label>
+                <input class="w-full px-3 py-2.5 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange focus:ring-1 focus:ring-brand-orange outline-none transition rounded-sm" id="trial-parent" type="text" required>
+              </div>
+              <div>
+                <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">No. WhatsApp Aktif</label>
+                <input class="w-full px-3 py-2.5 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange focus:ring-1 focus:ring-brand-orange outline-none transition rounded-sm" id="trial-phone" type="tel" required>
+              </div>
+              <div>
+                <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Tanggal Lahir Pemain</label>
+                <input class="w-full px-3 py-2.5 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange focus:ring-1 focus:ring-brand-orange outline-none transition rounded-sm" id="trial-dob" type="date" required>
+              </div>
+              <div>
+                <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Posisi Bermain Pilihan</label>
+                <select class="w-full px-3 py-2.5 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange focus:ring-1 focus:ring-brand-orange outline-none transition rounded-sm" id="trial-position" required>
+                  <option value="">Pilih Posisi...</option>
+                  <option value="Kiper">Penjaga Gawang</option>
+                  <option value="Bek">Pemain Bertahan</option>
+                  <option value="Gelandang">Pemain Tengah</option>
+                  <option value="Striker">Penyerang Utama</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Domisili (RT/RW)</label>
+                <input class="w-full px-3 py-2.5 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange focus:ring-1 focus:ring-brand-orange outline-none transition rounded-sm" id="trial-address" type="text" required>
+              </div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div><label class="block text-xs font-bold text-slate-500 mb-1">No. WhatsApp</label><input type="tel" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:border-brand-500 outline-none dark:text-white"></div>
-              <div><label class="block text-xs font-bold text-slate-500 mb-1">Posisi Main</label><select required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:border-brand-500 outline-none dark:text-white"><option value="Kiper">Kiper</option><option value="Bek">Bek</option><option value="Gelandang">Gelandang</option><option value="Striker">Striker</option></select></div>
+            <div class="pt-4 border-t border-gray-700 mt-4">
+              <button type="submit" class="btn-orange w-full md:w-auto justify-center text-sm px-8 py-3">Kirim Pendaftaran ›</button>
             </div>
-            <button type="submit" class="w-full py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg transition font-display tracking-wide mt-4">Kirim Berkas Pendaftaran</button>
           </form>
-          <div id="trial-form-loader" class="hidden absolute inset-0 bg-white/90 dark:bg-slate-800/90 rounded-3xl flex items-center justify-center z-10"><div class="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div></div>
-          <div id="trial-form-success" class="hidden absolute inset-0 bg-white dark:bg-slate-800 rounded-3xl flex flex-col items-center justify-center p-8 text-center z-20">
-            <div class="text-5xl mb-4">✅</div>
-            <h3 class="text-2xl font-black text-slate-900 dark:text-white">Registrasi Berhasil!</h3>
-            <p class="text-sm text-slate-500 mt-2">Data <strong id="success-name" class="text-brand-600"></strong> tersimpan. Tim pelatih akan menghubungi via WA.</p>
-            <button onclick="resetTrialForm()" class="mt-6 px-6 py-2.5 bg-slate-100 dark:bg-slate-700 font-bold rounded-xl text-sm">Tutup</button>
+
+          <div id="form-loader" class="hidden absolute inset-0 bg-[#1a1a1c]/90 flex items-center justify-center flex-col z-10 rounded-md">
+            <div class="w-10 h-10 border-4 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-white mt-4 text-xs font-bold uppercase tracking-widest">Memproses...</p>
+          </div>
+
+          <div id="form-success" class="hidden absolute inset-0 bg-brand-gray border border-gray-700 flex flex-col items-center justify-center text-center p-8 z-20 rounded-md">
+            <div class="text-4xl text-brand-orange mb-4">✔️</div>
+            <h3 class="text-xl font-bold text-white uppercase mb-2">Pendaftaran Berhasil</h3>
+            <p class="text-xs text-gray-400 mb-6 max-w-sm">Data pendaftaran telah tersimpan di sistem kami. Tim pelatih akan segera menghubungi Anda via WhatsApp untuk jadwal trial.</p>
+            <button onclick="document.getElementById('form-success').classList.add('hidden')" class="btn-orange">Kembali</button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-950 text-slate-400 py-10 text-center text-sm font-sans border-t border-slate-900">
-      <p>© 2026 Tarsel Junior FC - Desa Tarempa Selatan. Hak Cipta Dilindungi.</p>
-    </footer>
-  </div> <!-- End Public View -->
 
-  <div id="admin-view" class="hidden min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col md:flex-row transition-colors">
-    <!-- Sidebar -->
-    <aside class="w-full md:w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex-shrink-0 sticky top-0 h-auto md:h-screen p-6 flex flex-col">
-      <div class="flex items-center gap-3 mb-10">
-        <div class="w-10 h-10 bg-brand-600 text-white rounded-lg flex items-center justify-center font-bold">TJ</div>
-        <span class="font-black text-slate-900 dark:text-white font-display text-lg">Admin Panel</span>
-      </div>
-      <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible flex-1">
-        <button onclick="switchAdminTab('players')" id="nav-tab-players" class="admin-nav-btn text-left px-4 py-3 bg-brand-50 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 font-bold rounded-xl text-sm transition">⚽ Kelola Skuad</button>
-        <button onclick="switchAdminTab('news')" id="nav-tab-news" class="admin-nav-btn text-left px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold rounded-xl text-sm transition">📰 Berita Tim</button>
-        <button onclick="switchAdminTab('gallery')" id="nav-tab-gallery" class="admin-nav-btn text-left px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold rounded-xl text-sm transition">📸 Galeri Foto</button>
-        <button onclick="switchAdminTab('videos')" id="nav-tab-videos" class="admin-nav-btn text-left px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold rounded-xl text-sm transition">🎥 Video YT</button>
-      </nav>
-      <div class="mt-auto pt-6 border-t border-slate-200 dark:border-slate-700 flex flex-col gap-2">
-        <button onclick="toggleTheme()" class="w-full text-center py-2.5 bg-slate-100 dark:bg-slate-700 rounded-xl text-xs font-bold transition">Ubah Tema 🌓</button>
-        <button onclick="logoutAdmin()" class="w-full text-center py-2.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-xl text-xs font-bold transition">Keluar Sesi 🚪</button>
-      </div>
-    </aside>
+    <!-- ================= 8. VIEW: CMS ADMIN ================= -->
+    <div id="view-cms" class="app-view bg-brand-dark min-h-screen py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-gray-800 pb-4 mb-6 gap-4">
+          <h2 class="text-2xl font-bold text-white uppercase col-title-border">Dasbor Admin CMS</h2>
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="window.switchCMSTab('players')" id="tab-btn-players" class="px-3 py-1.5 text-xs font-bold bg-brand-orange text-white rounded-sm transition hover:brightness-110 active:scale-95">Skuad</button>
+            <button onclick="window.switchCMSTab('staff')" id="tab-btn-staff" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Staf</button>
+            <button onclick="window.switchCMSTab('awards')" id="tab-btn-awards" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Prestasi</button>
+            <button onclick="window.switchCMSTab('news')" id="tab-btn-news" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Berita</button>
+            <button onclick="window.switchCMSTab('gallery')" id="tab-btn-gallery" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Media</button>
+            <button onclick="window.switchCMSTab('tampilan')" id="tab-btn-tampilan" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Tampilan</button>
+            <button onclick="window.logoutAdmin()" class="px-3 py-1.5 text-xs font-bold bg-red-700 hover:bg-red-600 text-white rounded-sm ml-auto md:ml-4 transition active:scale-95">Keluar</button>
+          </div>
+        </div>
 
-    <!-- Main Admin Content -->
-    <main class="flex-1 p-6 md:p-10 overflow-y-auto">
-      
-      <!-- Tab Players -->
-      <div id="admin-tab-players" class="admin-tab-content block">
-        <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 font-display">Manajemen Skuad</h2>
-        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
-          <div class="xl:col-span-4 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-            <h3 id="form-action-title" class="font-bold text-lg mb-4">Tambah Pemain</h3>
+        <!-- CMS: PLAYERS -->
+        <div id="cms-players-view" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-4 bg-brand-gray border border-gray-700 p-6 h-fit rounded-sm shadow-lg">
+            <h3 id="player-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tambah Pemain</h3>
             <form id="player-crud-form" class="space-y-3">
-              <input type="hidden" id="edit-player-id" value="">
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Lengkap</label><input type="text" id="form-pname" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Domisili</label><input type="text" id="form-paddress" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
-              <div class="grid grid-cols-2 gap-3">
-                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">No. Punggung</label><input type="number" id="form-pnumber" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
-                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tgl Lahir</label><input type="date" id="form-pdob" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
-              </div>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Posisi</label>
-                  <select id="form-pposition" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none">
-                    <option value="Striker">Striker</option><option value="Gelandang">Gelandang</option><option value="Bek">Bek</option><option value="Kiper">Kiper</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kategori</label>
-                  <select id="form-pcategory" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none">
-                    <option value="U-12">U-12</option><option value="U-15">U-15</option><option value="U-17">U-17</option><option value="Senior">Senior</option>
-                  </select>
-                </div>
+              <input type="hidden" id="edit-player-id">
+              <input type="text" id="form-pname" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" placeholder="Nama Lengkap">
+              <input type="text" id="form-paddress" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" placeholder="Domisili">
+              <div class="grid grid-cols-2 gap-2">
+                <input type="number" id="form-pnumber" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" placeholder="No. Jersey">
+                <input type="date" id="form-pdob" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" title="Tanggal Lahir">
               </div>
               <div class="grid grid-cols-3 gap-2">
-                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tinggi</label><input type="number" id="form-pheight" placeholder="cm" class="w-full px-2 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs outline-none"></div>
-                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Berat</label><input type="number" id="form-pweight" placeholder="kg" class="w-full px-2 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs outline-none"></div>
-                <div>
-                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kaki</label>
-                  <select id="form-pfoot" class="w-full px-1 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs outline-none"><option value="Kanan">Kanan</option><option value="Kiri">Kiri</option></select>
-                </div>
+                <input type="number" id="form-pheight" class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" placeholder="Tinggi (cm)">
+                <input type="number" id="form-pweight" class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" placeholder="Berat (kg)">
+                <select id="form-pfoot" class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+                  <option value="Kanan">Kanan</option><option value="Kiri">Kiri</option>
+                </select>
               </div>
-              
-              <!-- Dynamic Stats (Kiper vs Outfield) -->
-              <div id="form-outfield-stats" class="grid grid-cols-2 gap-3">
-                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Gol</label><input type="number" id="form-pgoals" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none" value="0"></div>
-                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Assist</label><input type="number" id="form-passists" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none" value="0"></div>
+              <div class="grid grid-cols-2 gap-2">
+                <select id="form-pposition" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+                  <option value="Striker">Striker</option><option value="Gelandang">Gelandang</option><option value="Bek">Bek</option><option value="Kiper">Kiper</option>
+                </select>
+                <select id="form-pcategory" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+                  <option value="U-12">U-12</option><option value="U-15">U-15</option><option value="U-17">U-17</option><option value="Senior">Senior</option>
+                </select>
               </div>
-              <div id="form-gk-stats" class="hidden">
-                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Clean Sheet (Nirbobol)</label>
-                <input type="number" id="form-pcleansheets" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none" value="0">
+              <div class="grid grid-cols-2 gap-2" id="form-outfield-stats-group">
+                <input type="number" id="form-pgoals" class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" placeholder="Jumlah Gol">
+                <input type="number" id="form-passists" class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" placeholder="Jumlah Assist">
               </div>
-
+              <div id="form-goalkeeper-stats-group" class="hidden">
+                <input type="number" id="form-pcleansheets" class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition" placeholder="Jumlah Clean Sheet">
+              </div>
               <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Foto Profil</label>
-                <input type="file" id="form-pfile" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-brand-100 dark:file:bg-brand-900/50 file:text-brand-600">
-                <input type="hidden" id="form-pimage-base64">
+                <label class="block text-[10px] text-gray-500 mb-1">Upload Foto Pemain (Biarkan kosong jika tidak diubah)</label>
+                <input type="file" id="form-pfile" accept="image/*" class="w-full px-2 py-1 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
               </div>
-
-              <div class="flex gap-2 pt-3">
-                <button type="submit" class="flex-1 py-2.5 bg-brand-600 text-white font-bold rounded-xl text-sm">Simpan</button>
-                <button type="button" id="form-btn-cancel" onclick="cancelPlayerEdit()" class="hidden px-4 py-2.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-sm">Batal</button>
+              <div class="flex gap-2 pt-2">
+                <button type="submit" id="btn-submit-player" class="btn-orange flex-1 justify-center">Simpan Pemain</button>
+                <button type="button" id="btn-cancel-player" onclick="window.cancelEdit('player')" class="hidden bg-gray-700 hover:bg-gray-600 text-white px-4 text-xs rounded-sm font-bold transition">Batal</button>
               </div>
             </form>
           </div>
-          <div class="xl:col-span-8 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700">
-            <h3 class="font-bold text-lg mb-4 flex justify-between">Database Skuad <span class="bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 px-2 py-0.5 rounded text-xs" id="admin-player-count">0</span></h3>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm border-collapse min-w-[500px]">
-                <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-xs text-slate-500"><th class="pb-2">Profil</th><th class="pb-2">Nama</th><th class="pb-2">Posisi</th><th class="pb-2 text-right">Aksi</th></tr></thead>
-                <tbody id="admin-table-body" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+          <div class="lg:col-span-8 bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
+             <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Database Skuad</h3>
+             <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-gray-300">
+                <thead class="border-b border-gray-700 text-gray-500"><tr><th class="pb-2">Foto</th><th class="pb-2">Nama & Domisili</th><th class="pb-2">Posisi</th><th class="pb-2 text-right">Aksi</th></tr></thead>
+                <tbody id="admin-table-body" class="divide-y divide-gray-800"></tbody>
               </table>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Tab News -->
-      <div id="admin-tab-news" class="admin-tab-content hidden">
-        <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 font-display">Manajemen Berita</h2>
-        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
-          <div class="xl:col-span-4 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-            <h3 id="news-form-title" class="font-bold text-lg mb-4">Tulis Berita</h3>
+        <!-- CMS: STAFF -->
+        <div id="cms-staff-view" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-4 bg-brand-gray border border-gray-700 p-6 h-fit rounded-sm shadow-lg">
+            <h3 id="staff-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tambah Staf</h3>
+            <form id="staff-crud-form" class="space-y-3">
+              <input type="hidden" id="edit-staff-id">
+              <input type="text" id="form-sname" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Nama Staf">
+              <select id="form-srole" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition">
+                <option value="Coach">Pelatih (Coach)</option>
+                <option value="Official">Ofisial / Manajer</option>
+              </select>
+              <input type="text" id="form-stitle" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Lisensi / Jabatan">
+              <div>
+                <label class="block text-[10px] text-gray-500 mb-1">Upload Foto Staf (Biarkan kosong jika tidak diubah)</label>
+                <input type="file" id="form-sfile" accept="image/*" class="w-full px-2 py-1 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+              </div>
+              <div class="flex gap-2 pt-2">
+                <button type="submit" id="btn-submit-staff" class="btn-orange flex-1 justify-center">Simpan Staf</button>
+                <button type="button" id="btn-cancel-staff" onclick="window.cancelEdit('staff')" class="hidden bg-gray-700 hover:bg-gray-600 text-white px-4 text-xs rounded-sm font-bold transition">Batal</button>
+              </div>
+            </form>
+          </div>
+          <div class="lg:col-span-8 bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
+             <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Database Staf</h3>
+             <table class="w-full text-left text-xs text-gray-300"><tbody id="admin-staff-table-body" class="divide-y divide-gray-800"></tbody></table>
+          </div>
+        </div>
+
+        <!-- CMS: AWARDS -->
+        <div id="cms-awards-view" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-4 bg-brand-gray border border-gray-700 p-6 h-fit rounded-sm shadow-lg">
+            <h3 id="awards-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tambah Prestasi</h3>
+            <form id="awards-crud-form" class="space-y-3">
+              <input type="hidden" id="edit-awards-id">
+              <input type="text" id="form-atitle" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Nama Penghargaan / Gelar">
+              <input type="number" id="form-ayear" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Tahun (cth: 2025)">
+              <textarea id="form-adesc" rows="3" class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Deskripsi Singkat"></textarea>
+              <div>
+                <label class="block text-[10px] text-gray-500 mb-1">Upload Foto Momen (Biarkan kosong jika tidak diubah)</label>
+                <input type="file" id="form-afile" accept="image/*" class="w-full px-2 py-1 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+              </div>
+              <div class="flex gap-2 pt-2">
+                <button type="submit" id="btn-submit-awards" class="btn-orange flex-1 justify-center">Simpan Prestasi</button>
+                <button type="button" id="btn-cancel-awards" onclick="window.cancelEdit('awards')" class="hidden bg-gray-700 hover:bg-gray-600 text-white px-4 text-xs rounded-sm font-bold transition">Batal</button>
+              </div>
+            </form>
+          </div>
+          <div class="lg:col-span-8 bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
+             <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Database Prestasi</h3>
+             <table class="w-full text-left text-xs text-gray-300"><tbody id="admin-awards-table-body" class="divide-y divide-gray-800"></tbody></table>
+          </div>
+        </div>
+
+        <!-- CMS: NEWS -->
+        <div id="cms-news-view" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-4 bg-brand-gray border border-gray-700 p-6 h-fit rounded-sm shadow-lg">
+            <h3 id="news-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tulis Berita</h3>
             <form id="news-crud-form" class="space-y-3">
               <input type="hidden" id="edit-news-id">
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Judul</label><input type="text" id="form-ntitle" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
-              <div class="grid grid-cols-2 gap-3">
-                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kategori</label><select id="form-ncategory" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"><option value="Match Day">Match Day</option><option value="Latihan">Latihan</option><option value="Komunitas">Komunitas</option></select></div>
-                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tanggal</label><input type="date" id="form-ndate" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
+              <input type="text" id="form-ntitle" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Judul Berita">
+              <div class="grid grid-cols-2 gap-2">
+                <select id="form-ncategory" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition"><option>Match Day</option><option>Latihan</option><option>Komunitas</option></select>
+                <input type="date" id="form-ndate" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition">
               </div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Ringkasan</label><input type="text" id="form-nsummary" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Konten Penuh</label><textarea id="form-ncontent" rows="4" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></textarea></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Cover (Opsional)</label><input type="file" id="form-nfile" accept="image/*" class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-brand-100 dark:file:bg-brand-900/50 file:text-brand-600"><input type="hidden" id="form-nimage-base64"></div>
-              <div class="flex gap-2 pt-3"><button type="submit" class="flex-1 py-2.5 bg-brand-600 text-white font-bold rounded-xl text-sm">Terbitkan</button><button type="button" id="news-btn-cancel" onclick="cancelNewsEdit()" class="hidden px-4 py-2.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-sm">Batal</button></div>
+              <input type="text" id="form-nsummary" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Ringkasan Singkat">
+              <textarea id="form-ncontent" rows="4" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Isi Berita Lengkap"></textarea>
+              <div>
+                <label class="block text-[10px] text-gray-500 mb-1">Upload Cover Berita (Biarkan kosong jika tidak diubah)</label>
+                <input type="file" id="form-nfile" accept="image/*" class="w-full px-2 py-1 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+              </div>
+              <div class="flex gap-2 pt-2">
+                <button type="submit" id="btn-submit-news" class="btn-orange flex-1 justify-center">Terbitkan Berita</button>
+                <button type="button" id="btn-cancel-news" onclick="window.cancelEdit('news')" class="hidden bg-gray-700 hover:bg-gray-600 text-white px-4 text-xs rounded-sm font-bold transition">Batal</button>
+              </div>
             </form>
           </div>
-          <div class="xl:col-span-8 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700">
-            <h3 class="font-bold text-lg mb-4">Database Berita</h3>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm border-collapse min-w-[500px]">
-                <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-xs text-slate-500"><th class="pb-2">Cover</th><th class="pb-2">Judul</th><th class="pb-2 text-right">Aksi</th></tr></thead>
-                <tbody id="admin-news-table-body" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
-              </table>
-            </div>
+          <div class="lg:col-span-8 bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
+             <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Database Berita</h3>
+             <table class="w-full text-left text-xs text-gray-300"><tbody id="admin-news-table-body" class="divide-y divide-gray-800"></tbody></table>
           </div>
         </div>
-      </div>
 
-      <!-- Tab Gallery -->
-      <div id="admin-tab-gallery" class="admin-tab-content hidden">
-        <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 font-display">Manajemen Galeri</h2>
-        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
-          <div class="xl:col-span-4 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-            <h3 class="font-bold text-lg mb-4">Upload Foto Baru</h3>
-            <form id="gallery-crud-form" class="space-y-3">
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Judul / Ket</label><input type="text" id="form-gtitle" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kategori</label><select id="form-gcategory" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"><option value="latihan">Latihan</option><option value="match">Pertandingan</option></select></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">File Foto</label><input type="file" id="form-gfile" accept="image/*" required class="w-full text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-brand-100 dark:file:bg-brand-900/50 file:text-brand-600"><input type="hidden" id="form-gimage-base64"></div>
-              <div class="pt-3"><button type="submit" class="w-full py-2.5 bg-brand-600 text-white font-bold rounded-xl text-sm">Unggah Foto</button></div>
+        <!-- CMS: GALLERY & VIDEOS -->
+        <div id="cms-gallery-view" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
+            <h3 id="gallery-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Upload Foto Galeri</h3>
+            <form id="gallery-crud-form" class="space-y-3 mb-8">
+              <input type="hidden" id="edit-gallery-id">
+              <input type="text" id="form-gtitle" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Judul Foto">
+              <select id="form-gcategory" class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition"><option value="latihan">Latihan</option><option value="match">Match</option></select>
+              <div>
+                <label class="block text-[10px] text-gray-500 mb-1">Upload File Gambar (Biarkan kosong jika tidak diubah)</label>
+                <input type="file" id="form-gfile" accept="image/*" class="w-full px-2 py-1 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+              </div>
+              <div class="flex gap-2 pt-2">
+                <button type="submit" id="btn-submit-gallery" class="btn-orange flex-1 justify-center">Simpan Foto</button>
+                <button type="button" id="btn-cancel-gallery" onclick="window.cancelEdit('gallery')" class="hidden bg-gray-700 hover:bg-gray-600 text-white px-4 text-xs rounded-sm font-bold transition">Batal</button>
+              </div>
             </form>
+            <div class="overflow-y-auto max-h-64"><table class="w-full text-left text-xs text-gray-300"><tbody id="admin-gallery-table-body" class="divide-y divide-gray-800"></tbody></table></div>
           </div>
-          <div class="xl:col-span-8 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700">
-            <h3 class="font-bold text-lg mb-4">Koleksi Foto</h3>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm border-collapse min-w-[400px]">
-                <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-xs text-slate-500"><th class="pb-2">Thumbnail</th><th class="pb-2">Ket & Kategori</th><th class="pb-2 text-right">Aksi</th></tr></thead>
-                <tbody id="admin-gallery-table-body" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab Videos -->
-      <div id="admin-tab-videos" class="admin-tab-content hidden">
-        <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6 font-display">Manajemen Video YT</h2>
-        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
-          <div class="xl:col-span-4 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-            <h3 class="font-bold text-lg mb-4">Tambah Tautan YT</h3>
-            <form id="video-crud-form" class="space-y-3">
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Judul Video</label><input type="text" id="form-vtitle" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none"></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">URL YouTube</label><input type="url" id="form-vurl" required class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none" placeholder="https://youtube.com/watch?v=..."></div>
-              <div class="pt-3"><button type="submit" class="w-full py-2.5 bg-brand-600 text-white font-bold rounded-xl text-sm">Terbitkan Video</button></div>
+          
+          <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
+            <h3 id="video-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tambah Video YT</h3>
+            <form id="video-crud-form" class="space-y-3 mb-8">
+              <input type="hidden" id="edit-video-id">
+              <input type="text" id="form-vtitle" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Judul Video">
+              <input type="url" id="form-vurl" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Link URL YouTube">
+              <div class="flex gap-2 pt-2">
+                <button type="submit" id="btn-submit-video" class="btn-orange flex-1 justify-center">Simpan Video</button>
+                <button type="button" id="btn-cancel-video" onclick="window.cancelEdit('video')" class="hidden bg-gray-700 hover:bg-gray-600 text-white px-4 text-xs rounded-sm font-bold transition">Batal</button>
+              </div>
             </form>
-          </div>
-          <div class="xl:col-span-8 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700">
-            <h3 class="font-bold text-lg mb-4">Daftar Video</h3>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm border-collapse min-w-[400px]">
-                <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-xs text-slate-500"><th class="pb-2">Cover</th><th class="pb-2">Judul</th><th class="pb-2 text-right">Aksi</th></tr></thead>
-                <tbody id="admin-video-table-body" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
-              </table>
-            </div>
+            <div class="overflow-y-auto max-h-64"><table class="w-full text-left text-xs text-gray-300"><tbody id="admin-video-table-body" class="divide-y divide-gray-800"></tbody></table></div>
           </div>
         </div>
+
+        <!-- CMS: TAMPILAN (HERO, BG, LOGO) -->
+        <div id="cms-tampilan-view" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
+            <h3 id="hero-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tambah Slide Hero</h3>
+            <form id="hero-crud-form" class="space-y-3 mb-8">
+              <input type="hidden" id="edit-hero-id">
+              <input type="text" id="form-h1" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Teks Utama (Cth: SOCCER)">
+              <input type="text" id="form-h2" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Teks Sekunder (Cth: We Love This Game)">
+              <textarea id="form-hdesc" rows="2" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Deskripsi Singkat"></textarea>
+              <div class="grid grid-cols-2 gap-2">
+                 <input type="text" id="form-hbtn" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition" placeholder="Teks Tombol">
+                 <select id="form-hlink" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition">
+                    <option value="skuad">Arahkan Ke: Tim</option><option value="pendaftaran">Arahkan Ke: Gabung</option><option value="prestasi">Arahkan Ke: Prestasi</option>
+                 </select>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-gray-500 mb-1">Upload Gambar (Biarkan kosong jika tidak diubah)</label>
+                  <input type="file" id="form-hfile" accept="image/*" class="w-full px-2 py-1 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-gray-500 mb-1">Posisi Fokus Gambar</label>
+                  <select id="form-hpos" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition rounded-sm">
+                    <option value="object-center">Tengah (Center)</option>
+                    <option value="object-top">Atas (Top)</option>
+                    <option value="object-bottom">Bawah (Bottom)</option>
+                    <option value="object-left">Kiri (Left)</option>
+                    <option value="object-right">Kanan (Right)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="flex gap-2 pt-2">
+                <button type="submit" id="btn-submit-hero" class="btn-orange flex-1 justify-center">Simpan Slide</button>
+                <button type="button" id="btn-cancel-hero" onclick="window.cancelEdit('hero')" class="hidden bg-gray-700 hover:bg-gray-600 text-white px-4 text-xs rounded-sm font-bold transition">Batal</button>
+              </div>
+            </form>
+            <h3 class="text-white font-bold text-xs uppercase mb-2">Daftar Slide Aktif</h3>
+            <div class="overflow-y-auto max-h-48 border border-gray-800 bg-[#1a1a1c]"><table class="w-full text-left text-xs text-gray-300"><tbody id="admin-hero-table-body" class="divide-y divide-gray-800"></tbody></table></div>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Logo Settings -->
+            <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg h-fit">
+              <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Logo Website</h3>
+              <form id="logo-crud-form" class="space-y-4">
+                <div>
+                  <label class="block text-[10px] text-gray-500 mb-2">Upload Logo Baru (Otomatis menyesuaikan ukuran, tanpa frame/border)</label>
+                  <input type="file" id="form-logofile" accept="image/*" required class="w-full px-2 py-1 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+                </div>
+                <button type="submit" class="btn-orange w-full justify-center">Perbarui Logo</button>
+              </form>
+            </div>
+
+            <!-- Background Settings -->
+            <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg h-fit">
+              <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Background Bagian "Gabung"</h3>
+              <form id="bg-crud-form" class="space-y-4">
+                <div>
+                  <label class="block text-[10px] text-gray-500 mb-2">Upload Gambar Background (Kosongkan jika tidak diganti)</label>
+                  <input type="file" id="form-bgfile" accept="image/*" class="w-full px-2 py-1 bg-[#1a1a1c] border border-gray-700 text-xs text-white rounded-sm focus:border-brand-orange outline-none transition">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-gray-500 mb-2">Posisi Background (Fokus Area)</label>
+                  <select id="form-bgpos" required class="w-full px-2 py-1.5 bg-[#1a1a1c] border border-gray-700 text-xs text-white focus:border-brand-orange outline-none transition rounded-sm">
+                    <option value="center">Tengah (Center)</option>
+                    <option value="top">Atas (Top)</option>
+                    <option value="bottom">Bawah (Bottom)</option>
+                    <option value="left">Kiri (Left)</option>
+                    <option value="right">Kanan (Right)</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn-orange w-full justify-center">Perbarui Background</button>
+              </form>
+              <div class="mt-6 border-t border-gray-700 pt-4">
+                 <span class="text-[10px] text-gray-500 block mb-2">Preview Background Saat Ini:</span>
+                 <div id="admin-bg-preview" class="w-full h-32 bg-gray-900 border border-gray-700 rounded-sm" style="background-size: cover; background-repeat: no-repeat;"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
+    </div>
 
-    </main>
-  </div> <!-- End Admin View -->
+  </main>
 
-  <div id="player-detail-modal" class="hidden fixed inset-0 bg-slate-900/90 z-[80] flex items-center justify-center p-4 backdrop-blur-sm">
-    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-sm w-full relative shadow-2xl border border-slate-200 dark:border-slate-700">
-      <button onclick="document.getElementById('player-detail-modal').classList.add('hidden')" class="absolute top-4 right-4 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-500 w-8 h-8 rounded-full flex items-center justify-center font-bold transition">✕</button>
-      <div class="text-center space-y-4 relative z-10">
-        <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-2">
-          <span id="detail-pcategory" class="text-[10px] font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest bg-brand-50 dark:bg-brand-900/50 px-2 py-1 rounded">KATEGORI</span>
-          <span id="detail-pnumber" class="text-3xl font-black text-slate-900 dark:text-white font-display">#00</span>
-        </div>
-        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-brand-500 shadow-[0_0_15px_rgba(16,185,129,0.3)] bg-slate-100 dark:bg-slate-900"><img id="detail-pimage" src="" class="w-full h-full object-cover"></div>
-        <div>
-          <h3 id="detail-pname" class="text-2xl font-black text-slate-900 dark:text-white leading-tight uppercase font-display">NAMA</h3>
-          <span id="detail-pposition" class="text-xs font-bold text-slate-500 mt-1 block">POSISI</span>
-        </div>
-        <div class="grid grid-cols-2 gap-3 text-left">
-          <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-100 dark:border-slate-700 space-y-1">
-            <span class="text-[9px] font-bold text-slate-400 uppercase block mb-1">FISIK</span>
-            <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Tinggi</span><span id="detail-pheight">0</span></div>
-            <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Berat</span><span id="detail-pweight">0</span></div>
-            <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Kaki</span><span id="detail-pfoot">-</span></div>
+  <!-- ================= MODALS DETAIL ================= -->
+  
+  <!-- Player Detail Modal -->
+  <div id="player-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded-sm">
+      <button onclick="window.closePlayerDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
+      <div class="text-center">
+        <span id="detail-pnumber" class="text-4xl font-bold text-brand-orange block font-display drop-shadow-md">#10</span>
+        <img id="detail-pimage" src="" class="w-32 h-32 object-cover mx-auto my-4 border border-gray-600 p-1 object-top rounded-full shadow-lg">
+        <h3 id="detail-pname" class="text-xl font-bold text-white uppercase">Name</h3>
+        <span id="detail-pposition" class="text-xs text-gray-400 uppercase tracking-widest font-bold">Position</span>
+        <div class="grid grid-cols-2 gap-2 mt-4 text-left text-xs text-gray-300 bg-[#1a1a1c] p-3 border border-gray-700 shadow-inner rounded-sm">
+          <div>Tinggi: <span id="detail-pheight" class="text-white font-bold"></span> cm</div>
+          <div>Berat: <span id="detail-pweight" class="text-white font-bold"></span> kg</div>
+          <div id="detail-outfield-stats" class="col-span-2 border-t border-gray-700 pt-2 mt-1 flex justify-between">
+            <span>Gol: <span id="detail-pgoals" class="text-brand-orange font-bold text-sm"></span></span>
+            <span>Assist: <span id="detail-passists" class="text-brand-orange font-bold text-sm"></span></span>
           </div>
-          <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-100 dark:border-slate-700 space-y-1">
-            <span class="text-[9px] font-bold text-slate-400 uppercase block mb-1">PERFORMA</span>
-            <div id="detail-outfield-stats" class="space-y-1">
-              <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Gol</span><span id="detail-pgoals" class="font-bold text-brand-600 dark:text-brand-400">0</span></div>
-              <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Assist</span><span id="detail-passists" class="font-bold text-brand-600 dark:text-brand-400">0</span></div>
-            </div>
-            <div id="detail-goalkeeper-stats" class="hidden space-y-1">
-              <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200"><span class="text-slate-500">Clean Sheet</span><span id="detail-pcleansheets" class="font-bold text-brand-600 dark:text-brand-400">0</span></div>
-              <div class="text-[9px] text-slate-400 italic text-center mt-1">GK Stats</div>
-            </div>
-            <div class="flex justify-between text-xs text-slate-800 dark:text-slate-200 border-t border-slate-200 dark:border-slate-800 pt-1 mt-1"><span class="text-slate-500">Usia</span><span id="detail-page">0</span></div>
+          <div id="detail-goalkeeper-stats" class="hidden col-span-2 border-t border-gray-700 pt-2 mt-1">
+            Clean Sheet: <span id="detail-pcleansheets" class="text-brand-orange font-bold text-sm"></span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="news-reader-modal" class="hidden fixed inset-0 bg-slate-900/95 z-[80] flex items-center justify-center p-4 backdrop-blur-sm">
-    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 sm:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto space-y-6 relative shadow-2xl">
-      <button onclick="document.getElementById('news-reader-modal').classList.add('hidden')" class="absolute top-4 right-4 bg-slate-100 dark:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center font-bold">✕</button>
-      <span id="reader-category" class="inline-block px-2 py-1 bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-400 text-[10px] font-bold rounded uppercase">Cat</span>
-      <h3 id="reader-title" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white font-display">Judul</h3>
-      <span id="reader-date" class="block text-xs text-slate-500">Tanggal</span>
-      <div class="w-full aspect-video rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-900"><img id="reader-image" src="" class="w-full h-full object-cover"></div>
-      <div id="reader-content" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-4 whitespace-pre-wrap"></div>
+  <!-- Staff Detail Modal -->
+  <div id="staff-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded-sm">
+      <button onclick="window.closeStaffDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
+      <div class="text-center mt-4">
+        <img id="detail-simage" src="" class="w-32 h-32 object-cover mx-auto my-4 border border-gray-600 p-1 rounded-full object-top shadow-lg">
+        <h3 id="detail-sname" class="text-xl font-bold text-white uppercase">Name</h3>
+        <span id="detail-srole" class="text-xs text-brand-orange uppercase tracking-widest font-bold block mt-1">Role</span>
+        <div class="mt-4 text-left text-xs text-gray-300 bg-[#1a1a1c] p-3 border border-gray-700 rounded-sm shadow-inner">
+          <div class="text-center font-bold text-white text-sm" id="detail-stitle">Title</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <script>
-    // Database Init
-    let players = JSON.parse(localStorage.getItem('tarsel_players')) || [
-      { id: "p1", name: "Muhammad Rizky", position: "Striker", address: "RT 02/04", number: "9", dob: "2010-04-12", category: "U-17", height: "174", weight: "62", foot: "Kanan", goals: "6", assists: "2", cleansheets: "0", image: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?w=300&fit=crop" },
-      { id: "p2", name: "Bagus Adi", position: "Kiper", address: "RT 01/02", number: "1", dob: "2005-08-20", category: "Senior", height: "180", weight: "70", foot: "Kanan", goals: "0", assists: "0", cleansheets: "4", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&fit=crop" }
-    ];
-    let news = JSON.parse(localStorage.getItem('tarsel_news')) || [
-      { id: "n1", title: "Kemenangan Dramatis di Laga Derbi!", category: "Match Day", date: "2026-06-15", summary: "Tarsel FC pastikan tiket semifinal.", content: "Pertandingan yang sangat menegangkan...", image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&fit=crop" }
-    ];
-    let gallery = JSON.parse(localStorage.getItem('tarsel_gallery')) || [
-      { id: "g1", title: "Sesi Latihan Fisik", category: "latihan", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&fit=crop" }
-    ];
-    let videos = JSON.parse(localStorage.getItem('tarsel_videos')) || [
-      { id: "v1", title: "Highlights Match", youtubeId: "dQw4w9WgXcQ" }
-    ];
+  <!-- Award Detail Modal -->
+  <div id="award-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-md relative shadow-2xl rounded-sm">
+      <button onclick="window.closeAwardDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
+      <div class="text-center mt-2">
+        <span id="detail-ayear" class="text-3xl font-bold text-brand-orange block font-display drop-shadow-md">2025</span>
+        <img id="detail-aimage" src="" class="w-full h-48 object-cover mx-auto my-4 border border-gray-600 p-1 shadow-lg rounded-sm">
+        <h3 id="detail-atitle" class="text-xl font-bold text-white uppercase mb-3">Title</h3>
+        <p id="detail-adesc" class="text-sm text-gray-400 leading-relaxed text-center bg-[#1a1a1c] p-4 border border-gray-700 rounded-sm shadow-inner"></p>
+      </div>
+    </div>
+  </div>
 
-    function saveData() {
-      localStorage.setItem('tarsel_players', JSON.stringify(players));
-      localStorage.setItem('tarsel_news', JSON.stringify(news));
-      localStorage.setItem('tarsel_gallery', JSON.stringify(gallery));
-      localStorage.setItem('tarsel_videos', JSON.stringify(videos));
-    }
+  <!-- News Reader Modal -->
+  <div id="news-reader-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto relative shadow-2xl rounded-sm">
+      <button onclick="window.closeNewsReader()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
+      <span id="reader-date" class="text-[10px] text-brand-orange mb-2 block uppercase font-bold tracking-wider">Date</span>
+      <h3 id="reader-title" class="text-2xl font-bold text-white mb-4 uppercase">Title</h3>
+      <img id="reader-image" class="w-full h-56 object-cover mb-6 border border-gray-700 shadow-md rounded-sm">
+      <div id="reader-content" class="text-sm text-gray-300 leading-relaxed space-y-4 whitespace-pre-wrap bg-[#1a1a1c] p-5 border border-gray-700 rounded-sm shadow-inner">Content</div>
+    </div>
+  </div>
 
-    // UI Utilities
-    function showToast(msg, type='success') {
-      const c = document.getElementById('toast-container');
+  <!-- Lightbox -->
+  <div id="gallery-lightbox" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
+    <button onclick="window.closeLightbox()" class="absolute top-4 right-6 text-white text-3xl font-extrabold transition hover:text-brand-orange">✕</button>
+    <div class="flex items-center gap-4">
+      <button onclick="window.changeLightboxImage(-1)" class="text-gray-500 hover:text-brand-orange text-4xl transition">❮</button>
+      <img id="lightbox-image" class="max-w-4xl max-h-[75vh] object-contain border border-gray-800 shadow-2xl" src="">
+      <button onclick="window.changeLightboxImage(1)" class="text-gray-500 hover:text-brand-orange text-4xl transition">❯</button>
+    </div>
+    <h3 id="lightbox-title" class="text-white mt-4 text-sm uppercase tracking-wider font-bold"></h3>
+  </div>
+
+  <!-- Video Player -->
+  <div id="video-player-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full aspect-video bg-black border border-gray-800 shadow-2xl">
+      <button onclick="window.closeVideoPlayer()" class="absolute -top-10 right-0 text-white text-2xl font-bold hover:text-brand-orange transition">✕</button>
+      <iframe id="modal-youtube-iframe" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- ================= LOGIC JAVASCRIPT FIREBASE ================= -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, doc, setDoc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // --- MENGAMBIL WINDOW FUNCTIONS KE ATAS UNTUK MENCEGAH ERROR UNDEFINED ---
+    window.showToast = function(msg) {
       const t = document.createElement('div');
-      t.className = `p-4 rounded-xl border ${type==='success'?'bg-emerald-50 dark:bg-emerald-900 border-emerald-200 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300':'bg-red-50 dark:bg-red-900 border-red-200 dark:border-red-700 text-red-800 dark:text-red-300'} shadow-xl transform translate-y-2 opacity-0 transition-all font-sans text-sm flex gap-3`;
-      t.innerHTML = `<span>${type==='success'?'✅':'⚠️'}</span><span class="font-bold">${msg}</span>`;
-      c.appendChild(t);
-      setTimeout(()=> t.classList.remove('translate-y-2','opacity-0'), 10);
-      setTimeout(()=> { t.classList.add('translate-y-2','opacity-0'); setTimeout(()=>t.remove(), 300); }, 3000);
-    }
+      t.className = "bg-brand-orange text-white px-4 py-2 rounded shadow-lg text-xs font-bold animate-pulse transform transition-all duration-300 translate-y-0 opacity-100";
+      t.innerText = msg;
+      document.getElementById('toast-container').appendChild(t);
+      setTimeout(() => { t.classList.add('translate-y-4', 'opacity-0'); setTimeout(()=>t.remove(), 300); }, 3000);
+    };
+    window.showLoader = function() { document.getElementById('upload-loader').classList.remove('hidden'); };
+    window.hideLoader = function() { document.getElementById('upload-loader').classList.add('hidden'); };
+    
+    window.renderAll = function() {
+      const navLogo = document.getElementById('nav-logo-img');
+      const footerLogo = document.getElementById('footer-logo-img');
+      if(navLogo) navLogo.src = siteLogo;
+      if(footerLogo) footerLogo.src = siteLogo;
 
-    let confirmCb = null;
-    function askConfirm(msg, cb) {
-      document.getElementById('confirm-modal-text').innerText = msg;
-      document.getElementById('confirm-modal').classList.remove('hidden');
-      confirmCb = cb;
-    }
-    document.getElementById('confirm-btn-cancel').onclick = () => document.getElementById('confirm-modal').classList.add('hidden');
-    document.getElementById('confirm-btn-action').onclick = () => { if(confirmCb) confirmCb(); document.getElementById('confirm-modal').classList.add('hidden'); };
+      if(typeof window.renderHeroSlider === 'function') window.renderHeroSlider();
+      if(typeof window.renderBackground === 'function') window.renderBackground();
+      if(typeof window.renderHomePreviews === 'function') window.renderHomePreviews();
+      if(typeof window.renderRoster === 'function') window.renderRoster();
+      if(typeof window.renderStaff === 'function') window.renderStaff();
+      if(typeof window.renderAwards === 'function') window.renderAwards();
+      if(typeof window.renderNewsGrid === 'function') window.renderNewsGrid();
+      if(typeof window.renderGalleryGridFull === 'function') window.renderGalleryGridFull();
+      if(typeof window.renderVideoGrid === 'function') window.renderVideoGrid();
+      if(typeof window.renderAdminTables === 'function') window.renderAdminTables();
+      
+      const formBgPos = document.getElementById('form-bgpos');
+      if(formBgPos) formBgPos.value = backgroundPos;
+    };
 
-    // Theme logic
-    function toggleTheme() {
-      const h = document.documentElement; h.classList.toggle('dark');
-      localStorage.theme = h.classList.contains('dark') ? 'dark' : 'light';
-      updateThemeIcons();
-    }
-    function updateThemeIcons() {
-      const isD = document.documentElement.classList.contains('dark');
-      const l = document.getElementById('theme-toggle-light-icon'), d = document.getElementById('theme-toggle-dark-icon');
-      if(l && d) { l.classList.toggle('hidden', !isD); d.classList.toggle('hidden', isD); }
-    }
-    if(localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
-    updateThemeIcons();
-    if(document.getElementById('theme-toggle')) document.getElementById('theme-toggle').onclick = toggleTheme;
+    window.renderHeroSlider = function() {
+      const container = document.getElementById('hero-slider-container');
+      if(!container) return; container.innerHTML = '';
+      if(heroSlidesData.length === 0) {
+        container.innerHTML = `<div class="hero-slide absolute inset-0 w-full h-full bg-gray-900 flex items-center justify-center"><h1 class="text-white">Tidak ada slide</h1></div>`; return;
+      }
+      heroSlidesData.forEach((slide, idx) => {
+        const isActive = idx === currentHeroSlide ? 'opacity-100 z-10' : 'opacity-0 z-0';
+        const imgPosClass = slide.imgPos || 'object-center';
+        container.innerHTML += `
+          <div class="hero-slide absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${isActive}">
+            <img class="absolute inset-0 w-full h-full object-cover opacity-70 ${imgPosClass}" src="${slide.image}" alt="Hero">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <div class="absolute inset-0 flex items-center">
+              <div class="max-w-6xl mx-auto px-4 w-full text-left pt-20">
+                <h1 class="text-5xl md:text-6xl font-bold text-white uppercase tracking-wider">${slide.h1}</h1>
+                <h2 class="text-3xl md:text-4xl text-gray-200 mt-1 mb-4 font-light">${slide.h2}</h2>
+                <p class="text-xs text-gray-400 max-w-sm leading-relaxed mb-6">${slide.desc}</p>
+                <button onclick="window.switchView('${slide.btnLink}')" class="btn-orange hover:scale-105 active:scale-95 transition-transform">${slide.btnTxt} <span class="text-lg leading-none">›</span></button>
+              </div>
+            </div>
+          </div>`;
+      });
+      window.resetHeroInterval();
+    };
 
-    // Scroll & Navbar
-    window.onscroll = () => {
-      if(document.getElementById('navbar')) document.getElementById('navbar').classList.toggle('shadow-sm', window.scrollY>20);
-      document.querySelectorAll('.reveal').forEach(el => {
-        if(el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('active');
+    window.showHeroSlide = function(index) {
+      const slides = document.querySelectorAll('.hero-slide');
+      if(slides.length === 0) return;
+      currentHeroSlide = (index < 0) ? slides.length - 1 : (index >= slides.length ? 0 : index);
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('opacity-100', idx === currentHeroSlide); slide.classList.toggle('z-10', idx === currentHeroSlide);
+        slide.classList.toggle('opacity-0', idx !== currentHeroSlide); slide.classList.toggle('z-0', idx !== currentHeroSlide);
       });
     };
-    if(document.getElementById('mobile-menu-btn')) {
-      document.getElementById('mobile-menu-btn').onclick = () => {
-        document.getElementById('mobile-menu').classList.toggle('hidden');
-        document.getElementById('hamburger-icon').classList.toggle('hidden'); document.getElementById('close-icon').classList.toggle('hidden');
+    window.nextHeroSlide = function() { window.showHeroSlide(currentHeroSlide + 1); window.resetHeroInterval(); };
+    window.prevHeroSlide = function() { window.showHeroSlide(currentHeroSlide - 1); window.resetHeroInterval(); };
+    window.resetHeroInterval = function() { clearInterval(heroInterval); heroInterval = setInterval(() => { window.showHeroSlide(currentHeroSlide + 1); }, 5000); };
+
+    window.switchView = function(viewId) {
+      document.querySelectorAll('.app-view').forEach(el => el.classList.remove('active'));
+      document.getElementById('view-' + viewId).classList.add('active');
+      window.scrollTo(0, 0);
+
+      document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+      const links = Array.from(document.querySelectorAll('.nav-link'));
+      const map = { 'beranda':'beranda', 'skuad':'tim', 'prestasi':'prestasi', 'ofisial':'ofisial', 'berita':'berita', 'galeri':'galeri', 'pendaftaran':'gabung', 'cms':'admin' };
+      const activeBtn = links.find(el => el.innerText.toLowerCase().includes(map[viewId] || viewId));
+      if(activeBtn) activeBtn.classList.add('active');
+      document.getElementById('mobile-menu').classList.add('hidden');
+      window.renderAll();
+    };
+
+    window.renderBackground = function() {
+      const joinSec = document.getElementById('join-section');
+      if(joinSec) { joinSec.style.backgroundImage = `url('${backgroundUrl}')`; joinSec.style.backgroundPosition = backgroundPos; }
+      const adminPrev = document.getElementById('admin-bg-preview');
+      if(adminPrev) { adminPrev.style.backgroundImage = `url('${backgroundUrl}')`; adminPrev.style.backgroundPosition = backgroundPos; }
+    };
+
+    window.renderHomePreviews = function() {
+      const hn = document.getElementById('home-news-preview');
+      if(hn) {
+        hn.innerHTML = '';
+        news.slice(0,3).forEach(n => { hn.innerHTML += `<div onclick="window.readNews('${n.id}')" class="cursor-pointer group border-b border-gray-800 pb-2 mb-2 last:border-0 hover:bg-gray-800/30 p-2 rounded transition active:scale-95"><span class="text-[9px] text-[#424242] font-bold block mb-1">${n.date}</span><p class="text-[11px] text-gray-400 group-hover:text-brand-orange transition leading-tight">${n.title}</p></div>`; });
+      }
+      const hg = document.getElementById('home-gallery-preview');
+      if(hg) {
+        hg.innerHTML = '<div class="grid grid-cols-2 gap-2">';
+        gallery.slice(0,4).forEach((g, i) => { hg.querySelector('.grid').innerHTML += `<img src="${g.image}" onclick="window.openLightbox(${i})" class="w-full h-12 object-cover cursor-pointer hover:opacity-75 transition active:scale-95 border border-gray-700">`; });
+        hg.innerHTML += `</div><p class="text-[10px] text-gray-500 mt-2">Momen terbaru dari lapangan kami...</p>`;
+      }
+    };
+
+    window.renderRoster = function() {
+      const q = document.getElementById('search-player')?.value.toLowerCase() || '';
+      const f = document.getElementById('filter-squad-select')?.value || 'all';
+      const grid = document.getElementById('public-roster-grid');
+      if(!grid) return; grid.innerHTML = '';
+      players.filter(p => (p.name.toLowerCase().includes(q) || p.position.toLowerCase().includes(q)) && (f === 'all' || p.category === f)).forEach(p => {
+        grid.innerHTML += `<div onclick="window.openPlayerDetail('${p.id}')" class="bg-[#1a1a1c] border border-gray-800 p-2 cursor-pointer hover:border-brand-orange transition-all duration-200 group hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 rounded-sm"><div class="h-48 relative bg-gray-900 border border-gray-800 overflow-hidden"><span class="absolute top-2 left-2 z-10 bg-brand-orange text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm shadow-md">#${p.number}</span><img src="${p.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100 object-top"></div><div class="pt-3 text-center"><h4 class="text-sm font-bold text-white uppercase group-hover:text-brand-orange transition">${p.name}</h4><span class="text-[10px] text-gray-500 uppercase tracking-widest">${p.position}</span></div></div>`;
+      });
+    };
+
+    window.renderStaff = function() {
+      const grid = document.getElementById('public-staff-grid');
+      if(!grid) return; grid.innerHTML = '';
+      staff.forEach(s => {
+        grid.innerHTML += `<div onclick="window.openStaffDetail('${s.id}')" class="bg-[#1a1a1c] border border-gray-800 p-2 text-center group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm"><img src="${s.image}" class="w-full h-48 object-cover border border-gray-800 grayscale group-hover:grayscale-0 transition duration-500 mb-3 object-top"><h4 class="text-sm font-bold text-white uppercase group-hover:text-brand-orange transition">${s.name}</h4><span class="text-[10px] text-brand-orange uppercase tracking-widest">${s.role}</span><p class="text-xs text-gray-500 mt-1">${s.title}</p></div>`;
+      });
+    };
+
+    window.renderAwards = function() {
+      const grid = document.getElementById('public-awards-grid');
+      if(!grid) return; grid.innerHTML = '';
+      awards.forEach(a => {
+        grid.innerHTML += `<div onclick="window.openAwardDetail('${a.id}')" class="bg-[#1a1a1c] border border-gray-800 flex flex-col group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm"><div class="relative h-48 border-b border-gray-800 overflow-hidden"><span class="absolute top-3 right-3 bg-brand-orange text-white font-bold text-xs px-2 py-1 z-10 shadow-lg">${a.year}</span><img src="${a.image}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-90 group-hover:opacity-100 object-center"></div><div class="p-4"><h4 class="text-white font-bold uppercase mb-2 text-sm group-hover:text-brand-orange transition">${a.title}</h4><p class="text-xs text-gray-400 line-clamp-3">${a.desc}</p></div></div>`;
+      });
+    };
+
+    window.renderNewsGrid = function() {
+      const grid = document.getElementById('public-news-grid');
+      if(!grid) return; grid.innerHTML = '';
+      news.forEach(n => {
+        grid.innerHTML += `<div class="bg-[#1a1a1c] border border-gray-800 hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm overflow-hidden group" onclick="window.readNews('${n.id}')"><img src="${n.image}" class="w-full h-48 object-cover border-b border-gray-800 opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"><div class="p-4 bg-[#1a1a1c] relative z-10"><span class="text-[10px] text-brand-orange font-bold uppercase mb-1 block">${n.date} | ${n.category}</span><h3 class="text-white font-bold text-sm mb-2 leading-tight uppercase group-hover:text-brand-orange transition">${n.title}</h3><p class="text-xs text-gray-400 line-clamp-2">${n.summary}</p></div></div>`;
+      });
+    };
+
+    window.renderGalleryGridFull = function() {
+      const grid = document.getElementById('public-gallery-grid-full');
+      if(!grid) return; grid.innerHTML = '';
+      gallery.forEach((g, i) => {
+        grid.innerHTML += `<div onclick="window.openLightbox(${i})" class="relative group cursor-pointer border border-gray-800 active:scale-95 transition-all rounded-sm overflow-hidden"><img src="${g.image}" class="w-full h-32 md:h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"><div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><span class="text-white text-xs font-bold uppercase border border-brand-orange bg-brand-orange/20 px-2 py-1 shadow-lg">Lihat</span></div></div>`;
+      });
+    };
+
+    window.renderVideoGrid = function() {
+      const grid = document.getElementById('public-video-grid');
+      if(!grid) return; grid.innerHTML = '';
+      videos.forEach(v => {
+        grid.innerHTML += `<div class="bg-[#1a1a1c] border border-gray-800 cursor-pointer group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 rounded-sm" onclick="window.openVideoPlayer('${v.youtubeId}')"><div class="relative aspect-video border-b border-gray-800 overflow-hidden"><img src="https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"><div class="absolute inset-0 flex items-center justify-center"><div class="w-12 h-12 bg-brand-orange text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(217,83,30,0.6)] group-hover:scale-110 transition">▶</div></div></div><div class="p-3"><h4 class="text-white text-sm font-bold uppercase group-hover:text-brand-orange transition">${v.title}</h4></div></div>`;
+      });
+    };
+
+    // --- MODALS DETAIL INTERACTION ---
+    window.openPlayerDetail = function(id) {
+      const p = players.find(x => x.id === id);
+      if(p) {
+        document.getElementById('detail-pnumber').innerText = "#" + p.number;
+        document.getElementById('detail-pimage').src = p.image;
+        document.getElementById('detail-pname').innerText = p.name;
+        document.getElementById('detail-pposition').innerText = p.position;
+        document.getElementById('detail-pheight').innerText = p.height || '-';
+        document.getElementById('detail-pweight').innerText = p.weight || '-';
+        if(p.position === 'Kiper') {
+          document.getElementById('detail-outfield-stats').classList.add('hidden'); document.getElementById('detail-goalkeeper-stats').classList.remove('hidden'); document.getElementById('detail-pcleansheets').innerText = p.cleansheets || '0';
+        } else {
+          document.getElementById('detail-goalkeeper-stats').classList.add('hidden'); document.getElementById('detail-outfield-stats').classList.remove('hidden'); document.getElementById('detail-pgoals').innerText = p.goals || '0'; document.getElementById('detail-passists').innerText = p.assists || '0';
+        }
+        document.getElementById('player-detail-modal').classList.remove('hidden');
+      }
+    };
+    window.closePlayerDetail = function() { document.getElementById('player-detail-modal').classList.add('hidden'); };
+
+    window.openStaffDetail = function(id) {
+      const s = staff.find(x => x.id === id);
+      if(s) {
+        document.getElementById('detail-simage').src = s.image;
+        document.getElementById('detail-sname').innerText = s.name;
+        document.getElementById('detail-srole').innerText = s.role;
+        document.getElementById('detail-stitle').innerText = s.title;
+        document.getElementById('staff-detail-modal').classList.remove('hidden');
+      }
+    };
+    window.closeStaffDetail = function() { document.getElementById('staff-detail-modal').classList.add('hidden'); };
+
+    window.openAwardDetail = function(id) {
+      const a = awards.find(x => x.id === id);
+      if(a) {
+        document.getElementById('detail-ayear').innerText = a.year;
+        document.getElementById('detail-aimage').src = a.image;
+        document.getElementById('detail-atitle').innerText = a.title;
+        document.getElementById('detail-adesc').innerText = a.desc;
+        document.getElementById('award-detail-modal').classList.remove('hidden');
+      }
+    };
+    window.closeAwardDetail = function() { document.getElementById('award-detail-modal').classList.add('hidden'); };
+
+    window.readNews = function(id) { 
+      const item = news.find(n => n.id === id); 
+      if(item) { 
+        document.getElementById('reader-date').innerText = item.date + " | " + item.category; 
+        document.getElementById('reader-title').innerText = item.title; 
+        document.getElementById('reader-image').src = item.image; 
+        document.getElementById('reader-content').innerText = item.content; 
+        document.getElementById('news-reader-modal').classList.remove('hidden'); 
+      } 
+    };
+    window.closeNewsReader = function() { document.getElementById('news-reader-modal').classList.add('hidden'); };
+
+    let currentLgtIdx = 0;
+    window.openLightbox = function(idx) { currentLgtIdx = idx; document.getElementById('lightbox-image').src = gallery[idx].image; document.getElementById('lightbox-title').innerText = gallery[idx].title; document.getElementById('gallery-lightbox').classList.remove('hidden'); };
+    window.closeLightbox = function() { document.getElementById('gallery-lightbox').classList.add('hidden'); };
+    window.changeLightboxImage = function(dir) { currentLgtIdx += dir; if(currentLgtIdx < 0) currentLgtIdx = gallery.length -1; if(currentLgtIdx >= gallery.length) currentLgtIdx = 0; window.openLightbox(currentLgtIdx); };
+    window.openVideoPlayer = function(id) { document.getElementById('modal-youtube-iframe').src = `https://www.youtube.com/embed/${id}?autoplay=1`; document.getElementById('video-player-modal').classList.remove('hidden'); };
+    window.closeVideoPlayer = function() { document.getElementById('video-player-modal').classList.add('hidden'); document.getElementById('modal-youtube-iframe').src = ""; };
+
+    // --- CMS ADMIN ---
+    window.handleCMSAuthClick = function() {
+      if(sessionStorage.getItem('tc_admin') === 'true') window.switchView('cms');
+      else document.getElementById('admin-login-modal').classList.remove('hidden');
+    };
+    window.closeAdminLogin = function() { document.getElementById('admin-login-modal').classList.add('hidden'); };
+    
+    // --- FIREBASE ADMIN AUTH LOGIN ---
+    document.getElementById('admin-login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        sessionStorage.setItem('tc_admin', 'true');
+        window.closeAdminLogin(); 
+        document.getElementById('nav-cms-icon').innerText = '🔓';
+        window.showToast("Otorisasi Admin Berhasil!");
+        window.switchView('cms'); 
+        e.target.reset();
+      } catch (error) {
+        window.showToast("Akses Ditolak! Periksa Email/Password.");
+        console.error(error);
+      }
+    });
+
+    window.logoutAdmin = async function() {
+      try {
+        await signOut(auth);
+        sessionStorage.removeItem('tc_admin');
+        document.getElementById('nav-cms-icon').innerText = '🔒';
+        window.switchView('beranda');
+        window.showToast("Berhasil Keluar");
+        await signInAnonymously(auth); // Fallback ke mode publik
+      } catch (e) {
+        console.error("Logout error", e);
+      }
+    };
+
+    window.switchCMSTab = function(tab) {
+      ['players','staff','awards','news','gallery','tampilan'].forEach(t => {
+        document.getElementById(`cms-${t}-view`)?.classList.add('hidden');
+        document.getElementById(`tab-btn-${t}`)?.classList.remove('bg-brand-orange', 'text-white');
+        document.getElementById(`tab-btn-${t}`)?.classList.add('bg-gray-800', 'text-gray-300');
+      });
+      document.getElementById(`cms-${tab}-view`)?.classList.remove('hidden');
+      document.getElementById(`tab-btn-${tab}`)?.classList.add('bg-brand-orange', 'text-white');
+      document.getElementById(`tab-btn-${tab}`)?.classList.remove('bg-gray-800', 'text-gray-300');
+    };
+
+    window.renderAdminTables = function() {
+      const render = (id, data, htmlFn) => { const el = document.getElementById(id); if(el){ el.innerHTML = ''; data.forEach(d => el.innerHTML += htmlFn(d)); } };
+      
+      render('admin-table-body', players, p => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${p.image}" class="w-8 h-8 object-cover rounded-sm object-top"></td><td>${p.name} <span class="text-[9px] text-gray-500 block">${p.address}</span></td><td>${p.position}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('players','${p.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('players','${p.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-staff-table-body', staff, s => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${s.image}" class="w-8 h-8 object-cover rounded-sm object-top"></td><td>${s.name}</td><td>${s.role}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('staff','${s.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('staff','${s.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-awards-table-body', awards, a => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${a.image}" class="w-10 h-6 object-cover rounded-sm"></td><td>${a.title}</td><td>${a.year}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('awards','${a.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('awards','${a.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-news-table-body', news, n => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2">${n.title}</td><td>${n.date}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('news','${n.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('news','${n.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-gallery-table-body', gallery, g => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${g.image}" class="w-10 h-6 object-cover rounded-sm"></td><td class="truncate max-w-[100px]">${g.title}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('gallery','${g.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('gallery','${g.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-video-table-body', videos, v => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2 truncate max-w-[100px]">${v.title}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('videos','${v.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('videos','${v.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-hero-table-body', heroSlidesData, h => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${h.image}" class="w-10 h-6 object-cover rounded-sm"></td><td>${h.h1}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('hero','${h.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('hero','${h.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+    };
+
+    window.editData = function(type, id) {
+      if(type === 'players') {
+        const p = players.find(x => x.id === id);
+        document.getElementById('edit-player-id').value = p.id;
+        document.getElementById('form-pname').value = p.name; document.getElementById('form-paddress').value = p.address;
+        document.getElementById('form-pnumber').value = p.number; document.getElementById('form-pdob').value = p.dob;
+        document.getElementById('form-pheight').value = p.height || ''; document.getElementById('form-pweight').value = p.weight || '';
+        document.getElementById('form-pfoot').value = p.foot; document.getElementById('form-pposition').value = p.position;
+        document.getElementById('form-pcategory').value = p.category; document.getElementById('form-pgoals').value = p.goals || '';
+        document.getElementById('form-passists').value = p.assists || ''; document.getElementById('form-pcleansheets').value = p.cleansheets || '';
+        document.getElementById('form-pposition').dispatchEvent(new Event('change'));
+        document.getElementById('player-form-title').innerText = "Edit Pemain"; document.getElementById('btn-submit-player').innerText = "Update Pemain"; document.getElementById('btn-cancel-player').classList.remove('hidden');
+        document.getElementById('form-pname').scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+      else if(type === 'staff') {
+        const s = staff.find(x => x.id === id);
+        document.getElementById('edit-staff-id').value = s.id;
+        document.getElementById('form-sname').value = s.name; document.getElementById('form-srole').value = s.role; document.getElementById('form-stitle').value = s.title;
+        document.getElementById('staff-form-title').innerText = "Edit Staf"; document.getElementById('btn-submit-staff').innerText = "Update Staf"; document.getElementById('btn-cancel-staff').classList.remove('hidden');
+        document.getElementById('form-sname').scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+      else if(type === 'awards') {
+        const a = awards.find(x => x.id === id);
+        document.getElementById('edit-awards-id').value = a.id;
+        document.getElementById('form-atitle').value = a.title; document.getElementById('form-ayear').value = a.year; document.getElementById('form-adesc').value = a.desc;
+        document.getElementById('awards-form-title').innerText = "Edit Prestasi"; document.getElementById('btn-submit-awards').innerText = "Update Prestasi"; document.getElementById('btn-cancel-awards').classList.remove('hidden');
+        document.getElementById('form-atitle').scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+      else if(type === 'news') {
+        const n = news.find(x => x.id === id);
+        document.getElementById('edit-news-id').value = n.id;
+        document.getElementById('form-ntitle').value = n.title; document.getElementById('form-ncategory').value = n.category; document.getElementById('form-ndate').value = n.date;
+        document.getElementById('form-nsummary').value = n.summary; document.getElementById('form-ncontent').value = n.content;
+        document.getElementById('news-form-title').innerText = "Edit Berita"; document.getElementById('btn-submit-news').innerText = "Update Berita"; document.getElementById('btn-cancel-news').classList.remove('hidden');
+        document.getElementById('form-ntitle').scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+      else if(type === 'gallery') {
+        const g = gallery.find(x => x.id === id);
+        document.getElementById('edit-gallery-id').value = g.id;
+        document.getElementById('form-gtitle').value = g.title; document.getElementById('form-gcategory').value = g.category;
+        document.getElementById('gallery-form-title').innerText = "Edit Foto Galeri"; document.getElementById('btn-submit-gallery').innerText = "Update Foto"; document.getElementById('btn-cancel-gallery').classList.remove('hidden');
+        document.getElementById('form-gtitle').scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+      else if(type === 'videos') {
+        const v = videos.find(x => x.id === id);
+        document.getElementById('edit-video-id').value = v.id;
+        document.getElementById('form-vtitle').value = v.title; document.getElementById('form-vurl').value = `https://www.youtube.com/watch?v=${v.youtubeId}`;
+        document.getElementById('video-form-title').innerText = "Edit Video YT"; document.getElementById('btn-submit-video').innerText = "Update Video"; document.getElementById('btn-cancel-video').classList.remove('hidden');
+        document.getElementById('form-vtitle').scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+      else if(type === 'hero') {
+        const h = heroSlidesData.find(x => x.id === id);
+        document.getElementById('edit-hero-id').value = h.id;
+        document.getElementById('form-h1').value = h.h1; document.getElementById('form-h2').value = h.h2; document.getElementById('form-hdesc').value = h.desc;
+        document.getElementById('form-hbtn').value = h.btnTxt; document.getElementById('form-hlink').value = h.btnLink; document.getElementById('form-hpos').value = h.imgPos || 'object-center';
+        document.getElementById('hero-form-title').innerText = "Edit Slide Hero"; document.getElementById('btn-submit-hero').innerText = "Update Slide"; document.getElementById('btn-cancel-hero').classList.remove('hidden');
+        document.getElementById('form-h1').scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+    };
+
+    window.cancelEdit = function(type) {
+      document.getElementById(`${type}-crud-form`)?.reset();
+      const idEl = document.getElementById(`edit-${type}-id`);
+      if(idEl) idEl.value = '';
+      const titles = {'player':'Pemain', 'staff':'Staf', 'awards':'Prestasi', 'news':'Berita', 'gallery':'Foto', 'video':'Video YT', 'hero':'Slide'};
+      const titleEl = document.getElementById(`${type}-form-title`);
+      if(titleEl && titles[type]) titleEl.innerText = `Tambah ${titles[type]}`;
+      const btnSub = document.getElementById(`btn-submit-${type}`);
+      if(btnSub && titles[type]) btnSub.innerText = `Simpan ${titles[type].split(' ')[0]}`;
+      const btnCan = document.getElementById(`btn-cancel-${type}`);
+      if(btnCan) btnCan.classList.add('hidden');
+    };
+
+    window.compressImage = function(file, maxWidth = 1200, quality = 0.8) {
+      return new Promise((resolve, reject) => {
+        if (!file) { resolve(null); return; }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width; let height = img.height;
+            if (width > maxWidth) { height = Math.round((height * maxWidth) / width); width = maxWidth; }
+            canvas.width = width; canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+        };
+        reader.onerror = error => reject(error);
+      });
+    };
+
+    // --- FIREBASE CONFIG ---
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+      apiKey: "AIzaSyAIXx0a9mqPcg_clbjilqk6TbI7kkLdcww",
+      authDomain: "tarseljunior.firebaseapp.com",
+      projectId: "tarseljunior",
+      storageBucket: "tarseljunior.firebasestorage.app",
+      messagingSenderId: "651327727126",
+      appId: "1:651327727126:web:604ca0f166ca9b4b667737"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'tarseljunior';
+    let currentUser = null;
+
+    // --- DATA STATE ---
+    let players = [];
+    let staff = [];
+    let awards = [];
+    let news = [];
+    let gallery = [];
+    let videos = [];
+    let heroSlidesData = [];
+    let backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=1200&auto=format&fit=crop";
+    let backgroundPos = "center";
+    let siteLogo = "https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=400&auto=format&fit=crop";
+
+    // --- DEFAULT DATA ---
+    const defaultPlayers = [
+      { id: "p1", name: "Muhammad Rizky", position: "Striker", address: "Rintis", number: "9", dob: "2010-04-12", category: "U-17", height: "174", weight: "62", foot: "Kanan", goals: "12", assists: "4", cleansheets: "0", image: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=600&auto=format&fit=crop" }
+    ];
+    const defaultStaff = [
+      { id: "s1", name: "Coach Hendra", role: "Coach", title: "Lisensi C AFC", image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop" }
+    ];
+    const defaultAwards = [
+      { id: "a1", title: "Juara 1 Bupati Cup Anambas", year: "2025", desc: "Tim Senior Tarsel FC memenangkan piala bergengsi tingkat kabupaten.", image: "https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=800&auto=format&fit=crop" }
+    ];
+    const defaultNews = [
+      { id: "n1", title: "Kemenangan Telak Di Final!", category: "Match Day", date: "2026-06-10", summary: "Tarsel FC angkat piala di depan publik sendiri.", content: "Pertandingan dramatis berakhir dengan skor 3-1. Kemenangan ini merupakan hasil keras dari pemusatan latihan selama dua bulan terakhir yang dipimpin langsung oleh Coach Hendra.", image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop" }
+    ];
+    const defaultGallery = [
+      { id: "g1", title: "Selebrasi Kemenangan", category: "match", image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800&auto=format&fit=crop" }
+    ];
+    const defaultVideos = [
+      { id: "v1", title: "Highlights Final Tarsel", youtubeId: "dQw4w9WgXcQ" }
+    ];
+    const defaultHero = [
+      { id: "h1", h1: "SOCCER", h2: "Kami Mencintai Permainan Ini", desc: "Membangun karakter dan prestasi pemuda melalui sepakbola.", btnTxt: "Tentang Tim", btnLink: "skuad", image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1200&auto=format&fit=crop", imgPos: "object-top" }
+    ];
+
+    // --- AUTHENTICATION ---
+    async function initAuth() {
+      try {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          try {
+            await signInWithCustomToken(auth, __initial_auth_token);
+          } catch (e) {
+            await signInAnonymously(auth);
+          }
+        } else {
+          await signInAnonymously(auth);
+        }
+      } catch (e) {
+        console.error("Auth error:", e);
+      }
+    }
+
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+      if (user) {
+        setupRealtimeListeners();
+      }
+    });
+
+    initAuth();
+
+    function setupRealtimeListeners() {
+      if (!currentUser) return;
+      
+      const setupCollection = (colName, arrayRefSetter, defaultData) => {
+        onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', colName), snapshot => {
+          if(snapshot.empty) {
+             arrayRefSetter(defaultData);
+             window.renderAll();
+          } else {
+             const arr = [];
+             snapshot.forEach(doc => arr.push({id: doc.id, ...doc.data()}));
+             arr.sort((a,b) => b.id.localeCompare(a.id)); 
+             arrayRefSetter(arr);
+             window.renderAll();
+          }
+        }, err => {
+          console.error("Snapshot error:", err);
+          arrayRefSetter(defaultData);
+          window.renderAll();
+        });
       };
-      document.querySelectorAll('#mobile-menu a').forEach(a => a.onclick = () => document.getElementById('mobile-menu-btn').click());
+
+      setupCollection('players', arr => players = arr, defaultPlayers);
+      setupCollection('staff', arr => staff = arr, defaultStaff);
+      setupCollection('awards', arr => awards = arr, defaultAwards);
+      setupCollection('news', arr => news = arr, defaultNews);
+      setupCollection('gallery', arr => gallery = arr, defaultGallery);
+      setupCollection('videos', arr => videos = arr, defaultVideos);
+      setupCollection('hero', arr => heroSlidesData = arr, defaultHero);
+
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'settings'), snapshot => {
+        if(!snapshot.empty) {
+          snapshot.forEach(d => {
+            if(d.id === 'logo') siteLogo = d.data().url || siteLogo;
+            if(d.id === 'background') {
+              backgroundUrl = d.data().url || backgroundUrl;
+              backgroundPos = d.data().pos || "center";
+            }
+          });
+          window.renderAll();
+        }
+      }, err => console.error(err));
     }
 
-    // Hero Slider
-    let sIdx = 0; const slds = document.querySelectorAll('.hero-slide'), inds = document.querySelectorAll('.slide-progress');
-    function setSlide(i) {
-      sIdx = i<0 ? slds.length-1 : i>=slds.length ? 0 : i;
-      slds.forEach((s, x) => {
-        s.classList.toggle('opacity-100', x===sIdx); s.classList.toggle('z-10', x===sIdx); s.classList.toggle('opacity-0', x!==sIdx);
-      });
-      inds.forEach((d, x) => { d.classList.toggle('bg-brand-500', x===sIdx); d.classList.toggle('bg-white/30', x!==sIdx); });
+    // --- CMS EDIT LOGIC & FIRESTORE OPS ---
+    async function saveData(collectionName, dataObj) {
+      if(!currentUser) return;
+      try {
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, dataObj.id), dataObj);
+      } catch(e) {
+        window.showToast("Penyimpanan lokal digunakan (Izin Firestore ditolak)");
+      }
     }
-    setInterval(()=>setSlide(sIdx+1), 5000);
 
-    // SPA Logic (Public vs Admin)
-    function isAdmin() { return sessionStorage.getItem('tj_admin') === 'true'; }
-    function closeAdminLogin() { document.getElementById('admin-login-modal').classList.add('hidden'); }
-    function showAdminView() {
-      document.getElementById('public-view').classList.remove('block'); document.getElementById('public-view').classList.add('hidden');
-      document.getElementById('admin-view').classList.remove('hidden'); document.getElementById('admin-view').classList.add('flex');
-      switchAdminTab('players'); renderAdminAll();
-    }
-    function showPublicView() {
-      document.getElementById('admin-view').classList.remove('flex'); document.getElementById('admin-view').classList.add('hidden');
-      document.getElementById('public-view').classList.remove('hidden'); document.getElementById('public-view').classList.add('block');
-      renderPublicAll(); setTimeout(()=>window.dispatchEvent(new Event('scroll')), 100);
-    }
+    // CMS Form Submit Handlers
+    document.getElementById('player-crud-form')?.addEventListener('submit', async e => {
+      e.preventDefault(); window.showLoader();
+      const id = document.getElementById('edit-player-id').value;
+      const fileInput = document.getElementById('form-pfile');
+      let imgData = null;
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000);
+      else if(id) imgData = players.find(x => x.id === id).image;
+      else imgData = 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=600&auto=format&fit=crop';
+
+      const newData = { id: id || 'p'+Date.now(), name:document.getElementById('form-pname').value, address:document.getElementById('form-paddress').value, number:document.getElementById('form-pnumber').value, dob:document.getElementById('form-pdob').value, height:document.getElementById('form-pheight').value, weight:document.getElementById('form-pweight').value, foot:document.getElementById('form-pfoot').value, position:document.getElementById('form-pposition').value, category:document.getElementById('form-pcategory').value, goals:document.getElementById('form-pgoals').value, assists:document.getElementById('form-passists').value, cleansheets:document.getElementById('form-pcleansheets').value, image: imgData };
+      await saveData('players', newData);
+      e.target.reset(); window.cancelEdit('player'); window.hideLoader(); window.showToast(id ? "Pemain Diperbarui" : "Pemain Disimpan");
+    });
     
-    document.getElementById('admin-login-form').onsubmit = (e) => {
+    document.getElementById('staff-crud-form')?.addEventListener('submit', async e => {
+      e.preventDefault(); window.showLoader();
+      const id = document.getElementById('edit-staff-id').value;
+      const fileInput = document.getElementById('form-sfile');
+      let imgData = null;
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 800);
+      else if(id) imgData = staff.find(x => x.id === id).image;
+      else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop';
+
+      const newData = { id: id || 's'+Date.now(), name:document.getElementById('form-sname').value, role:document.getElementById('form-srole').value, title:document.getElementById('form-stitle').value, image: imgData };
+      await saveData('staff', newData);
+      e.target.reset(); window.cancelEdit('staff'); window.hideLoader(); window.showToast(id ? "Staf Diperbarui" : "Staf Disimpan");
+    });
+
+    document.getElementById('awards-crud-form')?.addEventListener('submit', async e => {
+      e.preventDefault(); window.showLoader();
+      const id = document.getElementById('edit-awards-id').value;
+      const fileInput = document.getElementById('form-afile');
+      let imgData = null;
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000);
+      else if(id) imgData = awards.find(x => x.id === id).image;
+      else imgData = 'https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=800&auto=format&fit=crop';
+
+      const newData = { id: id || 'a'+Date.now(), title:document.getElementById('form-atitle').value, year:document.getElementById('form-ayear').value, desc:document.getElementById('form-adesc').value, image: imgData };
+      await saveData('awards', newData);
+      e.target.reset(); window.cancelEdit('awards'); window.hideLoader(); window.showToast(id ? "Prestasi Diperbarui" : "Prestasi Disimpan");
+    });
+
+    document.getElementById('news-crud-form')?.addEventListener('submit', async e => {
+      e.preventDefault(); window.showLoader();
+      const id = document.getElementById('edit-news-id').value;
+      const fileInput = document.getElementById('form-nfile');
+      let imgData = null;
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000);
+      else if(id) imgData = news.find(x => x.id === id).image;
+      else imgData = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop';
+
+      const newData = { id: id || 'n'+Date.now(), title:document.getElementById('form-ntitle').value, category:document.getElementById('form-ncategory').value, date:document.getElementById('form-ndate').value, summary:document.getElementById('form-nsummary').value, content:document.getElementById('form-ncontent').value, image: imgData };
+      await saveData('news', newData);
+      e.target.reset(); window.cancelEdit('news'); window.hideLoader(); window.showToast(id ? "Berita Diperbarui" : "Berita Diterbitkan");
+    });
+
+    document.getElementById('gallery-crud-form')?.addEventListener('submit', async e => {
+      e.preventDefault(); window.showLoader();
+      const id = document.getElementById('edit-gallery-id').value;
+      const fileInput = document.getElementById('form-gfile');
+      let imgData = null;
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1200); 
+      else if(id) imgData = gallery.find(x => x.id === id).image;
+
+      if(!imgData && !id) { window.hideLoader(); window.showToast("Harap pilih gambar!"); return; } 
+
+      const newData = { id: id || 'g'+Date.now(), title:document.getElementById('form-gtitle').value, category:document.getElementById('form-gcategory').value, image: imgData };
+      await saveData('gallery', newData);
+      e.target.reset(); window.cancelEdit('gallery'); window.hideLoader(); window.showToast(id ? "Foto Diperbarui" : "Foto Disimpan");
+    });
+
+    document.getElementById('video-crud-form')?.addEventListener('submit', async e => {
       e.preventDefault();
-      if(document.getElementById('login-username').value==='admin' && document.getElementById('login-password').value==='admin123') {
-        sessionStorage.setItem('tj_admin', 'true'); closeAdminLogin(); showAdminView(); showToast('Login Admin Sukses');
-        document.getElementById('admin-login-form').reset();
-      } else showToast('Kredensial Salah', 'error');
-    };
-    window.logoutAdmin = () => { sessionStorage.removeItem('tj_admin'); showPublicView(); showToast('Logout sukses'); };
+      const id = document.getElementById('edit-video-id').value;
+      const ytId = document.getElementById('form-vurl').value.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/)?.[1];
+      if(ytId) { 
+        const newData = { id: id || 'v'+Date.now(), title:document.getElementById('form-vtitle').value, youtubeId:ytId };
+        await saveData('videos', newData);
+        e.target.reset(); window.cancelEdit('video'); window.showToast(id ? "Video Diperbarui" : "Video Ditambahkan"); 
+      } else { window.showToast("Link YouTube Tidak Valid!"); }
+    });
 
-    // File to Base64 Utils
-    function setupB64(inputId, targetId) {
-      const el = document.getElementById(inputId);
-      if(el) el.onchange = function() { if(this.files[0]) { const r = new FileReader(); r.onload = e => document.getElementById(targetId).value = e.target.result; r.readAsDataURL(this.files[0]); } };
-    }
-    setupB64('form-pfile', 'form-pimage-base64'); setupB64('form-nfile', 'form-nimage-base64'); setupB64('form-gfile', 'form-gimage-base64');
+    document.getElementById('hero-crud-form')?.addEventListener('submit', async e => {
+      e.preventDefault(); window.showLoader();
+      const id = document.getElementById('edit-hero-id').value;
+      const fileInput = document.getElementById('form-hfile');
+      let imgData = null;
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1200);
+      else if(id) imgData = heroSlidesData.find(x => x.id === id).image;
+      else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1400&auto=format&fit=crop';
 
-    // Admin Tab Switcher
-    window.switchAdminTab = (t) => {
-      document.querySelectorAll('.admin-tab-content').forEach(v => { v.classList.remove('block'); v.classList.add('hidden'); });
-      document.getElementById('admin-tab-'+t).classList.remove('hidden'); document.getElementById('admin-tab-'+t).classList.add('block');
-      document.querySelectorAll('.admin-nav-btn').forEach(b => {
-        if(b.id === 'nav-tab-'+t) { b.classList.add('bg-brand-50','dark:bg-brand-900/50','text-brand-600','dark:text-brand-400'); b.classList.remove('hover:bg-slate-100','dark:hover:bg-slate-700','text-slate-600','dark:text-slate-300'); }
-        else { b.classList.remove('bg-brand-50','dark:bg-brand-900/50','text-brand-600','dark:text-brand-400'); b.classList.add('hover:bg-slate-100','dark:hover:bg-slate-700','text-slate-600','dark:text-slate-300'); }
-      });
-    };
+      const newData = { id: id || 'h'+Date.now(), h1:document.getElementById('form-h1').value, h2:document.getElementById('form-h2').value, desc:document.getElementById('form-hdesc').value, btnTxt:document.getElementById('form-hbtn').value, btnLink:document.getElementById('form-hlink').value, imgPos:document.getElementById('form-hpos').value, image: imgData };
+      await saveData('hero', newData);
+      e.target.reset(); window.cancelEdit('hero'); window.hideLoader(); window.showToast(id ? "Slide Diperbarui" : "Slide Ditambahkan");
+    });
 
-    // Form logic: Skuad Kiper Toggle
-    document.getElementById('form-pposition').onchange = (e) => {
-      const isGK = e.target.value==='Kiper';
-      document.getElementById('form-outfield-stats').classList.toggle('hidden', isGK); document.getElementById('form-outfield-stats').classList.toggle('grid', !isGK);
-      document.getElementById('form-gk-stats').classList.toggle('hidden', !isGK);
-    };
+    // Logo Upload handler
+    document.getElementById('logo-crud-form')?.addEventListener('submit', async e => {
+      e.preventDefault(); window.showLoader();
+      const fileInput = document.getElementById('form-logofile');
+      if(fileInput.files.length > 0) {
+        siteLogo = await window.compressImage(fileInput.files[0], 400); 
+        if(currentUser) {
+          try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'logo'), { url: siteLogo }); window.showToast("Logo Diperbarui"); e.target.reset(); } catch(err){}
+        }
+      }
+      window.hideLoader();
+    });
 
-    function calcAge(d) { if(!d) return 0; const a = new Date().getFullYear() - new Date(d).getFullYear(); return a>0?a:0; }
+    // Background upload handler
+    document.getElementById('bg-crud-form')?.addEventListener('submit', async e => {
+      e.preventDefault(); window.showLoader();
+      const fileInput = document.getElementById('form-bgfile');
+      backgroundPos = document.getElementById('form-bgpos').value;
+      
+      if(fileInput.files.length > 0) {
+        backgroundUrl = await window.compressImage(fileInput.files[0], 1200);
+      }
+      if(currentUser) {
+        try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'background'), { url: backgroundUrl, pos: backgroundPos }); window.showToast("Background Diperbarui"); e.target.reset(); } catch(err){}
+      }
+      window.hideLoader();
+    });
 
-    // RENDERERS
-    function renderAdminAll() {
-      // Players
-      const pB = document.getElementById('admin-table-body'); pB.innerHTML=''; document.getElementById('admin-player-count').innerText=players.length;
-      players.forEach(p => pB.innerHTML += `<tr><td class="p-3"><img src="${p.image}" class="w-10 h-10 object-cover rounded-lg"></td><td class="p-3"><b>${p.name}</b></td><td class="p-3"><span class="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-[10px]">${p.position} #${p.number}</span></td><td class="p-3 text-right"><button onclick="editP('${p.id}')" class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded mr-1">✏️</button><button onclick="delP('${p.id}')" class="px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-600 rounded">🗑️</button></td></tr>`);
-      // News
-      const nB = document.getElementById('admin-news-table-body'); nB.innerHTML='';
-      news.forEach(n => nB.innerHTML += `<tr><td class="p-3"><img src="${n.image}" class="w-12 h-8 object-cover rounded"></td><td class="p-3 line-clamp-1">${n.title}</td><td class="p-3 text-right"><button onclick="editN('${n.id}')" class="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded mr-1">✏️</button><button onclick="delN('${n.id}')" class="px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-600 rounded">🗑️</button></td></tr>`);
-      // Gallery
-      const gB = document.getElementById('admin-gallery-table-body'); gB.innerHTML='';
-      gallery.forEach(g => gB.innerHTML += `<tr><td class="p-3 flex items-center gap-2"><img src="${g.image}" class="w-10 h-10 object-cover rounded"> <span class="truncate max-w-[100px] text-[10px]">${g.title}</span></td><td class="p-3 text-[10px]">${g.category}</td><td class="p-3 text-right"><button onclick="delG('${g.id}')" class="px-2 py-1 bg-red-100 text-red-600 rounded">🗑️</button></td></tr>`);
-      // Video
-      const vB = document.getElementById('admin-video-table-body'); vB.innerHTML='';
-      videos.forEach(v => vB.innerHTML += `<tr><td class="p-3 flex items-center gap-2"><img src="https://img.youtube.com/vi/${v.youtubeId}/default.jpg" class="w-12 h-8 object-cover rounded"> <span class="truncate max-w-[100px] text-[10px]">${v.title}</span></td><td class="p-3 text-right"><button onclick="delV('${v.id}')" class="px-2 py-1 bg-red-100 text-red-600 rounded">🗑️</button></td></tr>`);
-    }
+    document.getElementById('form-pposition')?.addEventListener('change', function() {
+      document.getElementById('form-outfield-stats-group').classList.toggle('hidden', this.value === 'Kiper');
+      document.getElementById('form-goalkeeper-stats-group').classList.toggle('hidden', this.value !== 'Kiper');
+    });
 
-    function renderPublicAll() {
-      // Squad
-      const q = (document.getElementById('search-player')?.value || '').toLowerCase(), f = document.getElementById('filter-squad-select')?.value || 'all';
-      const fP = players.filter(p => (f==='all'||p.category===f) && (p.name.toLowerCase().includes(q) || p.position.toLowerCase().includes(q)));
-      const pGrid = document.getElementById('public-roster-grid'); pGrid.innerHTML='';
-      document.getElementById('roster-empty-state').classList.toggle('hidden', fP.length>0);
-      fP.forEach(p => {
-        pGrid.innerHTML += `<div onclick="openPModal('${p.id}')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl overflow-hidden group shadow-sm hover:shadow-lg transition-all cursor-pointer relative"><div class="absolute top-3 left-3 bg-white dark:bg-slate-900 w-8 h-8 flex items-center justify-center rounded-lg font-black text-brand-500 z-10 border border-slate-200 dark:border-slate-700">#${p.number}</div><div class="absolute top-3 right-3 bg-white/90 dark:bg-slate-900/90 px-2 py-1 rounded text-[10px] font-bold z-10 border border-slate-200 dark:border-slate-700">${p.category}</div><div class="aspect-square relative overflow-hidden bg-slate-100 dark:bg-slate-900"><img src="${p.image}" class="w-full h-full object-cover group-hover:scale-105 transition-all"></div><div class="p-5 relative"><span class="text-[10px] text-brand-600 dark:text-brand-400 font-bold uppercase block">${p.position}</span><h4 class="text-xl font-black text-slate-900 dark:text-white leading-tight mt-1 truncate font-display">${p.name}</h4><div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700 flex justify-between text-[10px] text-slate-500 font-bold"><span>${p.position==='Kiper'?'🧤 '+p.cleansheets+' CS':'⚽ '+p.goals+' G'}</span><span>${calcAge(p.dob)} THN</span></div></div></div>`;
-      });
-      // News
-      const nGrid = document.getElementById('public-news-grid'); nGrid.innerHTML='';
-      news.forEach(n => nGrid.innerHTML += `<div class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700 group flex flex-col"><div class="aspect-video relative overflow-hidden"><img src="${n.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><span class="absolute top-3 right-3 bg-white/90 dark:bg-slate-900/90 px-2 py-1 text-[10px] font-bold rounded border border-slate-200 dark:border-slate-700">${n.category}</span></div><div class="p-6 flex-1 flex flex-col"><span class="text-[10px] font-bold text-slate-400 block mb-2">${n.date}</span><h3 class="text-xl font-black text-slate-900 dark:text-white leading-tight mb-2 font-display">${n.title}</h3><p class="text-xs text-slate-500 mb-4 line-clamp-2">${n.summary}</p><button onclick="window.readN('${n.id}')" class="mt-auto text-brand-600 dark:text-brand-400 text-xs font-bold text-left hover:underline">Baca Selengkapnya ➔</button></div></div>`);
-      // Gallery Filter
-      window.filterGallery('all');
-      // Videos
-      const vGrid = document.getElementById('public-video-grid'); vGrid.innerHTML='';
-      videos.forEach(v => vGrid.innerHTML += `<div onclick="window.openVid('${v.youtubeId}')" class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden cursor-pointer group shadow-sm border border-slate-200 dark:border-slate-700"><div class="aspect-video relative"><img src="https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><div class="absolute inset-0 flex items-center justify-center bg-black/30"><div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white pl-1 shadow-lg">▶</div></div></div><div class="p-5"><h4 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-2 font-display">${v.title}</h4></div></div>`);
-    }
-
-    // CRUD PLAYER
-    document.getElementById('player-crud-form').onsubmit = (e) => {
-      e.preventDefault();
-      const id = document.getElementById('edit-player-id').value || "p"+Date.now(),
-            p = { id, name: document.getElementById('form-pname').value, position: document.getElementById('form-pposition').value, category: document.getElementById('form-pcategory').value, number: document.getElementById('form-pnumber').value, dob: document.getElementById('form-pdob').value, height: document.getElementById('form-pheight').value, weight: document.getElementById('form-pweight').value, foot: document.getElementById('form-pfoot').value, goals: document.getElementById('form-pgoals').value, assists: document.getElementById('form-passists').value, cleansheets: document.getElementById('form-pcleansheets').value, address: document.getElementById('form-paddress').value, image: document.getElementById('form-pimage-base64').value || (document.getElementById('edit-player-id').value ? players.find(x=>x.id===id).image : defaultPlayers[0].image) };
-      if(document.getElementById('edit-player-id').value) { const ix = players.findIndex(x=>x.id===id); if(ix>-1) players[ix]=p; showToast('Pemain diupdate'); } else { players.push(p); showToast('Pemain ditambah'); }
-      saveData(); renderAdminAll(); window.cancelPlayerEdit();
-    };
-    window.editP = (id) => {
-      const p = players.find(x=>x.id===id); if(!p) return;
-      document.getElementById('edit-player-id').value=p.id; document.getElementById('form-pname').value=p.name; document.getElementById('form-pposition').value=p.position; document.getElementById('form-pposition').dispatchEvent(new Event('change')); document.getElementById('form-pcategory').value=p.category; document.getElementById('form-pnumber').value=p.number; document.getElementById('form-pdob').value=p.dob; document.getElementById('form-pheight').value=p.height; document.getElementById('form-pweight').value=p.weight; document.getElementById('form-pfoot').value=p.foot; document.getElementById('form-pgoals').value=p.goals; document.getElementById('form-passists').value=p.assists; document.getElementById('form-pcleansheets').value=p.cleansheets; document.getElementById('form-paddress').value=p.address; document.getElementById('form-action-title').innerText='Edit Pemain'; document.getElementById('form-btn-cancel').classList.remove('hidden');
-    };
-    window.delP = (id) => askConfirm('Hapus pemain ini?', ()=>{ players=players.filter(x=>x.id!==id); saveData(); renderAdminAll(); showToast('Terhapus'); });
-    window.cancelPlayerEdit = () => { document.getElementById('player-crud-form').reset(); document.getElementById('edit-player-id').value=''; document.getElementById('form-pimage-base64').value=''; document.getElementById('form-action-title').innerText='Tambah Pemain'; document.getElementById('form-btn-cancel').classList.add('hidden'); document.getElementById('form-pposition').dispatchEvent(new Event('change')); };
-
-    // CRUD NEWS
-    document.getElementById('news-crud-form').onsubmit = (e) => {
-      e.preventDefault(); const id = document.getElementById('edit-news-id').value || "n"+Date.now(), n = { id, title: document.getElementById('form-ntitle').value, category: document.getElementById('form-ncategory').value, date: document.getElementById('form-ndate').value, summary: document.getElementById('form-nsummary').value, content: document.getElementById('form-ncontent').value, image: document.getElementById('form-nimage-base64').value || (document.getElementById('edit-news-id').value ? news.find(x=>x.id===id).image : defaultNews[0].image) };
-      if(document.getElementById('edit-news-id').value) { const ix = news.findIndex(x=>x.id===id); if(ix>-1) news[ix]=n; showToast('Berita diedit'); } else { news.push(n); showToast('Berita diterbitkan'); }
-      saveData(); renderAdminAll(); window.cancelNewsEdit();
-    };
-    window.editN = (id) => { const n=news.find(x=>x.id===id); if(!n) return; document.getElementById('edit-news-id').value=n.id; document.getElementById('form-ntitle').value=n.title; document.getElementById('form-ncategory').value=n.category; document.getElementById('form-ndate').value=n.date; document.getElementById('form-nsummary').value=n.summary; document.getElementById('form-ncontent').value=n.content; document.getElementById('news-form-title').innerText='Edit Berita'; document.getElementById('news-btn-cancel').classList.remove('hidden'); };
-    window.delN = (id) => askConfirm('Hapus berita?', ()=>{ news=news.filter(x=>x.id!==id); saveData(); renderAdminAll(); showToast('Terhapus'); });
-    window.cancelNewsEdit = () => { document.getElementById('news-crud-form').reset(); document.getElementById('edit-news-id').value=''; document.getElementById('form-nimage-base64').value=''; document.getElementById('news-form-title').innerText='Tulis Berita'; document.getElementById('news-btn-cancel').classList.add('hidden'); };
-
-    // CRUD GALLERY
-    document.getElementById('gallery-crud-form').onsubmit = (e) => {
-      e.preventDefault(); if(!document.getElementById('form-gimage-base64').value) return showToast('Pilih foto!','error');
-      gallery.push({ id:"g"+Date.now(), title:document.getElementById('form-gtitle').value, category:document.getElementById('form-gcategory').value, image:document.getElementById('form-gimage-base64').value });
-      saveData(); renderAdminAll(); document.getElementById('gallery-crud-form').reset(); document.getElementById('form-gimage-base64').value=''; showToast('Foto diupload');
-    };
-    window.delG = (id) => askConfirm('Hapus foto?', ()=>{ gallery=gallery.filter(x=>x.id!==id); saveData(); renderAdminAll(); showToast('Terhapus'); });
-
-    // CRUD VIDEOS
-    document.getElementById('video-crud-form').onsubmit = (e) => {
-      e.preventDefault(); const url = document.getElementById('form-vurl').value, m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-      if(!m) return showToast('Link YT tidak valid!','error');
-      videos.push({ id:"v"+Date.now(), title:document.getElementById('form-vtitle').value, youtubeId:m[1] });
-      saveData(); renderAdminAll(); document.getElementById('video-crud-form').reset(); showToast('Video ditambah');
-    };
-    window.delV = (id) => askConfirm('Hapus video?', ()=>{ videos=videos.filter(x=>x.id!==id); saveData(); renderAdminAll(); showToast('Terhapus'); });
-
-    // PUBLIC INTERACTIONS
-    window.openPModal = (id) => {
-      const p = players.find(x=>x.id===id); if(!p) return;
-      document.getElementById('detail-pcategory').innerText = p.category; document.getElementById('detail-pnumber').innerText = '#'+p.number;
-      document.getElementById('detail-pimage').src = p.image; document.getElementById('detail-pname').innerText = p.name;
-      document.getElementById('detail-pposition').innerText = p.position;
-      document.getElementById('detail-pheight').innerText = p.height||'-'; document.getElementById('detail-pweight').innerText = p.weight||'-';
-      document.getElementById('detail-pfoot').innerText = p.foot||'-'; document.getElementById('detail-page').innerText = calcAge(p.dob);
-      document.getElementById('detail-paddress').innerText = p.address;
-      const isGK = p.position==='Kiper';
-      document.getElementById('detail-outfield-stats').classList.toggle('hidden', isGK); document.getElementById('detail-goalkeeper-stats').classList.toggle('hidden', !isGK);
-      if(isGK) document.getElementById('detail-pcleansheets').innerText = p.cleansheets||'0'; else { document.getElementById('detail-pgoals').innerText = p.goals||'0'; document.getElementById('detail-passists').innerText = p.assists||'0'; }
-      document.getElementById('player-detail-modal').classList.remove('hidden');
-    };
-
-    window.readN = (id) => { const n=news.find(x=>x.id===id); if(n){ document.getElementById('reader-title').innerText=n.title; document.getElementById('reader-category').innerText=n.category; document.getElementById('reader-date').innerText=n.date; document.getElementById('reader-image').src=n.image; document.getElementById('reader-content').innerHTML=n.content.replace(/\n/g, '<br>'); document.getElementById('news-reader-modal').classList.remove('hidden'); } };
-    window.openVid = (yId) => { document.getElementById('modal-youtube-iframe').src=`https://www.youtube.com/embed/${yId}?autoplay=1`; document.getElementById('video-player-modal').classList.remove('hidden'); };
-    window.closeVideoPlayer = () => { document.getElementById('video-player-modal').classList.add('hidden'); document.getElementById('modal-youtube-iframe').src=''; };
-    
-    // Gallery Lightbox
-    let lBoxIdx = 0, curGals = [];
-    window.filterGallery = (cat) => { 
-      document.querySelectorAll('.gallery-tab').forEach(b => { 
-        if(b.innerText.toLowerCase().includes(cat.replace('match','tanding'))) { b.classList.add('bg-brand-600','text-white','shadow-md'); b.classList.remove('bg-white','dark:bg-slate-800','text-slate-600','dark:text-slate-300','border'); }
-        else { b.classList.remove('bg-brand-600','text-white','shadow-md'); b.classList.add('bg-white','dark:bg-slate-800','text-slate-600','dark:text-slate-300','border'); }
-      }); 
-      const gGrid = document.getElementById('public-gallery-grid'); gGrid.innerHTML='';
-      curGals = gallery.filter(g => cat==='all' || g.category===cat);
-      curGals.forEach((g,i) => {
-        gGrid.innerHTML += `<div onclick="window.openGal(${i})" class="aspect-[4/3] rounded-3xl overflow-hidden relative group cursor-pointer shadow-sm border border-slate-200 dark:border-slate-800"><img src="${g.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"><div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-5"><span class="text-white font-bold text-sm font-display">${g.title}</span></div></div>`;
-      });
-    };
-    window.openGal = (i) => { lBoxIdx=i; window.updLBox(); document.getElementById('gallery-lightbox').classList.remove('hidden'); };
-    window.closeLightbox = () => document.getElementById('gallery-lightbox').classList.add('hidden');
-    window.changeLightboxImage = (d) => { lBoxIdx+=d; if(lBoxIdx>=curGals.length) lBoxIdx=0; if(lBoxIdx<0) lBoxIdx=curGals.length-1; window.updLBox(); };
-    window.updLBox = () => { const g=curGals[lBoxIdx]; if(g){ document.getElementById('lightbox-image').src=g.image; document.getElementById('lightbox-title').innerText=g.title; } };
-
-    // Registration Form
-    document.getElementById('trial-registration-form').onsubmit = (e) => {
-      e.preventDefault(); document.getElementById('trial-form-loader').classList.remove('hidden');
-      setTimeout(()=>{ document.getElementById('trial-form-loader').classList.add('hidden'); document.getElementById('success-name').innerText = document.getElementById('trial-name').value; document.getElementById('trial-form-success').classList.remove('hidden'); }, 1200);
-    };
-    window.resetTrialForm = () => { document.getElementById('trial-registration-form').reset(); document.getElementById('trial-form-success').classList.add('hidden'); };
-
-    // Initial Load Logic
-    window.onload = () => {
-      if(isAdmin()) showAdminView(); else showPublicView();
-      setTimeout(()=> { document.querySelectorAll('.reveal').forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('active'); }); }, 500);
+    window.onload = function() {
+      if(sessionStorage.getItem('tc_admin') === 'true') document.getElementById('nav-cms-icon').innerText = '🔓';
+      window.renderAll();
     };
   </script>
 </body>
