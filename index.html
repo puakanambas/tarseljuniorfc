@@ -137,7 +137,6 @@
       <button onclick="window.closeAdminLogin()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl">✕</button>
       <h3 class="text-lg font-bold text-white uppercase mb-4 col-title-border">Login Dasbor Resmi</h3>
       <form id="admin-login-form" class="space-y-3">
-        <!-- Menggunakan tipe email yang benar -->
         <input type="email" id="login-email" required class="w-full px-3 py-2 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange outline-none transition" placeholder="Email Admin">
         <input type="password" id="login-password" required class="w-full px-3 py-2 bg-[#1a1a1c] border border-gray-700 text-sm text-white focus:border-brand-orange outline-none transition" placeholder="Password Akun">
         <button type="submit" class="btn-orange w-full justify-center mt-2">Otorisasi & Masuk</button>
@@ -149,7 +148,7 @@
   <header class="fixed top-0 left-0 w-full z-40 bg-black/80 backdrop-blur-md border-b border-white/5">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="flex items-center justify-between h-20">
-        <!-- Logo -->
+        <!-- Logo Bersih -->
         <a href="#" onclick="window.switchView('beranda')" class="flex items-center gap-3 cursor-pointer group">
           <img id="nav-logo-img" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=100&auto=format&fit=crop" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-lg" alt="Logo">
           <div class="leading-tight">
@@ -197,10 +196,7 @@
       
       <!-- HERO SLIDER SECTION -->
       <section class="relative h-[550px] bg-black overflow-hidden border-b border-gray-800">
-        <!-- Kontainer Slider -->
         <div id="hero-slider-container" class="relative w-full h-full"></div>
-
-        <!-- Decorative Arrows for Slider Controls -->
         <div class="absolute bottom-12 left-4 md:left-[50%] md:-translate-x-[200px] flex gap-4 text-gray-500 text-2xl z-20">
           <span class="cursor-pointer hover:text-white hover:-translate-x-1 transition-all" onclick="window.prevHeroSlide()">←</span>
           <span class="cursor-pointer hover:text-white hover:translate-x-1 transition-all" onclick="window.nextHeroSlide()">→</span>
@@ -283,7 +279,6 @@
             <!-- Col 1 -->
             <div>
               <h3 class="text-white font-bold text-sm uppercase mb-4 col-title-border">Selamat Datang</h3>
-              <!-- Logo Bersih Footer -->
               <img id="footer-logo-img" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=200&auto=format&fit=crop" class="h-16 w-auto object-contain mb-4 drop-shadow-md" alt="Site Logo">
               <p class="text-[11px] text-white font-bold mb-2">Tarsel Junior FC - Kebanggaan Masyarakat Tarempa Selatan.</p>
               <p class="text-[11px] text-gray-400 leading-relaxed">
@@ -708,6 +703,90 @@
 
   </main>
 
+  <!-- ================= MODALS DETAIL ================= -->
+  
+  <!-- Player Detail Modal -->
+  <div id="player-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded-sm">
+      <button onclick="window.closePlayerDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
+      <div class="text-center">
+        <span id="detail-pnumber" class="text-4xl font-bold text-brand-orange block font-display drop-shadow-md">#10</span>
+        <img id="detail-pimage" src="" class="w-32 h-32 object-cover mx-auto my-4 border border-gray-600 p-1 object-top rounded-full shadow-lg">
+        <h3 id="detail-pname" class="text-xl font-bold text-white uppercase">Name</h3>
+        <span id="detail-pposition" class="text-xs text-gray-400 uppercase tracking-widest font-bold">Position</span>
+        <div class="grid grid-cols-2 gap-2 mt-4 text-left text-xs text-gray-300 bg-[#1a1a1c] p-3 border border-gray-700 shadow-inner rounded-sm">
+          <div>Tinggi: <span id="detail-pheight" class="text-white font-bold"></span> cm</div>
+          <div>Berat: <span id="detail-pweight" class="text-white font-bold"></span> kg</div>
+          <div id="detail-outfield-stats" class="col-span-2 border-t border-gray-700 pt-2 mt-1 flex justify-between">
+            <span>Gol: <span id="detail-pgoals" class="text-brand-orange font-bold text-sm"></span></span>
+            <span>Assist: <span id="detail-passists" class="text-brand-orange font-bold text-sm"></span></span>
+          </div>
+          <div id="detail-goalkeeper-stats" class="hidden col-span-2 border-t border-gray-700 pt-2 mt-1">
+            Clean Sheet: <span id="detail-pcleansheets" class="text-brand-orange font-bold text-sm"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Staff Detail Modal -->
+  <div id="staff-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded-sm">
+      <button onclick="window.closeStaffDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
+      <div class="text-center mt-4">
+        <img id="detail-simage" src="" class="w-32 h-32 object-cover mx-auto my-4 border border-gray-600 p-1 rounded-full object-top shadow-lg">
+        <h3 id="detail-sname" class="text-xl font-bold text-white uppercase">Name</h3>
+        <span id="detail-srole" class="text-xs text-brand-orange uppercase tracking-widest font-bold block mt-1">Role</span>
+        <div class="mt-4 text-left text-xs text-gray-300 bg-[#1a1a1c] p-3 border border-gray-700 rounded-sm shadow-inner">
+          <div class="text-center font-bold text-white text-sm" id="detail-stitle">Title</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Award Detail Modal -->
+  <div id="award-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-md relative shadow-2xl rounded-sm">
+      <button onclick="window.closeAwardDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
+      <div class="text-center mt-2">
+        <span id="detail-ayear" class="text-3xl font-bold text-brand-orange block font-display drop-shadow-md">2025</span>
+        <img id="detail-aimage" src="" class="w-full h-48 object-cover mx-auto my-4 border border-gray-600 p-1 shadow-lg rounded-sm">
+        <h3 id="detail-atitle" class="text-xl font-bold text-white uppercase mb-3">Title</h3>
+        <p id="detail-adesc" class="text-sm text-gray-400 leading-relaxed text-center bg-[#1a1a1c] p-4 border border-gray-700 rounded-sm shadow-inner"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- News Reader Modal -->
+  <div id="news-reader-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto relative shadow-2xl rounded-sm">
+      <button onclick="window.closeNewsReader()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
+      <span id="reader-date" class="text-[10px] text-brand-orange mb-2 block uppercase font-bold tracking-wider">Date</span>
+      <h3 id="reader-title" class="text-2xl font-bold text-white mb-4 uppercase">Title</h3>
+      <img id="reader-image" class="w-full h-56 object-cover mb-6 border border-gray-700 shadow-md rounded-sm">
+      <div id="reader-content" class="text-sm text-gray-300 leading-relaxed space-y-4 whitespace-pre-wrap bg-[#1a1a1c] p-5 border border-gray-700 rounded-sm shadow-inner">Content</div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="gallery-lightbox" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
+    <button onclick="window.closeLightbox()" class="absolute top-4 right-6 text-white text-3xl font-extrabold transition hover:text-brand-orange">✕</button>
+    <div class="flex items-center gap-4">
+      <button onclick="window.changeLightboxImage(-1)" class="text-gray-500 hover:text-brand-orange text-4xl transition">❮</button>
+      <img id="lightbox-image" class="max-w-4xl max-h-[75vh] object-contain border border-gray-800 shadow-2xl" src="">
+      <button onclick="window.changeLightboxImage(1)" class="text-gray-500 hover:text-brand-orange text-4xl transition">❯</button>
+    </div>
+    <h3 id="lightbox-title" class="text-white mt-4 text-sm uppercase tracking-wider font-bold"></h3>
+  </div>
+
+  <!-- Video Player -->
+  <div id="video-player-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full aspect-video bg-black border border-gray-800 shadow-2xl">
+      <button onclick="window.closeVideoPlayer()" class="absolute -top-10 right-0 text-white text-2xl font-bold hover:text-brand-orange transition">✕</button>
+      <iframe id="modal-youtube-iframe" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
   <!-- ================= LOGIC JAVASCRIPT FIREBASE ================= -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -831,7 +910,17 @@
       const grid = document.getElementById('public-roster-grid');
       if(!grid) return; grid.innerHTML = '';
       players.filter(p => (p.name.toLowerCase().includes(q) || p.position.toLowerCase().includes(q)) && (f === 'all' || p.category === f)).forEach(p => {
-        grid.innerHTML += `<div onclick="window.openPlayerDetail('${p.id}')" class="bg-[#1a1a1c] border border-gray-800 p-2 cursor-pointer hover:border-brand-orange transition-all duration-200 group hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 rounded-sm"><div class="h-48 relative bg-gray-900 border border-gray-800 overflow-hidden"><span class="absolute top-2 left-2 z-10 bg-brand-orange text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm shadow-md">#${p.number}</span><img src="${p.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100 object-top"></div><div class="pt-3 text-center"><h4 class="text-sm font-bold text-white uppercase group-hover:text-brand-orange transition">${p.name}</h4><span class="text-[10px] text-gray-500 uppercase tracking-widest">${p.position}</span></div></div>`;
+        grid.innerHTML += `
+          <div onclick="window.openPlayerDetail('${p.id}')" class="bg-[#1a1a1c] border border-gray-800 p-2 cursor-pointer hover:border-brand-orange transition-all duration-200 group hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 rounded-sm">
+            <div class="h-48 relative bg-gray-900 border border-gray-800 overflow-hidden">
+              <span class="absolute top-2 left-2 z-10 bg-brand-orange text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm shadow-md">#${p.number}</span>
+              <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100 object-top">
+            </div>
+            <div class="pt-3 text-center">
+              <h4 class="text-sm font-bold text-white uppercase group-hover:text-brand-orange transition">${p.name}</h4>
+              <span class="text-[10px] text-gray-500 uppercase tracking-widest">${p.position}</span>
+            </div>
+          </div>`;
       });
     };
 
@@ -839,7 +928,13 @@
       const grid = document.getElementById('public-staff-grid');
       if(!grid) return; grid.innerHTML = '';
       staff.forEach(s => {
-        grid.innerHTML += `<div onclick="window.openStaffDetail('${s.id}')" class="bg-[#1a1a1c] border border-gray-800 p-2 text-center group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm"><img src="${s.image}" class="w-full h-48 object-cover border border-gray-800 grayscale group-hover:grayscale-0 transition duration-500 mb-3 object-top"><h4 class="text-sm font-bold text-white uppercase group-hover:text-brand-orange transition">${s.name}</h4><span class="text-[10px] text-brand-orange uppercase tracking-widest">${s.role}</span><p class="text-xs text-gray-500 mt-1">${s.title}</p></div>`;
+        grid.innerHTML += `
+          <div onclick="window.openStaffDetail('${s.id}')" class="bg-[#1a1a1c] border border-gray-800 p-2 text-center group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm">
+            <img src="${s.image}" class="w-full h-48 object-cover border border-gray-800 grayscale group-hover:grayscale-0 transition duration-500 mb-3 object-top">
+            <h4 class="text-sm font-bold text-white uppercase group-hover:text-brand-orange transition">${s.name}</h4>
+            <span class="text-[10px] text-brand-orange uppercase tracking-widest">${s.role}</span>
+            <p class="text-xs text-gray-500 mt-1">${s.title}</p>
+          </div>`;
       });
     };
 
@@ -847,7 +942,17 @@
       const grid = document.getElementById('public-awards-grid');
       if(!grid) return; grid.innerHTML = '';
       awards.forEach(a => {
-        grid.innerHTML += `<div onclick="window.openAwardDetail('${a.id}')" class="bg-[#1a1a1c] border border-gray-800 flex flex-col group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm"><div class="relative h-48 border-b border-gray-800 overflow-hidden"><span class="absolute top-3 right-3 bg-brand-orange text-white font-bold text-xs px-2 py-1 z-10 shadow-lg">${a.year}</span><img src="${a.image}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-90 group-hover:opacity-100 object-center"></div><div class="p-4"><h4 class="text-white font-bold uppercase mb-2 text-sm group-hover:text-brand-orange transition">${a.title}</h4><p class="text-xs text-gray-400 line-clamp-3">${a.desc}</p></div></div>`;
+        grid.innerHTML += `
+          <div onclick="window.openAwardDetail('${a.id}')" class="bg-[#1a1a1c] border border-gray-800 flex flex-col group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm">
+            <div class="relative h-48 border-b border-gray-800 overflow-hidden">
+              <span class="absolute top-3 right-3 bg-brand-orange text-white font-bold text-xs px-2 py-1 z-10 shadow-lg">${a.year}</span>
+              <img src="${a.image}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-90 group-hover:opacity-100 object-center">
+            </div>
+            <div class="p-4">
+              <h4 class="text-white font-bold uppercase mb-2 text-sm group-hover:text-brand-orange transition">${a.title}</h4>
+              <p class="text-xs text-gray-400 line-clamp-3">${a.desc}</p>
+            </div>
+          </div>`;
       });
     };
 
@@ -855,7 +960,15 @@
       const grid = document.getElementById('public-news-grid');
       if(!grid) return; grid.innerHTML = '';
       news.forEach(n => {
-        grid.innerHTML += `<div class="bg-[#1a1a1c] border border-gray-800 hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm overflow-hidden group" onclick="window.readNews('${n.id}')"><img src="${n.image}" class="w-full h-48 object-cover border-b border-gray-800 opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"><div class="p-4 bg-[#1a1a1c] relative z-10"><span class="text-[10px] text-brand-orange font-bold uppercase mb-1 block">${n.date} | ${n.category}</span><h3 class="text-white font-bold text-sm mb-2 leading-tight uppercase group-hover:text-brand-orange transition">${n.title}</h3><p class="text-xs text-gray-400 line-clamp-2">${n.summary}</p></div></div>`;
+        grid.innerHTML += `
+          <div class="bg-[#1a1a1c] border border-gray-800 hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 cursor-pointer rounded-sm overflow-hidden group" onclick="window.readNews('${n.id}')">
+            <img src="${n.image}" class="w-full h-48 object-cover border-b border-gray-800 opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+            <div class="p-4 bg-[#1a1a1c] relative z-10">
+              <span class="text-[10px] text-brand-orange font-bold uppercase mb-1 block">${n.date} | ${n.category}</span>
+              <h3 class="text-white font-bold text-sm mb-2 leading-tight uppercase group-hover:text-brand-orange transition">${n.title}</h3>
+              <p class="text-xs text-gray-400 line-clamp-2">${n.summary}</p>
+            </div>
+          </div>`;
       });
     };
 
@@ -863,7 +976,13 @@
       const grid = document.getElementById('public-gallery-grid-full');
       if(!grid) return; grid.innerHTML = '';
       gallery.forEach((g, i) => {
-        grid.innerHTML += `<div onclick="window.openLightbox(${i})" class="relative group cursor-pointer border border-gray-800 active:scale-95 transition-all rounded-sm overflow-hidden"><img src="${g.image}" class="w-full h-32 md:h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"><div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><span class="text-white text-xs font-bold uppercase border border-brand-orange bg-brand-orange/20 px-2 py-1 shadow-lg">Lihat</span></div></div>`;
+        grid.innerHTML += `
+          <div onclick="window.openLightbox(${i})" class="relative group cursor-pointer border border-gray-800 active:scale-95 transition-all rounded-sm overflow-hidden">
+            <img src="${g.image}" class="w-full h-32 md:h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
+            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="text-white text-xs font-bold uppercase border border-brand-orange bg-brand-orange/20 px-2 py-1 shadow-lg">Lihat</span>
+            </div>
+          </div>`;
       });
     };
 
@@ -871,7 +990,18 @@
       const grid = document.getElementById('public-video-grid');
       if(!grid) return; grid.innerHTML = '';
       videos.forEach(v => {
-        grid.innerHTML += `<div class="bg-[#1a1a1c] border border-gray-800 cursor-pointer group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 rounded-sm" onclick="window.openVideoPlayer('${v.youtubeId}')"><div class="relative aspect-video border-b border-gray-800 overflow-hidden"><img src="https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"><div class="absolute inset-0 flex items-center justify-center"><div class="w-12 h-12 bg-brand-orange text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(217,83,30,0.6)] group-hover:scale-110 transition">▶</div></div></div><div class="p-3"><h4 class="text-white text-sm font-bold uppercase group-hover:text-brand-orange transition">${v.title}</h4></div></div>`;
+        grid.innerHTML += `
+          <div class="bg-[#1a1a1c] border border-gray-800 cursor-pointer group hover:border-brand-orange hover:shadow-[0_0_20px_rgba(217,83,30,0.3)] active:scale-95 transition-all duration-200 rounded-sm" onclick="window.openVideoPlayer('${v.youtubeId}')">
+            <div class="relative aspect-video border-b border-gray-800 overflow-hidden">
+              <img src="https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-12 h-12 bg-brand-orange text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(217,83,30,0.6)] group-hover:scale-110 transition">▶</div>
+              </div>
+            </div>
+            <div class="p-3">
+              <h4 class="text-white text-sm font-bold uppercase group-hover:text-brand-orange transition">${v.title}</h4>
+            </div>
+          </div>`;
       });
     };
 
@@ -1220,46 +1350,11 @@
       });
     }
 
-    window.deleteData = async function(type, id) {
-      if(confirm("Hapus data ini secara permanen?")) {
-        if(!currentUser) {
-           window.showToast("Gagal menghapus: Tidak ada koneksi Firestore.");
-           return;
-        }
-        let col = type;
-        if(type === 'video') col = 'videos';
-        try {
-          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id));
-          window.cancelEdit(type === 'hero' ? 'hero' : (type === 'gallery' ? 'gallery' : (type === 'videos' ? 'video' : type.slice(0,-1))));
-          window.showToast("Data Terhapus");
-        } catch(e) {
-          window.showToast("Gagal: Izin ditolak oleh Firebase");
-        }
-      }
-    };
-
+    // CMS Form Submit Handlers (Mengganti window.saveData menjadi Firebase native call untuk menghindari import leak)
     async function saveData(collectionName, dataObj) {
       if(!currentUser) return;
-      try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, dataObj.id), dataObj);
-      } catch(e) {
-        window.showToast("Gagal menyimpan: Izin Firestore Ditolak!");
-        throw e;
-      }
+      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, dataObj.id), dataObj);
     }
-
-    // CMS Form Submit Handlers 
-    document.getElementById('admin-login-form')?.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      try {
-        await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value);
-        sessionStorage.setItem('tc_admin', 'true');
-        window.closeAdminLogin(); document.getElementById('nav-cms-icon').innerText = '🔓';
-        window.showToast("Otorisasi Berhasil!"); window.switchView('cms'); e.target.reset();
-      } catch (err) {
-        window.showToast("Akses Ditolak!");
-      }
-    });
 
     document.getElementById('player-crud-form')?.addEventListener('submit', async e => {
       e.preventDefault(); window.showLoader();
@@ -1356,6 +1451,7 @@
       window.hideLoader();
     });
 
+    // Logo Upload handler
     document.getElementById('logo-crud-form')?.addEventListener('submit', async e => {
       e.preventDefault(); window.showLoader();
       const fileInput = document.getElementById('form-logofile');
@@ -1368,6 +1464,7 @@
       window.hideLoader();
     });
 
+    // Background upload handler
     document.getElementById('bg-crud-form')?.addEventListener('submit', async e => {
       e.preventDefault(); window.showLoader();
       const fileInput = document.getElementById('form-bgfile');
