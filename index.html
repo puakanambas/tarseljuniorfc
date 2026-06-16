@@ -259,7 +259,7 @@
         </div>
       </section>
 
-      <!-- JOIN OUR CLUB BANNER (Background Diatur via Javascript) -->
+      <!-- JOIN OUR CLUB BANNER -->
       <section id="join-section" class="relative py-16 transition-all duration-500 border-b border-gray-800" style="background-size: cover; background-repeat: no-repeat;">
         <div class="absolute inset-0 bg-black/60"></div>
         <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
@@ -283,6 +283,7 @@
             <!-- Col 1 -->
             <div>
               <h3 class="text-white font-bold text-sm uppercase mb-4 col-title-border">Selamat Datang</h3>
+              <!-- Logo Bersih Footer -->
               <img id="footer-logo-img" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=200&auto=format&fit=crop" class="h-16 w-auto object-contain mb-4 drop-shadow-md" alt="Site Logo">
               <p class="text-[11px] text-white font-bold mb-2">Tarsel Junior FC - Kebanggaan Masyarakat Tarempa Selatan.</p>
               <p class="text-[11px] text-gray-400 leading-relaxed">
@@ -707,90 +708,6 @@
 
   </main>
 
-  <!-- ================= MODALS DETAIL ================= -->
-  
-  <!-- Player Detail Modal -->
-  <div id="player-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded-sm">
-      <button onclick="window.closePlayerDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
-      <div class="text-center">
-        <span id="detail-pnumber" class="text-4xl font-bold text-brand-orange block font-display drop-shadow-md">#10</span>
-        <img id="detail-pimage" src="" class="w-32 h-32 object-cover mx-auto my-4 border border-gray-600 p-1 object-top rounded-full shadow-lg">
-        <h3 id="detail-pname" class="text-xl font-bold text-white uppercase">Name</h3>
-        <span id="detail-pposition" class="text-xs text-gray-400 uppercase tracking-widest font-bold">Position</span>
-        <div class="grid grid-cols-2 gap-2 mt-4 text-left text-xs text-gray-300 bg-[#1a1a1c] p-3 border border-gray-700 shadow-inner rounded-sm">
-          <div>Tinggi: <span id="detail-pheight" class="text-white font-bold"></span> cm</div>
-          <div>Berat: <span id="detail-pweight" class="text-white font-bold"></span> kg</div>
-          <div id="detail-outfield-stats" class="col-span-2 border-t border-gray-700 pt-2 mt-1 flex justify-between">
-            <span>Gol: <span id="detail-pgoals" class="text-brand-orange font-bold text-sm"></span></span>
-            <span>Assist: <span id="detail-passists" class="text-brand-orange font-bold text-sm"></span></span>
-          </div>
-          <div id="detail-goalkeeper-stats" class="hidden col-span-2 border-t border-gray-700 pt-2 mt-1">
-            Clean Sheet: <span id="detail-pcleansheets" class="text-brand-orange font-bold text-sm"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Staff Detail Modal -->
-  <div id="staff-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded-sm">
-      <button onclick="window.closeStaffDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
-      <div class="text-center mt-4">
-        <img id="detail-simage" src="" class="w-32 h-32 object-cover mx-auto my-4 border border-gray-600 p-1 rounded-full object-top shadow-lg">
-        <h3 id="detail-sname" class="text-xl font-bold text-white uppercase">Name</h3>
-        <span id="detail-srole" class="text-xs text-brand-orange uppercase tracking-widest font-bold block mt-1">Role</span>
-        <div class="mt-4 text-left text-xs text-gray-300 bg-[#1a1a1c] p-3 border border-gray-700 rounded-sm shadow-inner">
-          <div class="text-center font-bold text-white text-sm" id="detail-stitle">Title</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Award Detail Modal -->
-  <div id="award-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-md relative shadow-2xl rounded-sm">
-      <button onclick="window.closeAwardDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
-      <div class="text-center mt-2">
-        <span id="detail-ayear" class="text-3xl font-bold text-brand-orange block font-display drop-shadow-md">2025</span>
-        <img id="detail-aimage" src="" class="w-full h-48 object-cover mx-auto my-4 border border-gray-600 p-1 shadow-lg rounded-sm">
-        <h3 id="detail-atitle" class="text-xl font-bold text-white uppercase mb-3">Title</h3>
-        <p id="detail-adesc" class="text-sm text-gray-400 leading-relaxed text-center bg-[#1a1a1c] p-4 border border-gray-700 rounded-sm shadow-inner"></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- News Reader Modal -->
-  <div id="news-reader-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-    <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto relative shadow-2xl rounded-sm">
-      <button onclick="window.closeNewsReader()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
-      <span id="reader-date" class="text-[10px] text-brand-orange mb-2 block uppercase font-bold tracking-wider">Date</span>
-      <h3 id="reader-title" class="text-2xl font-bold text-white mb-4 uppercase">Title</h3>
-      <img id="reader-image" class="w-full h-56 object-cover mb-6 border border-gray-700 shadow-md rounded-sm">
-      <div id="reader-content" class="text-sm text-gray-300 leading-relaxed space-y-4 whitespace-pre-wrap bg-[#1a1a1c] p-5 border border-gray-700 rounded-sm shadow-inner">Content</div>
-    </div>
-  </div>
-
-  <!-- Lightbox -->
-  <div id="gallery-lightbox" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
-    <button onclick="window.closeLightbox()" class="absolute top-4 right-6 text-white text-3xl font-extrabold transition hover:text-brand-orange">✕</button>
-    <div class="flex items-center gap-4">
-      <button onclick="window.changeLightboxImage(-1)" class="text-gray-500 hover:text-brand-orange text-4xl transition">❮</button>
-      <img id="lightbox-image" class="max-w-4xl max-h-[75vh] object-contain border border-gray-800 shadow-2xl" src="">
-      <button onclick="window.changeLightboxImage(1)" class="text-gray-500 hover:text-brand-orange text-4xl transition">❯</button>
-    </div>
-    <h3 id="lightbox-title" class="text-white mt-4 text-sm uppercase tracking-wider font-bold"></h3>
-  </div>
-
-  <!-- Video Player -->
-  <div id="video-player-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
-    <div class="relative max-w-4xl w-full aspect-video bg-black border border-gray-800 shadow-2xl">
-      <button onclick="window.closeVideoPlayer()" class="absolute -top-10 right-0 text-white text-2xl font-bold hover:text-brand-orange transition">✕</button>
-      <iframe id="modal-youtube-iframe" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
-    </div>
-  </div>
-
   <!-- ================= LOGIC JAVASCRIPT FIREBASE ================= -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -808,6 +725,10 @@
     window.showLoader = function() { document.getElementById('upload-loader').classList.remove('hidden'); };
     window.hideLoader = function() { document.getElementById('upload-loader').classList.add('hidden'); };
     
+    // VARIABEL GLOBAL DI WINDOW
+    window.currentHeroSlide = 0;
+    let heroInterval;
+
     window.renderAll = function() {
       const navLogo = document.getElementById('nav-logo-img');
       const footerLogo = document.getElementById('footer-logo-img');
@@ -836,7 +757,7 @@
         container.innerHTML = `<div class="hero-slide absolute inset-0 w-full h-full bg-gray-900 flex items-center justify-center"><h1 class="text-white">Tidak ada slide</h1></div>`; return;
       }
       heroSlidesData.forEach((slide, idx) => {
-        const isActive = idx === currentHeroSlide ? 'opacity-100 z-10' : 'opacity-0 z-0';
+        const isActive = idx === window.currentHeroSlide ? 'opacity-100 z-10' : 'opacity-0 z-0';
         const imgPosClass = slide.imgPos || 'object-center';
         container.innerHTML += `
           <div class="hero-slide absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${isActive}">
@@ -859,15 +780,15 @@
     window.showHeroSlide = function(index) {
       const slides = document.querySelectorAll('.hero-slide');
       if(slides.length === 0) return;
-      currentHeroSlide = (index < 0) ? slides.length - 1 : (index >= slides.length ? 0 : index);
+      window.currentHeroSlide = (index < 0) ? slides.length - 1 : (index >= slides.length ? 0 : index);
       slides.forEach((slide, idx) => {
-        slide.classList.toggle('opacity-100', idx === currentHeroSlide); slide.classList.toggle('z-10', idx === currentHeroSlide);
-        slide.classList.toggle('opacity-0', idx !== currentHeroSlide); slide.classList.toggle('z-0', idx !== currentHeroSlide);
+        slide.classList.toggle('opacity-100', idx === window.currentHeroSlide); slide.classList.toggle('z-10', idx === window.currentHeroSlide);
+        slide.classList.toggle('opacity-0', idx !== window.currentHeroSlide); slide.classList.toggle('z-0', idx !== window.currentHeroSlide);
       });
     };
-    window.nextHeroSlide = function() { window.showHeroSlide(currentHeroSlide + 1); window.resetHeroInterval(); };
-    window.prevHeroSlide = function() { window.showHeroSlide(currentHeroSlide - 1); window.resetHeroInterval(); };
-    window.resetHeroInterval = function() { clearInterval(heroInterval); heroInterval = setInterval(() => { window.showHeroSlide(currentHeroSlide + 1); }, 5000); };
+    window.nextHeroSlide = function() { window.showHeroSlide(window.currentHeroSlide + 1); window.resetHeroInterval(); };
+    window.prevHeroSlide = function() { window.showHeroSlide(window.currentHeroSlide - 1); window.resetHeroInterval(); };
+    window.resetHeroInterval = function() { clearInterval(heroInterval); heroInterval = setInterval(() => { window.showHeroSlide(window.currentHeroSlide + 1); }, 5000); };
 
     window.switchView = function(viewId) {
       document.querySelectorAll('.app-view').forEach(el => el.classList.remove('active'));
@@ -954,7 +875,18 @@
       });
     };
 
-    // --- MODALS DETAIL INTERACTION ---
+    window.renderAdminTables = function() {
+      const render = (id, data, htmlFn) => { const el = document.getElementById(id); if(el){ el.innerHTML = ''; data.forEach(d => el.innerHTML += htmlFn(d)); } };
+      
+      render('admin-table-body', players, p => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${p.image}" class="w-8 h-8 object-cover rounded-sm object-top"></td><td>${p.name} <span class="text-[9px] text-gray-500 block">${p.address}</span></td><td>${p.position}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('players','${p.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('players','${p.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-staff-table-body', staff, s => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${s.image}" class="w-8 h-8 object-cover rounded-sm object-top"></td><td>${s.name}</td><td>${s.role}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('staff','${s.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('staff','${s.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-awards-table-body', awards, a => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${a.image}" class="w-10 h-6 object-cover rounded-sm"></td><td>${a.title}</td><td>${a.year}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('awards','${a.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('awards','${a.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-news-table-body', news, n => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2">${n.title}</td><td>${n.date}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('news','${n.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('news','${n.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-gallery-table-body', gallery, g => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${g.image}" class="w-10 h-6 object-cover rounded-sm"></td><td class="truncate max-w-[100px]">${g.title}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('gallery','${g.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('gallery','${g.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-video-table-body', videos, v => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2 truncate max-w-[100px]">${v.title}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('videos','${v.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('videos','${v.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      render('admin-hero-table-body', heroSlidesData, h => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${h.image}" class="w-10 h-6 object-cover rounded-sm"></td><td>${h.h1}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('hero','${h.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('hero','${h.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+    };
+
     window.openPlayerDetail = function(id) {
       const p = players.find(x => x.id === id);
       if(p) {
@@ -1066,18 +998,6 @@
       document.getElementById(`cms-${tab}-view`)?.classList.remove('hidden');
       document.getElementById(`tab-btn-${tab}`)?.classList.add('bg-brand-orange', 'text-white');
       document.getElementById(`tab-btn-${tab}`)?.classList.remove('bg-gray-800', 'text-gray-300');
-    };
-
-    window.renderAdminTables = function() {
-      const render = (id, data, htmlFn) => { const el = document.getElementById(id); if(el){ el.innerHTML = ''; data.forEach(d => el.innerHTML += htmlFn(d)); } };
-      
-      render('admin-table-body', players, p => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${p.image}" class="w-8 h-8 object-cover rounded-sm object-top"></td><td>${p.name} <span class="text-[9px] text-gray-500 block">${p.address}</span></td><td>${p.position}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('players','${p.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('players','${p.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
-      render('admin-staff-table-body', staff, s => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${s.image}" class="w-8 h-8 object-cover rounded-sm object-top"></td><td>${s.name}</td><td>${s.role}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('staff','${s.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('staff','${s.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
-      render('admin-awards-table-body', awards, a => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${a.image}" class="w-10 h-6 object-cover rounded-sm"></td><td>${a.title}</td><td>${a.year}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('awards','${a.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('awards','${a.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
-      render('admin-news-table-body', news, n => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2">${n.title}</td><td>${n.date}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('news','${n.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('news','${n.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
-      render('admin-gallery-table-body', gallery, g => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${g.image}" class="w-10 h-6 object-cover rounded-sm"></td><td class="truncate max-w-[100px]">${g.title}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('gallery','${g.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('gallery','${g.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
-      render('admin-video-table-body', videos, v => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2 truncate max-w-[100px]">${v.title}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('videos','${v.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('videos','${v.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
-      render('admin-hero-table-body', heroSlidesData, h => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${h.image}" class="w-10 h-6 object-cover rounded-sm"></td><td>${h.h1}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('hero','${h.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('hero','${h.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
     };
 
     window.editData = function(type, id) {
@@ -1233,7 +1153,8 @@
         if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
           try {
             await signInWithCustomToken(auth, __initial_auth_token);
-          } catch (e) {
+          } catch (customTokenError) {
+            console.warn("Login anonim fallback...", customTokenError);
             await signInAnonymously(auth);
           }
         } else {
@@ -1260,18 +1181,18 @@
         onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', colName), snapshot => {
           if(snapshot.empty) {
              arrayRefSetter(defaultData);
-             window.renderAll();
+             if(typeof window.renderAll === 'function') window.renderAll();
           } else {
              const arr = [];
              snapshot.forEach(doc => arr.push({id: doc.id, ...doc.data()}));
              arr.sort((a,b) => b.id.localeCompare(a.id)); 
              arrayRefSetter(arr);
-             window.renderAll();
+             if(typeof window.renderAll === 'function') window.renderAll();
           }
         }, err => {
-          console.error("Snapshot error:", err);
+          console.warn(`Fallback ke data default untuk ${colName} karena Firestore rules.`);
           arrayRefSetter(defaultData);
-          window.renderAll();
+          if(typeof window.renderAll === 'function') window.renderAll();
         });
       };
 
@@ -1292,22 +1213,54 @@
               backgroundPos = d.data().pos || "center";
             }
           });
-          window.renderAll();
+          if(typeof window.renderAll === 'function') window.renderAll();
         }
-      }, err => console.error(err));
+      }, err => {
+        console.warn("Menggunakan pengaturan default.");
+      });
     }
 
-    // --- CMS EDIT LOGIC & FIRESTORE OPS ---
+    window.deleteData = async function(type, id) {
+      if(confirm("Hapus data ini secara permanen?")) {
+        if(!currentUser) {
+           window.showToast("Gagal menghapus: Tidak ada koneksi Firestore.");
+           return;
+        }
+        let col = type;
+        if(type === 'video') col = 'videos';
+        try {
+          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id));
+          window.cancelEdit(type === 'hero' ? 'hero' : (type === 'gallery' ? 'gallery' : (type === 'videos' ? 'video' : type.slice(0,-1))));
+          window.showToast("Data Terhapus");
+        } catch(e) {
+          window.showToast("Gagal: Izin ditolak oleh Firebase");
+        }
+      }
+    };
+
     async function saveData(collectionName, dataObj) {
       if(!currentUser) return;
       try {
         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, dataObj.id), dataObj);
       } catch(e) {
-        window.showToast("Penyimpanan lokal digunakan (Izin Firestore ditolak)");
+        window.showToast("Gagal menyimpan: Izin Firestore Ditolak!");
+        throw e;
       }
     }
 
-    // CMS Form Submit Handlers
+    // CMS Form Submit Handlers 
+    document.getElementById('admin-login-form')?.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value);
+        sessionStorage.setItem('tc_admin', 'true');
+        window.closeAdminLogin(); document.getElementById('nav-cms-icon').innerText = '🔓';
+        window.showToast("Otorisasi Berhasil!"); window.switchView('cms'); e.target.reset();
+      } catch (err) {
+        window.showToast("Akses Ditolak!");
+      }
+    });
+
     document.getElementById('player-crud-form')?.addEventListener('submit', async e => {
       e.preventDefault(); window.showLoader();
       const id = document.getElementById('edit-player-id').value;
@@ -1318,8 +1271,8 @@
       else imgData = 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=600&auto=format&fit=crop';
 
       const newData = { id: id || 'p'+Date.now(), name:document.getElementById('form-pname').value, address:document.getElementById('form-paddress').value, number:document.getElementById('form-pnumber').value, dob:document.getElementById('form-pdob').value, height:document.getElementById('form-pheight').value, weight:document.getElementById('form-pweight').value, foot:document.getElementById('form-pfoot').value, position:document.getElementById('form-pposition').value, category:document.getElementById('form-pcategory').value, goals:document.getElementById('form-pgoals').value, assists:document.getElementById('form-passists').value, cleansheets:document.getElementById('form-pcleansheets').value, image: imgData };
-      await saveData('players', newData);
-      e.target.reset(); window.cancelEdit('player'); window.hideLoader(); window.showToast(id ? "Pemain Diperbarui" : "Pemain Disimpan");
+      try { await saveData('players', newData); e.target.reset(); window.cancelEdit('player'); window.showToast(id ? "Pemain Diperbarui" : "Pemain Disimpan"); } catch(err){}
+      window.hideLoader(); 
     });
     
     document.getElementById('staff-crud-form')?.addEventListener('submit', async e => {
@@ -1332,8 +1285,8 @@
       else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop';
 
       const newData = { id: id || 's'+Date.now(), name:document.getElementById('form-sname').value, role:document.getElementById('form-srole').value, title:document.getElementById('form-stitle').value, image: imgData };
-      await saveData('staff', newData);
-      e.target.reset(); window.cancelEdit('staff'); window.hideLoader(); window.showToast(id ? "Staf Diperbarui" : "Staf Disimpan");
+      try { await saveData('staff', newData); e.target.reset(); window.cancelEdit('staff'); window.showToast(id ? "Staf Diperbarui" : "Staf Disimpan"); } catch(err){}
+      window.hideLoader();
     });
 
     document.getElementById('awards-crud-form')?.addEventListener('submit', async e => {
@@ -1346,8 +1299,8 @@
       else imgData = 'https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=800&auto=format&fit=crop';
 
       const newData = { id: id || 'a'+Date.now(), title:document.getElementById('form-atitle').value, year:document.getElementById('form-ayear').value, desc:document.getElementById('form-adesc').value, image: imgData };
-      await saveData('awards', newData);
-      e.target.reset(); window.cancelEdit('awards'); window.hideLoader(); window.showToast(id ? "Prestasi Diperbarui" : "Prestasi Disimpan");
+      try { await saveData('awards', newData); e.target.reset(); window.cancelEdit('awards'); window.showToast(id ? "Prestasi Diperbarui" : "Prestasi Disimpan"); } catch(err){}
+      window.hideLoader();
     });
 
     document.getElementById('news-crud-form')?.addEventListener('submit', async e => {
@@ -1360,8 +1313,8 @@
       else imgData = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop';
 
       const newData = { id: id || 'n'+Date.now(), title:document.getElementById('form-ntitle').value, category:document.getElementById('form-ncategory').value, date:document.getElementById('form-ndate').value, summary:document.getElementById('form-nsummary').value, content:document.getElementById('form-ncontent').value, image: imgData };
-      await saveData('news', newData);
-      e.target.reset(); window.cancelEdit('news'); window.hideLoader(); window.showToast(id ? "Berita Diperbarui" : "Berita Diterbitkan");
+      try { await saveData('news', newData); e.target.reset(); window.cancelEdit('news'); window.showToast(id ? "Berita Diperbarui" : "Berita Diterbitkan"); } catch(err){}
+      window.hideLoader();
     });
 
     document.getElementById('gallery-crud-form')?.addEventListener('submit', async e => {
@@ -1375,8 +1328,8 @@
       if(!imgData && !id) { window.hideLoader(); window.showToast("Harap pilih gambar!"); return; } 
 
       const newData = { id: id || 'g'+Date.now(), title:document.getElementById('form-gtitle').value, category:document.getElementById('form-gcategory').value, image: imgData };
-      await saveData('gallery', newData);
-      e.target.reset(); window.cancelEdit('gallery'); window.hideLoader(); window.showToast(id ? "Foto Diperbarui" : "Foto Disimpan");
+      try { await saveData('gallery', newData); e.target.reset(); window.cancelEdit('gallery'); window.showToast(id ? "Foto Diperbarui" : "Foto Disimpan"); } catch(err){}
+      window.hideLoader();
     });
 
     document.getElementById('video-crud-form')?.addEventListener('submit', async e => {
@@ -1385,8 +1338,7 @@
       const ytId = document.getElementById('form-vurl').value.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/)?.[1];
       if(ytId) { 
         const newData = { id: id || 'v'+Date.now(), title:document.getElementById('form-vtitle').value, youtubeId:ytId };
-        await saveData('videos', newData);
-        e.target.reset(); window.cancelEdit('video'); window.showToast(id ? "Video Diperbarui" : "Video Ditambahkan"); 
+        try { await saveData('videos', newData); e.target.reset(); window.cancelEdit('video'); window.showToast(id ? "Video Diperbarui" : "Video Ditambahkan"); } catch(err){}
       } else { window.showToast("Link YouTube Tidak Valid!"); }
     });
 
@@ -1400,11 +1352,10 @@
       else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1400&auto=format&fit=crop';
 
       const newData = { id: id || 'h'+Date.now(), h1:document.getElementById('form-h1').value, h2:document.getElementById('form-h2').value, desc:document.getElementById('form-hdesc').value, btnTxt:document.getElementById('form-hbtn').value, btnLink:document.getElementById('form-hlink').value, imgPos:document.getElementById('form-hpos').value, image: imgData };
-      await saveData('hero', newData);
-      e.target.reset(); window.cancelEdit('hero'); window.hideLoader(); window.showToast(id ? "Slide Diperbarui" : "Slide Ditambahkan");
+      try { await saveData('hero', newData); e.target.reset(); window.cancelEdit('hero'); window.showToast(id ? "Slide Diperbarui" : "Slide Ditambahkan"); } catch(err){}
+      window.hideLoader();
     });
 
-    // Logo Upload handler
     document.getElementById('logo-crud-form')?.addEventListener('submit', async e => {
       e.preventDefault(); window.showLoader();
       const fileInput = document.getElementById('form-logofile');
@@ -1417,7 +1368,6 @@
       window.hideLoader();
     });
 
-    // Background upload handler
     document.getElementById('bg-crud-form')?.addEventListener('submit', async e => {
       e.preventDefault(); window.showLoader();
       const fileInput = document.getElementById('form-bgfile');
@@ -1439,7 +1389,7 @@
 
     window.onload = function() {
       if(sessionStorage.getItem('tc_admin') === 'true') document.getElementById('nav-cms-icon').innerText = '🔓';
-      window.renderAll();
+      if(typeof window.renderAll === 'function') window.renderAll();
     };
   </script>
 </body>
