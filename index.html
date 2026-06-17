@@ -122,16 +122,14 @@
 </head>
 <body class="antialiased selection:bg-brand-orange selection:text-white overflow-hidden" id="body-container">
 
-  <!-- ================= INITIAL APP LOADER (BUFFER SCREEN) ================= -->
   <div id="initial-loader" class="fixed inset-0 z-[100] bg-[#1a1a1c] flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out">
     <div class="relative w-24 h-24 mb-6">
-  <div class="absolute inset-0 border-4 border-gray-700 border-t-brand-orange rounded-full animate-spin shadow-[0_0_15px_rgba(217,83,30,0.5)]"></div>
-  
-  <div class="absolute inset-0 flex items-center justify-center">
-    <img src="https://res.cloudinary.com/dybchljzd/image/upload/v1781580794/file_000000003a1071f8ae2bad40e1a79491_ef0qck.png" alt="Loading Icon" class="w-18 h-18 object-contain drop-shadow-lg animate-pulse">
-  </div>
-</div>
-    <h2 class="text-white text-2xl font-bold tracking-widest uppercase mb-2">TARSEL FC</h2>
+      <div class="absolute inset-0 border-4 border-gray-700 border-t-brand-orange rounded-full animate-spin shadow-[0_0_15px_rgba(217,83,30,0.5)]"></div>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <img src="https://res.cloudinary.com/dybchljzd/image/upload/v1781580794/file_000000003a1071f8ae2bad40e1a79491_ef0qck.png" alt="Loading Logo" class="w-18 h-18 object-contain drop-shadow-lg animate-pulse">
+      </div>
+    </div>
+    <h2 class="text-white text-2xl font-bold tracking-widest uppercase mb-2">SOCCERCLUB</h2>
     <div class="flex items-center gap-2 mt-2">
       <div class="w-2 h-2 bg-brand-orange rounded-full animate-bounce"></div>
       <div class="w-2 h-2 bg-brand-orange rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
@@ -140,16 +138,13 @@
     <p class="text-gray-400 text-[10px] mt-4 uppercase tracking-widest animate-pulse">Menyiapkan Lapangan...</p>
   </div>
 
-  <!-- ================= TOAST & ALERTS ================= -->
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- ================= OVERLAY LOADING UPLOAD ================= -->
   <div id="upload-loader" class="hidden fixed inset-0 bg-black/80 z-[60] flex flex-col items-center justify-center">
     <div class="w-12 h-12 border-4 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
     <p class="text-white mt-4 text-xs font-bold uppercase tracking-widest" id="loader-text">Memproses...</p>
   </div>
 
-  <!-- ================= ADMIN LOGIN MODAL ================= -->
   <div id="admin-login-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
     <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded">
       <button onclick="window.closeAdminLogin()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl">✕</button>
@@ -162,11 +157,9 @@
     </div>
   </div>
 
-  <!-- ================= STICKY NAVBAR ================= -->
   <header class="fixed top-0 left-0 w-full z-40 bg-black/80 backdrop-blur-md border-b border-white/5">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="flex items-center justify-between h-20">
-        <!-- Logo Bersih -->
         <a href="#" onclick="window.switchView('beranda')" class="flex items-center gap-3 cursor-pointer group">
           <img id="nav-logo-img" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=100&auto=format&fit=crop" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-lg" alt="Logo">
           <div class="leading-tight">
@@ -175,7 +168,6 @@
           </div>
         </a>
 
-        <!-- Desktop Nav -->
         <nav class="hidden md:flex items-center gap-6 h-full">
           <button onclick="window.switchView('beranda')" class="nav-link active text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Beranda</button>
           <button onclick="window.switchView('skuad')" class="nav-link text-xs font-semibold text-gray-400 hover:text-white uppercase h-full px-2 transition">Tim</button>
@@ -193,7 +185,6 @@
       </div>
     </div>
     
-    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-gray-800 p-4 space-y-2">
       <button onclick="window.switchView('beranda')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Beranda</button>
       <button onclick="window.switchView('skuad')" class="block w-full text-left text-sm text-white uppercase py-2 hover:text-brand-orange transition">Tim</button>
@@ -206,13 +197,10 @@
     </div>
   </header>
 
-  <!-- ================= APP CONTAINER ================= -->
   <main id="app-container" class="pt-20">
 
-    <!-- ================= 1. VIEW: BERANDA ================= -->
     <div id="view-beranda" class="app-view active">
       
-      <!-- HERO SLIDER SECTION -->
       <section class="relative h-[550px] bg-black overflow-hidden border-b border-gray-800">
         <div id="hero-slider-container" class="relative w-full h-full"></div>
         <div class="absolute bottom-12 left-4 md:left-[50%] md:-translate-x-[200px] flex gap-4 text-gray-500 text-2xl z-20">
@@ -221,7 +209,6 @@
         </div>
       </section>
 
-      <!-- 4 ICONS SECTION -->
       <section class="bg-brand-gray py-12 border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-4">
           <div class="flex items-center justify-between mb-8 px-4 text-gray-600 text-2xl">
@@ -230,7 +217,6 @@
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center px-8 mt-4">
-            <!-- Icon 1: Our Team -->
             <div class="flex flex-col items-center group cursor-pointer" onclick="window.switchView('skuad')">
               <div class="w-16 h-16 rounded-full bg-gradient-to-b from-gray-300 to-gray-500 flex items-center justify-center icon-3d mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(217,83,30,0.5)] transition-all">
                 <span class="text-3xl">⚽</span>
@@ -240,7 +226,6 @@
               <button class="btn-detail"><span class="btn-detail-icon"></span> detail</button>
             </div>
             
-            <!-- Icon 2: Awards -->
             <div class="flex flex-col items-center group cursor-pointer" onclick="window.switchView('prestasi')">
               <div class="w-16 h-16 rounded-full bg-gradient-to-b from-yellow-300 to-yellow-600 flex items-center justify-center icon-3d mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(217,83,30,0.5)] transition-all">
                 <span class="text-3xl">🏆</span>
@@ -250,7 +235,6 @@
               <button class="btn-detail"><span class="btn-detail-icon"></span> detail</button>
             </div>
             
-            <!-- Icon 3: Coaches -->
             <div class="flex flex-col items-center group cursor-pointer" onclick="window.switchView('ofisial')">
               <div class="w-16 h-16 rounded-full bg-gradient-to-b from-blue-300 to-blue-600 flex items-center justify-center icon-3d mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(217,83,30,0.5)] transition-all">
                 <span class="text-3xl">⏱️</span>
@@ -260,7 +244,6 @@
               <button class="btn-detail"><span class="btn-detail-icon"></span> detail</button>
             </div>
             
-            <!-- Icon 4: Official -->
             <div class="flex flex-col items-center group cursor-pointer" onclick="window.switchView('ofisial')">
               <div class="w-16 h-16 rounded-full bg-gradient-to-b from-gray-200 to-gray-400 flex items-center justify-center icon-3d mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(217,83,30,0.5)] transition-all text-4xl leading-none pt-1">
                 👔
@@ -273,7 +256,6 @@
         </div>
       </section>
 
-      <!-- JOIN OUR CLUB BANNER (Jernih, Tanpa Jaring) -->
       <section id="join-section" class="relative py-16 transition-all duration-500 border-b border-gray-800" style="background-size: cover; background-repeat: no-repeat;">
         <div class="absolute inset-0 bg-black/60"></div>
         <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
@@ -289,11 +271,9 @@
         </div>
       </section>
 
-      <!-- 3 COLUMNS FOOTER -->
       <section class="bg-brand-dark py-12 pb-20 border-t border-black">
         <div class="max-w-6xl mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <!-- Col 1 -->
             <div>
               <h3 class="text-white font-bold text-sm uppercase mb-4 col-title-border">Selamat Datang</h3>
               <img id="footer-logo-img" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=200&auto=format&fit=crop" class="h-16 w-auto object-contain mb-4 drop-shadow-md" alt="Site Logo">
@@ -302,12 +282,10 @@
                 Klub sepakbola komunitas yang berdedikasi melatih karakter disiplin, kekeluargaan, serta memacu prestasi atlet lokal di kancah regional demi memajukan sepakbola daerah.
               </p>
             </div>
-            <!-- Col 2 -->
             <div>
               <h3 class="text-white font-bold text-sm uppercase mb-4 col-title-border">Berita Terbaru</h3>
               <div id="home-news-preview" class="space-y-4"></div>
             </div>
-            <!-- Col 3 -->
             <div>
               <h3 class="text-white font-bold text-sm uppercase mb-4 col-title-border">Kegiatan Kami</h3>
               <div id="home-gallery-preview" class="space-y-4"></div>
@@ -318,7 +296,6 @@
 
     </div>
 
-    <!-- ================= 2. VIEW: SKUAD (TEAM) ================= -->
     <div id="view-skuad" class="app-view bg-brand-gray min-h-screen py-12">
       <div class="max-w-6xl mx-auto px-4">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 border-b border-gray-700 pb-4">
@@ -339,7 +316,6 @@
     </div>
 
 
-    <!-- ================= 3. VIEW: PRESTASI (AWARDS) ================= -->
     <div id="view-prestasi" class="app-view bg-brand-gray min-h-screen py-12">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Prestasi & Penghargaan</h2>
@@ -349,7 +325,6 @@
     </div>
 
 
-    <!-- ================= 4. VIEW: OFISIAL (STAFF) ================= -->
     <div id="view-ofisial" class="app-view bg-brand-gray min-h-screen py-12">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Pelatih & Ofisial</h2>
@@ -359,7 +334,6 @@
     </div>
 
 
-    <!-- ================= 5. VIEW: BERITA (BLOG) ================= -->
     <div id="view-berita" class="app-view bg-brand-gray min-h-screen py-12">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Berita & Informasi Terbaru</h2>
@@ -368,7 +342,6 @@
     </div>
 
 
-    <!-- ================= 6. VIEW: GALERI ================= -->
     <div id="view-galeri" class="app-view bg-brand-gray min-h-screen py-12">
       <div class="max-w-6xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Galeri Media</h2>
@@ -380,7 +353,6 @@
     </div>
 
 
-    <!-- ================= 7. VIEW: PENDAFTARAN (JOIN) ================= -->
     <div id="view-pendaftaran" class="app-view bg-brand-dark min-h-screen py-12">
       <div class="max-w-3xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-white uppercase col-title-border mb-8">Gabung Klub Kami</h2>
@@ -440,7 +412,6 @@
     </div>
 
 
-    <!-- ================= 8. VIEW: CMS ADMIN ================= -->
     <div id="view-cms" class="app-view bg-brand-dark min-h-screen py-12">
       <div class="max-w-7xl mx-auto px-4">
         
@@ -453,11 +424,11 @@
             <button onclick="window.switchCMSTab('news')" id="tab-btn-news" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Berita</button>
             <button onclick="window.switchCMSTab('gallery')" id="tab-btn-gallery" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Media</button>
             <button onclick="window.switchCMSTab('tampilan')" id="tab-btn-tampilan" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Tampilan</button>
+            <button onclick="window.switchCMSTab('registrations')" id="tab-btn-registrations" class="px-3 py-1.5 text-xs font-bold bg-gray-800 text-gray-300 rounded-sm hover:text-white transition hover:bg-gray-700 active:scale-95">Pendaftar</button>
             <button onclick="window.logoutAdmin()" class="px-3 py-1.5 text-xs font-bold bg-red-700 hover:bg-red-600 text-white rounded-sm ml-auto md:ml-4 transition active:scale-95">Keluar</button>
           </div>
         </div>
 
-        <!-- CMS: PLAYERS -->
         <div id="cms-players-view" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div class="lg:col-span-4 bg-brand-gray border border-gray-700 p-6 h-fit rounded-sm shadow-lg">
             <h3 id="player-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tambah Pemain</h3>
@@ -512,7 +483,6 @@
           </div>
         </div>
 
-        <!-- CMS: STAFF -->
         <div id="cms-staff-view" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div class="lg:col-span-4 bg-brand-gray border border-gray-700 p-6 h-fit rounded-sm shadow-lg">
             <h3 id="staff-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tambah Staf</h3>
@@ -540,7 +510,6 @@
           </div>
         </div>
 
-        <!-- CMS: AWARDS -->
         <div id="cms-awards-view" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div class="lg:col-span-4 bg-brand-gray border border-gray-700 p-6 h-fit rounded-sm shadow-lg">
             <h3 id="awards-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tambah Prestasi</h3>
@@ -565,7 +534,6 @@
           </div>
         </div>
 
-        <!-- CMS: NEWS -->
         <div id="cms-news-view" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div class="lg:col-span-4 bg-brand-gray border border-gray-700 p-6 h-fit rounded-sm shadow-lg">
             <h3 id="news-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Tulis Berita</h3>
@@ -594,7 +562,6 @@
           </div>
         </div>
 
-        <!-- CMS: GALLERY & VIDEOS -->
         <div id="cms-gallery-view" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
             <h3 id="gallery-form-title" class="text-white font-bold text-sm mb-4 uppercase col-title-border">Upload Foto Galeri</h3>
@@ -629,7 +596,6 @@
           </div>
         </div>
 
-        <!-- CMS: TAMPILAN (HERO, BG, LOGO) -->
         <div id="cms-tampilan-view" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
           
           <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
@@ -674,7 +640,6 @@
           </div>
 
           <div class="space-y-6">
-            <!-- Logo Settings -->
             <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg h-fit">
               <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Logo Website</h3>
               <form id="logo-crud-form" class="space-y-4">
@@ -686,7 +651,6 @@
               </form>
             </div>
 
-            <!-- Background Settings -->
             <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg h-fit">
               <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Background Bagian "Gabung"</h3>
               <form id="bg-crud-form" class="space-y-4">
@@ -718,14 +682,31 @@
 
         </div>
 
+        <div id="cms-registrations-view" class="hidden grid grid-cols-1 gap-6">
+          <div class="bg-brand-gray border border-gray-700 p-6 rounded-sm shadow-lg">
+            <h3 class="text-white font-bold text-sm mb-4 uppercase col-title-border">Data Pendaftar Trial</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-gray-300">
+                <thead class="border-b border-gray-700 text-gray-500">
+                  <tr>
+                    <th class="pb-2">Nama Pemain</th>
+                    <th class="pb-2">Wali & Kontak WA</th>
+                    <th class="pb-2">Tgl Lahir & Posisi</th>
+                    <th class="pb-2">Domisili</th>
+                    <th class="pb-2 text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-registrations-table-body" class="divide-y divide-gray-800"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
   </main>
 
-  <!-- ================= MODALS DETAIL ================= -->
-  
-  <!-- Player Detail Modal -->
   <div id="player-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
     <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded-sm">
       <button onclick="window.closePlayerDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
@@ -749,7 +730,6 @@
     </div>
   </div>
 
-  <!-- Staff Detail Modal -->
   <div id="staff-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
     <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-sm relative shadow-2xl rounded-sm">
       <button onclick="window.closeStaffDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
@@ -764,7 +744,6 @@
     </div>
   </div>
 
-  <!-- Award Detail Modal -->
   <div id="award-detail-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
     <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-md relative shadow-2xl rounded-sm">
       <button onclick="window.closeAwardDetail()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
@@ -777,7 +756,6 @@
     </div>
   </div>
 
-  <!-- News Reader Modal -->
   <div id="news-reader-modal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
     <div class="bg-brand-gray border border-gray-700 p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto relative shadow-2xl rounded-sm">
       <button onclick="window.closeNewsReader()" class="absolute top-2 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
@@ -788,7 +766,6 @@
     </div>
   </div>
 
-  <!-- Lightbox -->
   <div id="gallery-lightbox" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
     <button onclick="window.closeLightbox()" class="absolute top-4 right-6 text-white text-3xl font-extrabold transition hover:text-brand-orange">✕</button>
     <div class="flex items-center gap-4">
@@ -799,7 +776,6 @@
     <h3 id="lightbox-title" class="text-white mt-4 text-sm uppercase tracking-wider font-bold"></h3>
   </div>
 
-  <!-- Video Player -->
   <div id="video-player-modal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
     <div class="relative max-w-4xl w-full aspect-video bg-black border border-gray-800 shadow-2xl">
       <button onclick="window.closeVideoPlayer()" class="absolute -top-10 right-0 text-white text-2xl font-bold hover:text-brand-orange transition">✕</button>
@@ -807,7 +783,6 @@
     </div>
   </div>
 
-  <!-- ================= LOGIC JAVASCRIPT FIREBASE ================= -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -841,9 +816,8 @@
     window.hideLoader = function() { document.getElementById('upload-loader').classList.add('hidden'); };
     
     // --- DATA STATE ---
-    window.players = []; window.staff = []; window.awards = []; window.news = []; window.gallery = []; window.videos = []; window.heroSlidesData = [];
-    // Ganti parameter &w=1200 menjadi &w=1920
-window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=1920&auto=format&fit=crop"; window.backgroundPos = "50% 50%";
+    window.players = []; window.staff = []; window.awards = []; window.news = []; window.gallery = []; window.videos = []; window.heroSlidesData = []; window.registrations = [];
+    window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=1920&auto=format&fit=crop"; window.backgroundPos = "50% 50%";
     window.siteLogo = "https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=400&auto=format&fit=crop";
     window.currentHeroSlide = 0; window.heroInterval = null;
 
@@ -854,10 +828,10 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
     const defaultNews = [{ id: "n1", title: "Kemenangan Telak Di Final!", category: "Match Day", date: "2026-06-10", summary: "Tarsel FC angkat piala di depan publik sendiri.", content: "Pertandingan dramatis berakhir dengan skor 3-1. Kemenangan ini merupakan hasil keras dari pemusatan latihan selama dua bulan terakhir yang dipimpin langsung oleh Coach Hendra.", image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop" }];
     const defaultGallery = [{ id: "g1", title: "Selebrasi Kemenangan", category: "match", image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800&auto=format&fit=crop" }];
     const defaultVideos = [{ id: "v1", title: "Highlights Final Tarsel", youtubeId: "dQw4w9WgXcQ" }];
-    const defaultHero = [{ id: "h1", h1: "SOCCER", h2: "Kami Mencintai Permainan Ini", desc: "Membangun karakter dan prestasi pemuda melalui sepakbola.", btnTxt: "Tentang Tim", btnLink: "skuad", image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1200&auto=format&fit=crop", imgPos: "50% 20%" }];
+    const defaultHero = [{ id: "h1", h1: "SOCCER", h2: "Kami Mencintai Permainan Ini", desc: "Membangun karakter dan prestasi pemuda melalui sepakbola.", btnTxt: "Tentang Tim", btnLink: "skuad", image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1920&auto=format&fit=crop", imgPos: "50% 20%" }];
 
     // --- TRACKING INITIAL LOAD ---
-    let loadStatus = { players: false, staff: false, awards: false, news: false, gallery: false, videos: false, hero: false, settings: false };
+    let loadStatus = { players: false, staff: false, awards: false, news: false, gallery: false, videos: false, hero: false, settings: false, registrations: false };
     
     function checkAppReady() {
        if(Object.values(loadStatus).every(status => status === true)) {
@@ -924,6 +898,7 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       setupCollection('gallery', arr => window.gallery = arr, defaultGallery, 'gallery');
       setupCollection('videos', arr => window.videos = arr, defaultVideos, 'videos');
       setupCollection('hero', arr => window.heroSlidesData = arr, defaultHero, 'hero');
+      setupCollection('registrations', arr => window.registrations = arr, [], 'registrations');
 
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'settings'), snapshot => {
         if(!snapshot.empty) {
@@ -1116,6 +1091,18 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       render('admin-gallery-table-body', window.gallery, g => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${g.image}" class="w-10 h-6 object-cover rounded-sm"></td><td class="truncate max-w-[100px]">${g.title}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('gallery','${g.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('gallery','${g.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
       render('admin-video-table-body', window.videos, v => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2 truncate max-w-[100px]">${v.title}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('videos','${v.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('videos','${v.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
       render('admin-hero-table-body', window.heroSlidesData, h => `<tr class="border-b border-gray-800 hover:bg-gray-800/30 transition"><td class="py-2"><img src="${h.image}" class="w-10 h-6 object-cover rounded-sm"></td><td>${h.h1}</td><td class="text-right whitespace-nowrap"><button onclick="window.editData('hero','${h.id}')" class="text-yellow-500 hover:text-yellow-400 font-bold active:scale-90 transition mr-2">Edit</button> <button onclick="window.deleteData('hero','${h.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition">X</button></td></tr>`);
+      
+      render('admin-registrations-table-body', window.registrations, r => `
+        <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition">
+          <td class="py-3 font-bold text-white">${r.name}</td>
+          <td class="py-3">${r.parent} <br><a href="https://wa.me/${r.phone.replace(/^0/, '62')}" target="_blank" class="text-brand-orange hover:underline block mt-1">📞 ${r.phone}</a></td>
+          <td class="py-3">${r.dob} <br><span class="text-[9px] text-brand-orange font-bold uppercase tracking-widest block mt-1">${r.position}</span></td>
+          <td class="py-3">${r.address}</td>
+          <td class="py-3 text-right whitespace-nowrap">
+            <button onclick="window.deleteData('registrations','${r.id}')" class="text-red-500 hover:text-red-400 font-bold active:scale-90 transition px-2 py-1 border border-red-900 bg-red-900/20 rounded-sm">Hapus</button>
+          </td>
+        </tr>
+      `);
     };
 
     window.openPlayerDetail = function(id) {
@@ -1221,7 +1208,7 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
     };
 
     window.switchCMSTab = function(tab) {
-      ['players','staff','awards','news','gallery','tampilan'].forEach(t => {
+      ['players','staff','awards','news','gallery','tampilan','registrations'].forEach(t => {
         document.getElementById(`cms-${t}-view`)?.classList.add('hidden');
         document.getElementById(`tab-btn-${t}`)?.classList.remove('bg-brand-orange', 'text-white');
         document.getElementById(`tab-btn-${t}`)?.classList.add('bg-gray-800', 'text-gray-300');
@@ -1318,7 +1305,7 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       if(btnCan) btnCan.classList.add('hidden');
     };
 
-    window.compressImage = function(file, maxWidth = 1200, quality = 0.8) {
+    window.compressImage = function(file, maxWidth = 1920, quality = 0.9) {
       return new Promise((resolve, reject) => {
         if (!file) { resolve(null); return; }
         const reader = new FileReader();
@@ -1374,7 +1361,7 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       const id = document.getElementById('edit-player-id').value;
       const fileInput = document.getElementById('form-pfile');
       let imgData = null;
-      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000);
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000, 0.8);
       else if(id) imgData = window.players.find(x => x.id === id).image;
       else imgData = 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?q=80&w=600&auto=format&fit=crop';
 
@@ -1388,7 +1375,7 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       const id = document.getElementById('edit-staff-id').value;
       const fileInput = document.getElementById('form-sfile');
       let imgData = null;
-      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 800);
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 800, 0.8);
       else if(id) imgData = window.staff.find(x => x.id === id).image;
       else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop';
 
@@ -1402,7 +1389,7 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       const id = document.getElementById('edit-awards-id').value;
       const fileInput = document.getElementById('form-afile');
       let imgData = null;
-      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000);
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000, 0.8);
       else if(id) imgData = window.awards.find(x => x.id === id).image;
       else imgData = 'https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=800&auto=format&fit=crop';
 
@@ -1416,7 +1403,7 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       const id = document.getElementById('edit-news-id').value;
       const fileInput = document.getElementById('form-nfile');
       let imgData = null;
-      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000);
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1000, 0.8);
       else if(id) imgData = window.news.find(x => x.id === id).image;
       else imgData = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop';
 
@@ -1430,7 +1417,7 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       const id = document.getElementById('edit-gallery-id').value;
       const fileInput = document.getElementById('form-gfile');
       let imgData = null;
-      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1200); 
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1200, 0.8); 
       else if(id) imgData = window.gallery.find(x => x.id === id).image;
 
       if(!imgData && !id) { window.hideLoader(); window.showToast("Harap pilih gambar!"); return; } 
@@ -1455,10 +1442,10 @@ window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e504
       const id = document.getElementById('edit-hero-id').value;
       const fileInput = document.getElementById('form-hfile');
       let imgData = null;
-     // Memperbesar resolusi kompresi hero menjadi 1920px dengan kualitas 90% (0.9)
-if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1920, 0.9);
-else if(id) imgData = window.heroSlidesData.find(x => x.id === id).image;
-else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1920&auto=format&fit=crop';
+      // Gunakan resolusi tinggi untuk Hero
+      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1920, 0.9);
+      else if(id) imgData = window.heroSlidesData.find(x => x.id === id).image;
+      else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1920&auto=format&fit=crop';
 
       const imgPosVal = `${document.getElementById('form-hpos-x').value}% ${document.getElementById('form-hpos-y').value}%`;
       const newData = { id: id || 'h'+Date.now(), h1:document.getElementById('form-h1').value, h2:document.getElementById('form-h2').value, desc:document.getElementById('form-hdesc').value, btnTxt:document.getElementById('form-hbtn').value, btnLink:document.getElementById('form-hlink').value, imgPos: imgPosVal, image: imgData };
@@ -1470,7 +1457,7 @@ else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=8
       e.preventDefault(); window.showLoader();
       const fileInput = document.getElementById('form-logofile');
       if(fileInput.files.length > 0) {
-        window.siteLogo = await window.compressImage(fileInput.files[0], 400); 
+        window.siteLogo = await window.compressImage(fileInput.files[0], 400, 0.8); 
         if(currentUser) {
           try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'logo'), { url: window.siteLogo }); window.showToast("Logo Diperbarui"); e.target.reset(); } catch(err){}
         }
@@ -1484,9 +1471,9 @@ else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=8
       window.backgroundPos = `${document.getElementById('form-bgpos-x').value}% ${document.getElementById('form-bgpos-y').value}%`;
       
       if(fileInput.files.length > 0) {
-  // Ubah batas lebar menjadi 1920px dan tingkatkan kualitasnya menjadi 0.9 (90%)
-  window.backgroundUrl = await window.compressImage(fileInput.files[0], 1920, 0.9);
-}
+        // Gunakan resolusi tinggi untuk Background
+        window.backgroundUrl = await window.compressImage(fileInput.files[0], 1920, 0.9);
+      }
       if(currentUser) {
         try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'background'), { url: window.backgroundUrl, pos: window.backgroundPos }); window.showToast("Background Diperbarui"); e.target.reset(); } catch(err){}
       }
@@ -1498,14 +1485,30 @@ else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=8
       document.getElementById('form-goalkeeper-stats-group').classList.toggle('hidden', this.value !== 'Kiper');
     });
 
-    document.getElementById('trial-registration-form')?.addEventListener('submit', e => {
+    document.getElementById('trial-registration-form')?.addEventListener('submit', async e => {
       e.preventDefault();
       document.getElementById('form-loader').classList.remove('hidden');
-      setTimeout(() => {
+      
+      const newData = {
+        id: 'reg' + Date.now(),
+        name: document.getElementById('trial-name').value,
+        parent: document.getElementById('trial-parent').value,
+        phone: document.getElementById('trial-phone').value,
+        dob: document.getElementById('trial-dob').value,
+        position: document.getElementById('trial-position').value,
+        address: document.getElementById('trial-address').value,
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        await saveData('registrations', newData);
         document.getElementById('form-loader').classList.add('hidden');
         document.getElementById('form-success').classList.remove('hidden');
         e.target.reset();
-      }, 1500);
+      } catch(err) {
+        document.getElementById('form-loader').classList.add('hidden');
+        window.showToast("Gagal menyimpan data ke server. Pastikan koneksi internet stabil.");
+      }
     });
 
   </script>
