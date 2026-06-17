@@ -839,7 +839,8 @@
     
     // --- DATA STATE ---
     window.players = []; window.staff = []; window.awards = []; window.news = []; window.gallery = []; window.videos = []; window.heroSlidesData = [];
-    window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=1200&auto=format&fit=crop"; window.backgroundPos = "50% 50%";
+    // Ganti parameter &w=1200 menjadi &w=1920
+window.backgroundUrl = "https://images.unsplash.com/photo-1518605368461-1ee7e5042213?q=80&w=1920&auto=format&fit=crop"; window.backgroundPos = "50% 50%";
     window.siteLogo = "https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=400&auto=format&fit=crop";
     window.currentHeroSlide = 0; window.heroInterval = null;
 
@@ -1451,9 +1452,10 @@
       const id = document.getElementById('edit-hero-id').value;
       const fileInput = document.getElementById('form-hfile');
       let imgData = null;
-      if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1200);
-      else if(id) imgData = window.heroSlidesData.find(x => x.id === id).image;
-      else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1400&auto=format&fit=crop';
+     // Memperbesar resolusi kompresi hero menjadi 1920px dengan kualitas 90% (0.9)
+if(fileInput.files.length > 0) imgData = await window.compressImage(fileInput.files[0], 1920, 0.9);
+else if(id) imgData = window.heroSlidesData.find(x => x.id === id).image;
+else imgData = 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1920&auto=format&fit=crop';
 
       const imgPosVal = `${document.getElementById('form-hpos-x').value}% ${document.getElementById('form-hpos-y').value}%`;
       const newData = { id: id || 'h'+Date.now(), h1:document.getElementById('form-h1').value, h2:document.getElementById('form-h2').value, desc:document.getElementById('form-hdesc').value, btnTxt:document.getElementById('form-hbtn').value, btnLink:document.getElementById('form-hlink').value, imgPos: imgPosVal, image: imgData };
@@ -1479,8 +1481,9 @@
       window.backgroundPos = `${document.getElementById('form-bgpos-x').value}% ${document.getElementById('form-bgpos-y').value}%`;
       
       if(fileInput.files.length > 0) {
-        window.backgroundUrl = await window.compressImage(fileInput.files[0], 1200);
-      }
+  // Ubah batas lebar menjadi 1920px dan tingkatkan kualitasnya menjadi 0.9 (90%)
+  window.backgroundUrl = await window.compressImage(fileInput.files[0], 1920, 0.9);
+}
       if(currentUser) {
         try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'background'), { url: window.backgroundUrl, pos: window.backgroundPos }); window.showToast("Background Diperbarui"); e.target.reset(); } catch(err){}
       }
